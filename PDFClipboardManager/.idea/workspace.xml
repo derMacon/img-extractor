@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fbb26939-1fcb-4aca-9839-5d0bd9204582" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../demos/KeyListener/src/keymaster/CostumListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../demos/KeyListener/src/keymaster/KeyMasterMain.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../demos/KeyListener/src/nativeHook/GlobalKeyListenerExample .java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../demos/KeyListener/src/nativeHook/NativeHookDemo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demos/KeyListener/src/nativeHook/GerTutCode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demos/KeyListener/src/nativeHook/KeyHook.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demos/KeyListener/src/nativeHook/MyListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demos/KeyListener/src/nativeHook/MyNativeHookExample.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demos/KeyListener/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../demos/KeyListener/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demos/KeyListener/KeyListener.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../demos/KeyListener/KeyListener.iml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,10 +28,11 @@
     <session id="-335549758">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="2" />
           <entry key="project.open.time.4" value="1" />
+          <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -115,6 +118,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -132,14 +137,12 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="AndroidView" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555805346100" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555805562154" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../demos/KeyListener" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -185,17 +188,19 @@
       <option name="presentableId" value="Default" />
       <updated>1555794430587</updated>
       <workItem from="1555794435850" duration="2651000" />
-      <workItem from="1555804941620" duration="263000" />
+      <workItem from="1555804941620" duration="622000" />
+      <workItem from="1555886501854" duration="613000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2914000" />
+    <option name="totallyTimeSpent" value="3886000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25198728" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25397456" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
