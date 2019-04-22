@@ -4,6 +4,9 @@ import java.awt.datatransfer.Clipboard;
 
 import javax.swing.ImageIcon;
 
+/**
+ * http://omtlab.com/java-store-image-in-clipboard/
+ */
 public class Main {
 
     public static void main(String[] args) {

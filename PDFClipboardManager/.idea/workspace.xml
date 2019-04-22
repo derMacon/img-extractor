@@ -2,13 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fbb26939-1fcb-4aca-9839-5d0bd9204582" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../demos/KeyListener/src/nativeHook/GerTutCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../demos/KeyListener/src/nativeHook/KeyHook.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../demos/KeyListener/src/nativeHook/MyListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../demos/KeyListener/src/nativeHook/MyNativeHookExample.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/PDFClipboardManager/marvinSmall.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demos/KeyListener/src/pdfConverter/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../otherDocs/lib/jnativehook-2.1.0.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PDFClipboardManager/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PDFClipboardManager/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../demos/KeyListener/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../demos/KeyListener/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../demos/KeyListener/KeyListener.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../demos/KeyListener/KeyListener.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demos/KeyListener/out/production/KeyListener/imgToClipboard/ClipboardImage.class" beforeDir="false" afterPath="$PROJECT_DIR$/../demos/KeyListener/out/production/KeyListener/imgToClipboard/ClipboardImage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demos/KeyListener/out/production/KeyListener/imgToClipboard/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../demos/KeyListener/out/production/KeyListener/imgToClipboard/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demos/KeyListener/src/imgToClipboard/ClipboardImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demos/KeyListener/src/imgToClipboard/ClipboardImage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demos/KeyListener/src/imgToClipboard/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demos/KeyListener/src/imgToClipboard/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../otherDocs/lib/jnativehook-2.1.20170819.180800-42 (1).jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../otherDocs/lib/jnativehook-2.1.20170819.180800-42.jar.asc" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -47,12 +55,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="519" />
+          <entry key="java" value="539" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="519" />
+          <entry key="JAVA" value="539" />
         </counts>
       </usages-collector>
     </session>
@@ -62,8 +70,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="17" column="70" selection-start-line="17" selection-start-column="70" selection-end-line="17" selection-end-column="70" />
+            <state relative-caret-position="198">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -71,8 +82,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ImageResizer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="30" selection-start-line="30" selection-end-line="30" />
+            <state relative-caret-position="360">
+              <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -107,10 +118,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="2576" />
-    <option name="height" value="1416" />
+    <option name="x" value="-7" />
+    <option name="width" value="1294" />
+    <option name="height" value="1407" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -189,18 +199,18 @@
       <updated>1555794430587</updated>
       <workItem from="1555794435850" duration="2651000" />
       <workItem from="1555804941620" duration="622000" />
-      <workItem from="1555886501854" duration="613000" />
+      <workItem from="1555886501854" duration="2716000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3886000" />
+    <option name="totallyTimeSpent" value="5989000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25397456" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25397456" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -209,12 +219,12 @@
       <window_info id="Capture Tool" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3299532" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.19422777" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39937598" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.3299532" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3299532" />
       <window_info anchor="bottom" id="CheckStyle" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.3299532" />
@@ -239,17 +249,20 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/ImageResizer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" column="70" selection-start-line="17" selection-start-column="70" selection-end-line="17" selection-end-column="70" />
+        <state relative-caret-position="360">
+          <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageResizer.java">
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        <state relative-caret-position="198">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.File;
 
 public class Main {
@@ -7,6 +8,7 @@ public class Main {
 
         showNames("res/");
         Boolean status = ImageResizer.resizeImage("res/marvinLarge.png", "res/marvinSmall.png",100,100);
+
     }
 
     private static void showNames(String path) {

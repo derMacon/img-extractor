@@ -7,6 +7,9 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
+/**
+ * http://omtlab.com/java-store-image-in-clipboard/
+ */
 public class ClipboardImage implements Transferable, ClipboardOwner {
 
     private Image image;
