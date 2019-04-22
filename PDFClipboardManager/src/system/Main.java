@@ -30,7 +30,7 @@ public class Main {
         l.setLevel(Level.OFF);
 
         GlobalScreen.registerNativeHook();
-        HookListener list = new HookListener();
+        HookListener list = new HookListener("res/doc.pdf");
         GlobalScreen.addNativeKeyListener(list);
         while (running) {
             try {
