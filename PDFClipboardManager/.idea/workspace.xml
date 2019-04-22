@@ -2,21 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fbb26939-1fcb-4aca-9839-5d0bd9204582" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/out/production/PDFClipboardManager/marvinSmall.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../demos/KeyListener/src/pdfConverter/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../otherDocs/lib/jnativehook-2.1.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/system/HookListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/system/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PDFClipboardManager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PDFClipboardManager.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PDFClipboardManager/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PDFClipboardManager/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ImageResizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/logic/ImageResizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../demos/KeyListener/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../demos/KeyListener/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../demos/KeyListener/KeyListener.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../demos/KeyListener/KeyListener.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../demos/KeyListener/out/production/KeyListener/imgToClipboard/ClipboardImage.class" beforeDir="false" afterPath="$PROJECT_DIR$/../demos/KeyListener/out/production/KeyListener/imgToClipboard/ClipboardImage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../demos/KeyListener/out/production/KeyListener/imgToClipboard/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../demos/KeyListener/out/production/KeyListener/imgToClipboard/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../demos/KeyListener/src/imgToClipboard/ClipboardImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demos/KeyListener/src/imgToClipboard/ClipboardImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../demos/KeyListener/src/imgToClipboard/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demos/KeyListener/src/imgToClipboard/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../otherDocs/lib/jnativehook-2.1.20170819.180800-42 (1).jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../otherDocs/lib/jnativehook-2.1.20170819.180800-42.jar.asc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demos/KeyListener/src/nativeHook/MyNativeHookExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demos/KeyListener/src/nativeHook/MyNativeHookExample.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,33 +40,47 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="2" />
+          <entry key="java" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="2" />
+          <entry key="JAVA" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="539" />
+          <entry key="dummy" value="6" />
+          <entry key="java" value="3425" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="539" />
+          <entry key="JAVA" value="3425" />
+          <entry key="PLAIN_TEXT" value="6" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/system/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            <state relative-caret-position="216">
+              <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/system/HookListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="468">
+              <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -80,10 +89,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ImageResizer.java">
+        <entry file="file://$PROJECT_DIR$/src/logic/ImageResizer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="360">
-              <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+              <caret line="45" selection-start-line="45" selection-end-line="45" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -108,6 +117,9 @@
       <list>
         <option value="$PROJECT_DIR$/src/ImageResizer.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
+        <option value="$PROJECT_DIR$/src/MyListener.java" />
+        <option value="$PROJECT_DIR$/src/system/MyListener.java" />
+        <option value="$PROJECT_DIR$/src/system/HookListener.java" />
       </list>
     </option>
   </component>
@@ -117,8 +129,8 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1273" />
     <option name="width" value="1294" />
     <option name="height" value="1407" />
   </component>
@@ -152,8 +164,8 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555805562154" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../demos/KeyListener" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555895847966" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../otherDocs/lib/jnativehook-2.1.0.jar!/" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -175,7 +187,7 @@
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
+      <option name="MAIN_CLASS_NAME" value="system.Main" />
       <module name="PDFClipboardManager" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -199,18 +211,18 @@
       <updated>1555794430587</updated>
       <workItem from="1555794435850" duration="2651000" />
       <workItem from="1555804941620" duration="622000" />
-      <workItem from="1555886501854" duration="2716000" />
+      <workItem from="1555886501854" duration="5854000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5989000" />
+    <option name="totallyTimeSpent" value="9127000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
+    <frame x="1273" y="0" width="1294" height="1407" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25397456" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17341977" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -219,7 +231,7 @@
       <window_info id="Capture Tool" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.19422777" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.19560094" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39937598" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -249,20 +261,30 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ImageResizer.java">
+    <entry file="file://$PROJECT_DIR$/src/logic/ImageResizer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
-          <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+          <caret line="45" selection-start-line="45" selection-end-line="45" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/system/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        <state relative-caret-position="216">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/system/HookListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -326,7 +348,6 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

@@ -25,8 +25,6 @@ public class MyNativeHookExample {
             e.printStackTrace();
         }
 
-//        KeyHook kh = new KeyHook();
-//        kh.addValidHotkey("Space");
         MyListener list = new MyListener();
         GlobalScreen.addNativeKeyListener(list);
 
