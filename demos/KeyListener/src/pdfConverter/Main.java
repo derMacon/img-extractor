@@ -1,51 +1,35 @@
 package pdfConverter;
 
-import org.ghost4j.document.DocumentException;
-import org.ghost4j.document.PDFDocument;
-import org.ghost4j.renderer.RendererException;
-import org.ghost4j.renderer.SimpleRenderer;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.ImageType;
+import org.apache.pdfbox.rendering.PDFRenderer;
+import org.apache.pdfbox.tools.imageio.ImageIOUtil;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.RenderedImage;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) {
-        PDFDocument document = new PDFDocument();
-        try {
-            document.load(new File("input.pdf"));
-        } catch (IOException e) {
-            System.out.println("error");
-            e.printStackTrace();
-        }
+    private static final String OUTPUT_DIR = "res/";
 
-        SimpleRenderer renderer = new SimpleRenderer();
+    public static void main(String[] args) throws Exception{
 
-        // set resolution (in DPI)
-        renderer.setResolution(300);
+        File file = new File("res/input.pdf");
+        System.out.println(file.isFile());
+        try (final PDDocument document = PDDocument.load(file)){
+            PDFRenderer pdfRenderer = new PDFRenderer(document);
+            for (int page = 0; page < document.getNumberOfPages(); ++page)
+            {
+                BufferedImage bim = pdfRenderer.renderImageWithDPI(page, 300, ImageType.RGB);
+                String fileName = OUTPUT_DIR + "image-" + page + ".png";
+                ImageIOUtil.writeImage(bim, fileName, 300);
 
-        List<Image> images = null;
-        try {
-            images = renderer.render(document);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (RendererException e) {
-            e.printStackTrace();
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        }
-
-        for (int i = 0; i < images.size(); i++) {
-            try {
-                System.out.println(images.get(i));
-                ImageIO.write((RenderedImage) images.get(i), "png", new File((i + 1) + ".png"));
-            } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Printed page " + page);
             }
+            document.close();
+        } catch (IOException e){
+            System.err.println("Exception while trying to create pdf document - " + e);
         }
     }
 
