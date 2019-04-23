@@ -1,6 +1,10 @@
 package logic;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.PDFRenderer;
+
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Class to process the commands given by the user.
@@ -37,4 +41,23 @@ public class Organizer {
         return true;
     }
 
+    private void initImages(String path) {
+        File doc = new File(path);
+        if(!imgCorrespondsToDoc(doc)) {
+
+        }
+    }
+
+    /**
+     * Checks whether or not the internally saved image count corresponds to the page count of the document
+     * @return true if the internally saved image count corresponds to the page count of the document
+     */
+    private boolean imgCorrespondsToDoc(File doc) {
+        try {
+            return null != doc && doc.isFile()
+                    && PDDocument.load(doc).getNumberOfPages() == this.images.length;
+        } catch (IOException e) {
+            return false;
+        }
+    }
 }

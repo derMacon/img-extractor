@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("PDFClipboardManager");
         try {
-            initListener();
+            initListener("res/doc.pdf");
         } catch (NativeHookException e) {
             System.out.println("Error: Not possible to create system wide hook");
             e.printStackTrace();
@@ -25,13 +25,13 @@ public class Main {
      * Initializes the native hook listener to make it possible to listen for the key combinations to load up the
      * clipboard with an image.
      */
-    private static void initListener() throws NativeHookException {
+    private static void initListener(String path) throws NativeHookException {
         Logger l = Logger.getLogger(GlobalScreen.class.getPackage().getName());
         l.setLevel(Level.OFF);
 
         GlobalScreen.registerNativeHook();
-        HookListener list = new HookListener("res/doc.pdf");
-        GlobalScreen.addNativeKeyListener(list);
+        HookListener hookListener = new HookListener(path);
+        GlobalScreen.addNativeKeyListener(hookListener);
         while (running) {
             try {
                 Thread.sleep(300);
