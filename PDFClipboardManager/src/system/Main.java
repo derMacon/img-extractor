@@ -42,6 +42,10 @@ public class Main {
         GlobalScreen.unregisterNativeHook();
     }
 
+    /**
+     * testing method to see files in the directory
+     * @param path path of the directory to show
+     */
     private static void showNames(String path) {
         File folder = new File(path);
         File[] listOfFiles = folder.listFiles();
