@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class Main {
 
-    private static final String OUTPUT_DIR = "/tmp/";
+    private static final String OUTPUT_DIR = "res/";
 
     public static void main(String[] args) throws Exception{
 
@@ -24,6 +24,8 @@ public class Main {
                 BufferedImage bim = pdfRenderer.renderImageWithDPI(page, 300, ImageType.RGB);
                 String fileName = OUTPUT_DIR + "image-" + page + ".png";
                 ImageIOUtil.writeImage(bim, fileName, 300);
+
+                System.out.println("Printed page " + page);
             }
             document.close();
         } catch (IOException e){
