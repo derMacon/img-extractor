@@ -20,8 +20,14 @@ import java.util.List;
  */
 public class Organizer {
 
+    /**
+     * Default output directory
+     */
     public static String OUTPUT_DIR = "out/img/";
 
+    /**
+     * Default output resolution of the images (in dots per inch)
+     */
     public static int DEFAULT_DPI = 300;
 
     /**
@@ -33,10 +39,18 @@ public class Organizer {
      * Constructor setting the path for the pdf document that will be processed to the list of images.
      * @param path path to the pdf document
      */
-    public Organizer(String path) {
+    public Organizer(File doc) {
         this.images = new ArrayList<>();
         initOutputDir(OUTPUT_DIR);
-        initImages(path);
+        initImages(doc);
+    }
+
+    /**
+     * Generates a new output directory if the directory with the specified path is non existent
+     * @param path path to the output directory
+     */
+    private void initOutputDir(String path) {
+        // todo implementation
     }
 
     /**
@@ -46,15 +60,8 @@ public class Organizer {
      */
     public boolean copyToClipboard(Integer pageNum) {
         if(null != pageNum && 1 <= pageNum && this.images.size() >= pageNum) {
-            /* todo implementation
-                1. updateImages
-                2. getCurrImage
-                3. resizeImage
-                4. copyImageToClipboard
-             */
             System.out.println(this.images.get(pageNum).getName());
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            // todo path to img
             ImageIcon icon = new ImageIcon(this.images.get(pageNum).getPath(), "");
 
             ClipboardImage clipboardImage = new ClipboardImage(icon.getImage());
@@ -64,24 +71,40 @@ public class Organizer {
         return true;
     }
 
-    private void initImages(String path) {
-        File doc = new File(path);
+    /**
+     * Initiates the internal list of images with either a new set of images created from scratch or overrides the
+     * current set of images if the number of images doesn't match with the available number of pdf pages.
+     * @param path path to the pdf document.
+     */
+    private void initImages(File doc) {
         // todo if directory non existent
         if(!imgCorrespondsToDoc(doc)) {
-            overrideImages(doc);
+            updatedImgDir(doc);
+            loadImages();
         }
     }
 
-    private void overrideImages(File doc) {
+    /**
+     * Updates the images on the hard drive with new images. Already existent images will not be over written. Only
+     * the remaining images which are not included in the image directory will be generated.
+     *
+     * If images will be over written each time the pdf doc was updated it would take way to long to generate the
+     * images every single time.
+     *
+     * The internal list model will not be initialized in any way -> has own init method
+     *
+     * @param doc pdf document from which the images will be extracted from
+     */
+    private void updatedImgDir(File doc) {
         try (final PDDocument document = PDDocument.load(doc)){
             PDFRenderer pdfRenderer = new PDFRenderer(document);
+            // todo set starting page num to the file count in the output directory
             for (int page = 0; page < document.getNumberOfPages(); ++page)
             {
                 BufferedImage bim = pdfRenderer.renderImageWithDPI(page, DEFAULT_DPI, ImageType.RGB);
                 String fileName = OUTPUT_DIR + doc.getName() + "-" + page + ".png";
                 ImageIOUtil.writeImage(bim, fileName, DEFAULT_DPI);
-                this.images.add(new File(fileName));
-
+//                this.images.add(new File(fileName));
                 System.out.println("Printed page " + page);
             }
             document.close();
@@ -90,6 +113,12 @@ public class Organizer {
         }
     }
 
+    /**
+     * Loads up all files in the output / image directory into the internal list of images
+     */
+    private void loadImages() {
+        // todo set internal list of images to the files in the image directory
+    }
     /**
      * Checks whether or not the internally saved image count corresponds to the page count of the document
      * @return true if the internally saved image count corresponds to the page count of the document
@@ -104,7 +133,4 @@ public class Organizer {
         }
     }
 
-    private void initOutputDir(String path) {
-        // todo implementation
-    }
 }

@@ -4,6 +4,8 @@ import logic.Organizer;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
+import java.io.File;
+
 /**
  * Class that listens for a given shortcut combination and delegates the user input to an appropriate parser.
  */
@@ -17,8 +19,12 @@ public class HookListener implements NativeKeyListener {
     private StringBuilder userInput = new StringBuilder();
     private Organizer organizer;
 
-    public HookListener(String path) {
-        this.organizer = new Organizer(path);
+    /**
+     * Constructor initializing an organizer object with a given path
+     * @param path path to the pdf document that will be converted
+     */
+    public HookListener(File doc) {
+        this.organizer = new Organizer(doc);
     }
 
     @Override
