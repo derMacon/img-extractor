@@ -17,10 +17,15 @@ public class Main extends Application {
     private static final String DEFAULT_DIR_FC = "./";
 
     private static boolean running = true;
-    private static File selectedPdf;
+    private File selectedPdf;
 
     public static void main(String[] args) {
         Application.launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        startFileChooser(primaryStage);
         System.out.println("PDFClipboardManager");
         try {
             initListener();
@@ -38,8 +43,11 @@ public class Main extends Application {
 //        } while(!userInput.equals(EXIT_KEYWORD));
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
+    /**
+     * Starts up the initial file chooser to select a pdf document that should be processed
+     * @param primaryStage stage to show the file chooser on
+     */
+    private void startFileChooser(Stage primaryStage) {
         final FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
         fileChooser.setInitialDirectory(new File(DEFAULT_DIR_FC));
@@ -58,7 +66,7 @@ public class Main extends Application {
      * Initializes the native hook listener to make it possible to listen for the key combinations to load up the
      * clipboard with an image.
      */
-    private static void initListener() throws NativeHookException {
+    private void initListener() throws NativeHookException {
         Logger l = Logger.getLogger(GlobalScreen.class.getPackage().getName());
         l.setLevel(Level.OFF);
 

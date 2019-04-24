@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,6 +21,8 @@ import java.util.List;
  */
 public class Organizer {
 
+    private static final int DEFAULT_WIDTH = 930;
+    private static final int DEFAULT_HEIGHT = 650;
     /**
      * Default output directory
      */
@@ -37,7 +40,7 @@ public class Organizer {
 
     /**
      * Constructor setting the path for the pdf document that will be processed to the list of images.
-     * @param path path to the pdf document
+     * @param doc pdf document to process
      */
     public Organizer(File doc) {
         this.images = new ArrayList<>();
@@ -50,7 +53,10 @@ public class Organizer {
      * @param path path to the output directory
      */
     private void initOutputDir(String path) {
-        // todo implementation
+        if(!new File(path).isDirectory()) {
+            System.out.println("Created new directory: " + path);
+            new File(path).mkdir();
+        }
     }
 
     /**
@@ -74,10 +80,10 @@ public class Organizer {
     /**
      * Initiates the internal list of images with either a new set of images created from scratch or overrides the
      * current set of images if the number of images doesn't match with the available number of pdf pages.
-     * @param path path to the pdf document.
+     * @param doc pdf document to process
      */
     private void initImages(File doc) {
-        // todo if directory non existent
+        loadImages();
         if(!imgCorrespondsToDoc(doc)) {
             updatedImgDir(doc);
             loadImages();
@@ -117,7 +123,10 @@ public class Organizer {
      * Loads up all files in the output / image directory into the internal list of images
      */
     private void loadImages() {
-        // todo set internal list of images to the files in the image directory
+        this.images = Arrays.asList(new File(OUTPUT_DIR).listFiles());
+        for(File currImg : this.images) {
+            ImageResizer.resizeImage(currImg.getPath(), currImg.getPath(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        }
     }
     /**
      * Checks whether or not the internally saved image count corresponds to the page count of the document
