@@ -110,7 +110,6 @@ public class Organizer {
                 BufferedImage bim = pdfRenderer.renderImageWithDPI(page, DEFAULT_DPI, ImageType.RGB);
                 String fileName = OUTPUT_DIR + doc.getName() + "-" + page + ".png";
                 ImageIOUtil.writeImage(bim, fileName, DEFAULT_DPI);
-//                this.images.add(new File(fileName));
                 System.out.println("Printed page " + page);
             }
             document.close();

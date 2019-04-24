@@ -26,7 +26,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         startFileChooser(primaryStage);
-        System.out.println("PDFClipboardManager");
+        System.out.println("PDFClipboardManager: " + this.selectedPdf);
         try {
             initListener();
         } catch (NativeHookException e) {
