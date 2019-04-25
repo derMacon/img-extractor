@@ -10,3 +10,9 @@ The prgram will be useful when working with anki droid so that you don't have to
 * Resize image: https://deano.me/2012/02/java-resize-an-image-keeping-the-proportions-correct/
 * Pdf box Framework - Apache: https://pdfbox.apache.org/
 
+### Todo
+* init output directory
+* start file chooser at beginning
+* load up internal image list with file from output dir
+* modify the image updater to only take new images
+
