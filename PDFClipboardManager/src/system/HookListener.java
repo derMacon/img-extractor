@@ -21,7 +21,7 @@ public class HookListener implements NativeKeyListener {
 
     /**
      * Constructor initializing an organizer object with a given path
-     * @param path path to the pdf document that will be converted
+     * @param doc pdf document that will be converted
      */
     public HookListener(File doc) {
         this.organizer = new Organizer(doc);

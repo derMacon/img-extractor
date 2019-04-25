@@ -26,7 +26,9 @@ public class Organizer {
     /**
      * Default output directory
      */
-    public static String OUTPUT_DIR = "out/img/";
+    public static String OUTPUT_DIR_TEMPLATE = "%s" + File.separator + "img" + File.separator;
+
+    private String outputDir = null;
 
     /**
      * Default output resolution of the images (in dots per inch)
@@ -44,7 +46,10 @@ public class Organizer {
      */
     public Organizer(File doc) {
         this.images = new ArrayList<>();
-        initOutputDir(OUTPUT_DIR);
+//        System.out.println(String.format(OUTPUT_DIR_TEMPLATE, doc.getParent()));
+        outputDir = String.format(OUTPUT_DIR_TEMPLATE, doc.getParent());
+        initOutputDir(outputDir);
+//        initOutputDir(OUTPUT_DIR_TEMPLATE);
         initImages(doc);
     }
 
@@ -108,7 +113,7 @@ public class Organizer {
             for (int page = 0; page < document.getNumberOfPages(); ++page)
             {
                 BufferedImage bim = pdfRenderer.renderImageWithDPI(page, DEFAULT_DPI, ImageType.RGB);
-                String fileName = OUTPUT_DIR + doc.getName() + "-" + page + ".png";
+                String fileName = this.outputDir + doc.getName() + "-" + page + ".png";
                 ImageIOUtil.writeImage(bim, fileName, DEFAULT_DPI);
                 System.out.println("Printed page " + page);
             }
@@ -122,7 +127,7 @@ public class Organizer {
      * Loads up all files in the output / image directory into the internal list of images
      */
     private void loadImages() {
-        this.images = Arrays.asList(new File(OUTPUT_DIR).listFiles());
+        this.images = Arrays.asList(new File(this.outputDir).listFiles());
         for(File currImg : this.images) {
             ImageResizer.resizeImage(currImg.getPath(), currImg.getPath(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
         }
