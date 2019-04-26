@@ -46,10 +46,8 @@ public class Organizer {
      */
     public Organizer(File doc) {
         this.images = new ArrayList<>();
-//        System.out.println(String.format(OUTPUT_DIR_TEMPLATE, doc.getParent()));
         outputDir = String.format(OUTPUT_DIR_TEMPLATE, doc.getParent());
         initOutputDir(outputDir);
-//        initOutputDir(OUTPUT_DIR_TEMPLATE);
         initImages(doc);
     }
 
@@ -109,15 +107,24 @@ public class Organizer {
     private void updatedImgDir(File doc) {
         try (final PDDocument document = PDDocument.load(doc)){
             PDFRenderer pdfRenderer = new PDFRenderer(document);
-            // todo set starting page num to the file count in the output directory
-            for (int page = 0; page < document.getNumberOfPages(); ++page)
+            this.images = Arrays.asList(new File(this.outputDir).listFiles());
+
+            // generate images
+            for (int page = this.images.size(); page < document.getNumberOfPages(); ++page)
             {
                 BufferedImage bim = pdfRenderer.renderImageWithDPI(page, DEFAULT_DPI, ImageType.RGB);
                 String fileName = this.outputDir + doc.getName() + "-" + page + ".png";
                 ImageIOUtil.writeImage(bim, fileName, DEFAULT_DPI);
+                ImageResizer.resizeImage(fileName, fileName, DEFAULT_WIDTH, DEFAULT_HEIGHT);
                 System.out.println("Printed page " + page);
             }
-            document.close();
+//            document.close();
+
+            // resize file
+//            for(File currImg : this.images) {
+//                ImageResizer.resizeImage(currImg.getPath(), currImg.getPath(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
+//            }
+
         } catch (IOException e){
             System.err.println("Exception while trying to create pdf document - " + e);
         }
@@ -128,9 +135,6 @@ public class Organizer {
      */
     private void loadImages() {
         this.images = Arrays.asList(new File(this.outputDir).listFiles());
-        for(File currImg : this.images) {
-            ImageResizer.resizeImage(currImg.getPath(), currImg.getPath(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        }
     }
     /**
      * Checks whether or not the internally saved image count corresponds to the page count of the document

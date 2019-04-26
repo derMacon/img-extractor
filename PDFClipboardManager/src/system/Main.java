@@ -73,24 +73,5 @@ public class Main extends Application {
         }
         primaryStage.setTitle("Choose Pdf-Document");
     }
-
-    /**
-     * testing method to see files in the directory
-     * todo delete this method
-     *
-     * @param path path of the directory to show
-     */
-    private static void showNames(String path) {
-        File folder = new File(path);
-        File[] listOfFiles = folder.listFiles();
-
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                System.out.println("File " + listOfFiles[i].getName());
-            } else if (listOfFiles[i].isDirectory()) {
-                System.out.println("Directory " + listOfFiles[i].getName());
-            }
-        }
-    }
 }
 
