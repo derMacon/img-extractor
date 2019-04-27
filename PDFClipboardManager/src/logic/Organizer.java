@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -118,13 +120,6 @@ public class Organizer {
                 ImageResizer.resizeImage(fileName, fileName, DEFAULT_WIDTH, DEFAULT_HEIGHT);
                 System.out.println("Printed page " + page);
             }
-//            document.close();
-
-            // resize file
-//            for(File currImg : this.images) {
-//                ImageResizer.resizeImage(currImg.getPath(), currImg.getPath(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
-//            }
-
         } catch (IOException e){
             System.err.println("Exception while trying to create pdf document - " + e);
         }
@@ -135,6 +130,18 @@ public class Organizer {
      */
     private void loadImages() {
         this.images = Arrays.asList(new File(this.outputDir).listFiles());
+        Collections.sort(this.images, new Comparator<File>() {
+            @Override
+            public int compare(File o1, File o2) {
+                return getPageNum(o1) - getPageNum(o2);
+            }
+
+            private Integer getPageNum(File file) {
+                String name = file.getName();
+                String pageNum = name.substring(name.lastIndexOf("-") + 1, name.indexOf(".png"));
+                return Integer.parseInt(pageNum);
+            }
+        });
     }
     /**
      * Checks whether or not the internally saved image count corresponds to the page count of the document
