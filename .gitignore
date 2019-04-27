@@ -2,3 +2,5 @@
 **/out/
 *.iml
 **/META-INF/
+**/img/
+**/.history

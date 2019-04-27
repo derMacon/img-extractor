@@ -11,7 +11,7 @@ import java.io.File;
  */
 public class HookListener implements NativeKeyListener {
 
-    private static final int F8_RAW_CODE = 119;
+    private static final int F7_RAW_CODE = 118;
     private static final int ZERO_RAW_CODE = 48;
     private static final int NINE_RAW_CODE = 57;
 
@@ -21,7 +21,7 @@ public class HookListener implements NativeKeyListener {
 
     /**
      * Constructor initializing an organizer object with a given path
-     * @param path path to the pdf document that will be converted
+     * @param doc pdf document that will be converted
      */
     public HookListener(File doc) {
         this.organizer = new Organizer(doc);
@@ -68,7 +68,7 @@ public class HookListener implements NativeKeyListener {
                 userInput = new StringBuilder();
             }
         } else {
-            normalMode = F8_RAW_CODE == event.getRawCode();
+            normalMode = F7_RAW_CODE == event.getRawCode();
         }
         return output;
     }

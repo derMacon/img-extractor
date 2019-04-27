@@ -6,8 +6,6 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
@@ -72,8 +70,6 @@ public class ImageResizer {
 			ImageIO.write(resizedImage, "png", new File(destImg));
 
 		} catch (IOException ex) {
-//			Logger.getLogger(NewClass.class.getName()).log(Level.SEVERE, null, ex);
-//			return false;
             ex.printStackTrace();
 		}
 

@@ -6,41 +6,115 @@ import javafx.stage.Stage;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main extends Application {
 
-    private final static String EXIT_KEYWORD = "exit";
+    private static final String EXIT_KEYWORD = "exit";
+    private static final String IMPORT_KEYWORD = "imp";
     private static final String DEFAULT_DIR_FC = "./";
+    private static final String USAGE = "usage\n" +
+            "\t- EXIT to exit the program\n" +
+            "\t- IMP  to import a new pdf file\n";
+    private static final File HISTORY = new File("./.history");
 
-    private static boolean running = true;
     private File selectedPdf;
 
+    /**
+     * Main method calling the file chooser
+     * @param args command line args
+     */
     public static void main(String[] args) {
         Application.launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        startFileChooser(primaryStage);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(HISTORY.getPath());
+        refreshSelectedFile(primaryStage);
+
         System.out.println("PDFClipboardManager: " + this.selectedPdf);
-        try {
-            initListener();
-        } catch (NativeHookException e) {
-            System.out.println("Error: Not possible to create system wide hook");
-            e.printStackTrace();
+
+        HookRunner runner = new HookRunner(this.selectedPdf);
+        Thread thread = new Thread(runner);
+        thread.start();
+
+        String userInput = null;
+        while (this.selectedPdf != null && !EXIT_KEYWORD.equals(userInput)) {
+            System.out.print(USAGE + "user input: ");
+            userInput = scanner.next().toLowerCase();
+            if(userInput.equals(IMPORT_KEYWORD)) {
+                startFileChooser(primaryStage);
+            }
         }
 
-        // Not working currently -> todo launch initListener in seperate Thread
-//        Scanner scanner = new Scanner(System.in);
-//        String userInput;
-//        do {
-//            System.out.print("Type 'exit' to terminate the program: ");
-//            userInput = scanner.next();
-//        } while(!userInput.equals(EXIT_KEYWORD));
+        runner.stop();
+        thread.join();
+        setHistoryFile();
+        System.out.println("User terminated the programm");
+        System.exit(0);
+    }
+
+    /**
+     * Asks the user if he wants to load up the last used file specified in the history file.
+     */
+    private void refreshSelectedFile(Stage primaryStage) {
+        Scanner scanner = new Scanner(System.in);
+        String userInput = null;
+        if(HISTORY.exists()) {
+            setSelectedPdf();
+            System.out.print("Do you want to:\n1. reload the following file: " + this.selectedPdf.getName()
+                    + "\n2. select a new one\nuser input: ");
+            userInput = scanner.next().toLowerCase();
+        }
+        if(null == userInput || userInput.equals("2") || userInput.equals("2.")) {
+            startFileChooser(primaryStage);
+        }
+    }
+
+    /**
+     * Writes the current selected pdf document into the history file to load up instantly next time the programm
+     * will be started.
+     */
+    private void setHistoryFile() {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(HISTORY));
+            writer.write(this.selectedPdf.getPath());
+
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Could not write the history file");
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Reads the HISTORY .txt file which contains only one path to the pdf-document which was opened the last time
+     * the program was running.
+     */
+    private void setSelectedPdf() {
+        BufferedReader brTest = null;
+        try {
+            brTest = new BufferedReader(new FileReader(HISTORY));
+            this.selectedPdf = new File(brTest.readLine());
+        } catch (FileNotFoundException e) {
+            System.out.println("Could not read history file");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Could not read history file");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -56,50 +130,10 @@ public class Main extends Application {
             System.out.println("User selected file: " + file.getName());
             selectedPdf = file;
         } else {
-            System.out.println("User has not selected a valid pdf document");
+            System.out.println("User has not selected a valid pdf document, program terminated.");
             System.exit(0);
         }
         primaryStage.setTitle("Choose Pdf-Document");
-    }
-
-    /**
-     * Initializes the native hook listener to make it possible to listen for the key combinations to load up the
-     * clipboard with an image.
-     */
-    private void initListener() throws NativeHookException {
-        Logger l = Logger.getLogger(GlobalScreen.class.getPackage().getName());
-        l.setLevel(Level.OFF);
-
-        GlobalScreen.registerNativeHook();
-        HookListener hookListener = new HookListener(selectedPdf);
-        GlobalScreen.addNativeKeyListener(hookListener);
-        while (running) {
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        GlobalScreen.unregisterNativeHook();
-    }
-
-    /**
-     * testing method to see files in the directory
-     * todo delete this method
-     *
-     * @param path path of the directory to show
-     */
-    private static void showNames(String path) {
-        File folder = new File(path);
-        File[] listOfFiles = folder.listFiles();
-
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                System.out.println("File " + listOfFiles[i].getName());
-            } else if (listOfFiles[i].isDirectory()) {
-                System.out.println("Directory " + listOfFiles[i].getName());
-            }
-        }
     }
 }
 

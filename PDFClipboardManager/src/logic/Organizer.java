@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -26,7 +28,9 @@ public class Organizer {
     /**
      * Default output directory
      */
-    public static String OUTPUT_DIR = "out/img/";
+    public static String OUTPUT_DIR_TEMPLATE = "%s" + File.separator + "%s_img" + File.separator;
+
+    private String outputDir = null;
 
     /**
      * Default output resolution of the images (in dots per inch)
@@ -44,7 +48,10 @@ public class Organizer {
      */
     public Organizer(File doc) {
         this.images = new ArrayList<>();
-        initOutputDir(OUTPUT_DIR);
+        String wholeFileName = doc.getName();
+        outputDir = String.format(OUTPUT_DIR_TEMPLATE, doc.getParent(), wholeFileName.substring(0,
+                wholeFileName.lastIndexOf(".")));
+        initOutputDir(outputDir);
         initImages(doc);
     }
 
@@ -104,15 +111,19 @@ public class Organizer {
     private void updatedImgDir(File doc) {
         try (final PDDocument document = PDDocument.load(doc)){
             PDFRenderer pdfRenderer = new PDFRenderer(document);
-            // todo set starting page num to the file count in the output directory
-            for (int page = 0; page < document.getNumberOfPages(); ++page)
+            this.images = Arrays.asList(new File(this.outputDir).listFiles());
+
+            // generate images
+            for (int page = this.images.size(); page < document.getNumberOfPages(); ++page)
             {
                 BufferedImage bim = pdfRenderer.renderImageWithDPI(page, DEFAULT_DPI, ImageType.RGB);
-                String fileName = OUTPUT_DIR + doc.getName() + "-" + page + ".png";
+                String fileName = this.outputDir + doc.getName() + "-" + page + ".png";
                 ImageIOUtil.writeImage(bim, fileName, DEFAULT_DPI);
+                ImageResizer.resizeImage(fileName, fileName, DEFAULT_WIDTH, DEFAULT_HEIGHT);
                 System.out.println("Printed page " + page);
             }
-            document.close();
+
+            System.out.println("Generated all images. Please restart the program");
         } catch (IOException e){
             System.err.println("Exception while trying to create pdf document - " + e);
         }
@@ -122,11 +133,21 @@ public class Organizer {
      * Loads up all files in the output / image directory into the internal list of images
      */
     private void loadImages() {
-        this.images = Arrays.asList(new File(OUTPUT_DIR).listFiles());
-        for(File currImg : this.images) {
-            ImageResizer.resizeImage(currImg.getPath(), currImg.getPath(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        }
+        this.images = Arrays.asList(new File(this.outputDir).listFiles());
+        Collections.sort(this.images, new Comparator<File>() {
+            @Override
+            public int compare(File o1, File o2) {
+                return getPageNum(o1) - getPageNum(o2);
+            }
+
+            private Integer getPageNum(File file) {
+                String name = file.getName();
+                String pageNum = name.substring(name.lastIndexOf("-") + 1, name.indexOf(".png"));
+                return Integer.parseInt(pageNum);
+            }
+        });
     }
+
     /**
      * Checks whether or not the internally saved image count corresponds to the page count of the document
      * @return true if the internally saved image count corresponds to the page count of the document
