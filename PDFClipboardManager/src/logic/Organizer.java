@@ -28,7 +28,7 @@ public class Organizer {
     /**
      * Default output directory
      */
-    public static String OUTPUT_DIR_TEMPLATE = "%s" + File.separator + "img" + File.separator;
+    public static String OUTPUT_DIR_TEMPLATE = "%s" + File.separator + "%s_img" + File.separator;
 
     private String outputDir = null;
 
@@ -48,7 +48,10 @@ public class Organizer {
      */
     public Organizer(File doc) {
         this.images = new ArrayList<>();
-        outputDir = String.format(OUTPUT_DIR_TEMPLATE, doc.getParent());
+        String wholeFileName = doc.getName();
+        outputDir = String.format(OUTPUT_DIR_TEMPLATE, doc.getParent(), wholeFileName.substring(0,
+                wholeFileName.lastIndexOf(".")));
+//        System.out.println(outputDir);
         initOutputDir(outputDir);
         initImages(doc);
     }
