@@ -51,7 +51,6 @@ public class Organizer {
         String wholeFileName = doc.getName();
         outputDir = String.format(OUTPUT_DIR_TEMPLATE, doc.getParent(), wholeFileName.substring(0,
                 wholeFileName.lastIndexOf(".")));
-//        System.out.println(outputDir);
         initOutputDir(outputDir);
         initImages(doc);
     }
@@ -123,6 +122,8 @@ public class Organizer {
                 ImageResizer.resizeImage(fileName, fileName, DEFAULT_WIDTH, DEFAULT_HEIGHT);
                 System.out.println("Printed page " + page);
             }
+
+            System.out.println("Generated all images. Please restart the program");
         } catch (IOException e){
             System.err.println("Exception while trying to create pdf document - " + e);
         }
@@ -146,6 +147,7 @@ public class Organizer {
             }
         });
     }
+
     /**
      * Checks whether or not the internally saved image count corresponds to the page count of the document
      * @return true if the internally saved image count corresponds to the page count of the document
