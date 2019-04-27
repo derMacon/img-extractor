@@ -1,8 +1,8 @@
 # PDFToImage
 
-Programs runs in the background but can be accessed via shortcut. It copies a specified page of a given pdf document to the systems clipboard. 
+Programs runs in the background but can be accessed via shortcuts. It copies a specified page of a given pdf document to the systems clipboard. 
 
-The prgram will be useful when working with anki droid so that you don't have to screenshot each page you want to make a flashcard for. 
+The prgram will be useful when working with anki droid so that you don't have to screenshot each page you want to make a flashcard for. Now you can just type `f7` + the pagenumber and the page will be copied to your clipboard so that you can just paste it anywhere you want.
 
 ### Credits
 * Image to clipboard: http://omtlab.com/java-store-image-in-clipboard/
@@ -11,8 +11,5 @@ The prgram will be useful when working with anki droid so that you don't have to
 * Pdf box Framework - Apache: https://pdfbox.apache.org/
 
 ### Todo
-* init output directory
-* start file chooser at beginning
-* load up internal image list with file from output dir
-* modify the image updater to only take new images
+* Review the resizing method -> seems a bit odd
 
