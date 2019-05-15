@@ -1,6 +1,6 @@
 # PDFToImage
 
-Programs runs in the background but can be accessed via shortcuts. It copies a specified page of a given pdf document to the systems clipboard. 
+Program runs in the background but can be accessed via shortcuts. It copies a specified page of a given pdf document to the systems clipboard. 
 
 The prgram will be useful when working with anki droid so that you don't have to screenshot each page you want to make a flashcard for. Now you can just type `f7` + the pagenumber and the page will be copied to your clipboard so that you can just paste it anywhere you want.
 
