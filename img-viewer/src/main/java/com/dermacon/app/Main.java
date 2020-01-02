@@ -1,16 +1,16 @@
 package com.dermacon.app;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
 public class Main {
 
-    public static void main(String[] args) {
-        System.out.println("pdf-to-image v2");
 
+    public static void main(String[] args) {
+        FileHandler fileHandler = new FileHandler(args);
+        TerminalUI ui = new TerminalUI(fileHandler.getBookmarks());
+        Bookmark selection = ui.waitForUserSelection();
+
+        FxmlApp viewer = new FxmlApp();
+        viewer.setBookmark(selection);
+        viewer.main(args);
     }
 
 }
