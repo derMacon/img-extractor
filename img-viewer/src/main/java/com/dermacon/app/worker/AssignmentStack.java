@@ -5,28 +5,33 @@ import java.util.LinkedList;
 class AssignmentStack {
 
     private static final int PAGE_INTERVALL = 2; //todo
-    private LinkedList<Integer> assignments = new LinkedList<>();
-    private LinkedList<Integer> renderedImages = new LinkedList<>();
-    private int pageCnt;
+    private LinkedList<Assignment> assignments = new LinkedList<>();
+    private LinkedList<Assignment> renderedImages = new LinkedList<>();
+//    private int pageCnt;
 
-    public AssignmentStack(int pageCnt) {
-        this.pageCnt = pageCnt;
-    }
+//    public AssignmentStack(int pageCnt) {
+//        this.pageCnt = pageCnt;
+//    }
 
-    public synchronized void addPage(int pageNum) {
-        if (isValidPage(pageNum)) {
-            assignments.add(0, pageNum);
+    /**
+     * Adds a new (valid) assignment to the stack and generates the previous
+     * / next page assignment and also adds it to the stack.
+     * @param assignment
+     */
+    public synchronized void addAssignment(Assignment assignment) {
+        if (assignment != null) {
+            assignments.add(0, assignment);
 
-            int next, prev;
+            Assignment next, prev;
             for (int i = 1; i < PAGE_INTERVALL; i++) {
-                next = pageNum + i;
-                prev = pageNum - i;
+                next = assignment.next();
+                prev = assignment.prev();
 
-                if (isValidPage(prev)) {
+                if (next != null) {
                     assignments.add(i, prev);
                 }
 
-                if (isValidPage(next)) {
+                if (prev != null) {
                     assignments.add(i, next);
                 }
 
@@ -36,11 +41,7 @@ class AssignmentStack {
         this.notifyAll();
     }
 
-    private boolean isValidPage(int pageNum) {
-        return pageNum > 0 && pageNum <= pageCnt;
-    }
-
-    public synchronized Integer getAssignment() {
+    public synchronized Assignment getAssignment() {
 
         while (assignments.isEmpty() && !Thread.currentThread().isInterrupted()) {
             try {
@@ -50,7 +51,7 @@ class AssignmentStack {
             }
         }
 
-        Integer assignment = null;
+        Assignment assignment = null;
         if (!Thread.currentThread().isInterrupted()) {
             assignment = assignments.remove(0);
 
