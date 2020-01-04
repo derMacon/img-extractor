@@ -1,5 +1,13 @@
 package com.dermacon.app.worker;
 
+import com.dermacon.app.Bookmark;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.ImageType;
+import org.apache.pdfbox.rendering.PDFRenderer;
+import org.apache.pdfbox.tools.imageio.ImageIOUtil;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 class Worker implements Runnable {
