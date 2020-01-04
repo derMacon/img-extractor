@@ -7,11 +7,11 @@ class AssignmentStack {
     private static final int PAGE_INTERVALL = 2; //todo
     private LinkedList<Assignment> assignments = new LinkedList<>();
     private LinkedList<Assignment> renderedImages = new LinkedList<>();
-//    private int pageCnt;
+    private int pageCnt;
 
-//    public AssignmentStack(int pageCnt) {
-//        this.pageCnt = pageCnt;
-//    }
+    public AssignmentStack(int pageCnt) {
+        this.pageCnt = pageCnt;
+    }
 
     /**
      * Adds a new (valid) assignment to the stack and generates the previous
@@ -27,11 +27,11 @@ class AssignmentStack {
                 next = assignment.next();
                 prev = assignment.prev();
 
-                if (next != null) {
+                if (isValidAssignment(prev)) {
                     assignments.add(i, prev);
                 }
 
-                if (prev != null) {
+                if (isValidAssignment(next)) {
                     assignments.add(i, next);
                 }
 
@@ -39,6 +39,11 @@ class AssignmentStack {
         }
 
         this.notifyAll();
+    }
+
+    private boolean isValidAssignment(Assignment assignment) {
+        int pageNum = assignment.getBookmark().getPageNum();
+        return pageNum > 0 && pageNum <= pageCnt;
     }
 
     public synchronized Assignment getAssignment() {

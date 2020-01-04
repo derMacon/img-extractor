@@ -1,5 +1,6 @@
 package com.dermacon.app.worker;
 
+import com.dermacon.app.Bookmark;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
@@ -39,26 +40,28 @@ class Worker implements Runnable {
      * @throws IOException Exception that will be thrown if the selected pdf document cannot be read
      */
     private void render() throws IOException {
-//        System.out.println(Thread.currentThread().getName() + " processes page " + pageNum);
-        File file = this.assignment.getFile();
-        PDDocument pdf = PDDocument.load(file);
-        PDFRenderer pdfRenderer = new PDFRenderer(pdf);
-        BufferedImage bim =
-                pdfRenderer.renderImageWithDPI(assignment.getPageNum() - 1,
-                assignment.getDefaultDpi(),
-                ImageType.RGB);
-        File currPageImg = assignment.getOutputDir();
-
-        ImageIOUtil.writeImage(bim,
-                currPageImg.getPath(),
-                assignment.getDefaultDpi()
-        );
-
-        ImageResizer.resizeImage(
-                currPageImg.getPath(),
-                currPageImg.getPath(),
-                assignment.getDefaultWidth(),
-                assignment.getDefaultHeight()
-        );
+        System.out.println(Thread.currentThread().getName() + " processes " +
+                "page " + assignment.getBookmark().getPageNum());
+//        Bookmark bm = assignment.getBookmark();
+//        File file = bm.getFile();
+//        PDDocument pdf = PDDocument.load(file);
+//        PDFRenderer pdfRenderer = new PDFRenderer(pdf);
+//        BufferedImage bim =
+//                pdfRenderer.renderImageWithDPI(bm.getPageNum() - 1,
+//                assignment.getDefaultDpi(),
+//                ImageType.RGB);
+//        File currPageImg = assignment.getCurrImgPath();
+//
+//        ImageIOUtil.writeImage(bim,
+//                currPageImg.getPath(),
+//                assignment.getDefaultDpi()
+//        );
+//
+//        ImageResizer.resizeImage(
+//                currPageImg.getPath(),
+//                currPageImg.getPath(),
+//                assignment.getDefaultWidth(),
+//                assignment.getDefaultHeight()
+//        );
     }
 }

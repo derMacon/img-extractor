@@ -24,4 +24,11 @@ public class FileHandler {
     public List<Bookmark> getBookmarks() {
         return bookmarks;
     }
+
+    public Bookmark openNewFile() {
+        // todo
+        System.out.println("todo open file explorer");
+        return null;
+    }
+
 }

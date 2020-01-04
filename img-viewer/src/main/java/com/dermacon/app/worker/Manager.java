@@ -17,9 +17,10 @@ public class Manager implements Renderer {
     private final int pageCnt;
 
     public Manager(Bookmark bookmark) throws IOException {
-        this.bookmark = bookmark;
-        assignmentStack = new AssignmentStack();
         pageCnt = PDDocument.load(bookmark.getFile()).getNumberOfPages();
+
+        this.bookmark = bookmark;
+        assignmentStack = new AssignmentStack(pageCnt);
 
         Thread thread;
         for (int i = 0; i < THREAD_CNT; i++) {
@@ -32,13 +33,8 @@ public class Manager implements Renderer {
 
     @Override
     public void renderPageIntervall() {
-        Assignment newAssignment = new Assignment.AssignmentBuilder()
-                .setPageNum(bookmark.getPageNum())
-                .setPageCnt(pageCnt)
-                .setPdf(bookmark.getFile())
-                .setOutputDir(bookmark.getCurrImgPath())
-                .build();
-        assignmentStack.addAssignment(bookmark.getPageNum());
+        Assignment assignment = new Assignment(bookmark);
+        assignmentStack.addAssignment(assignment);
     }
 
     @Override

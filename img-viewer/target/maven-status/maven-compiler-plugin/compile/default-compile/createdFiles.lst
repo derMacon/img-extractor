@@ -1,2 +1,12 @@
 com/dermacon/app/FxmlApp.class
 com/dermacon/app/Main.class
+com/dermacon/app/TerminalUI.class
+com/dermacon/app/FileHandler.class
+com/dermacon/app/worker/Manager.class
+com/dermacon/app/MockBookmark.class
+com/dermacon/app/worker/Worker.class
+com/dermacon/app/worker/AssignmentStack.class
+com/dermacon/app/worker/Renderer.class
+com/dermacon/app/Bookmark.class
+com/dermacon/app/worker/Assignment.class
+com/dermacon/app/worker/ImageResizer.class

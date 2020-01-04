@@ -1,5 +1,7 @@
 package com.dermacon.app.worker;
 
+import com.dermacon.app.Bookmark;
+
 import java.io.File;
 
 public class Assignment {
@@ -15,65 +17,20 @@ public class Assignment {
      */
     private static int DEFAULT_DPI = 200;
 
-    private final Integer pageNum;
-    private final Integer pageCnt;
-    private final File pdf;
-    private final File outputDir;
+    private final Bookmark bookmark;
 
-    public static class AssignmentBuilder {
-
-        private Integer pageNum;
-        private Integer pageCnt;
-        private File pdf;
-        private File outputDir;
-
-        public AssignmentBuilder setPageNum(Integer pageNum) {
-            this.pageNum = pageNum;
-            return this;
-        }
-
-        public AssignmentBuilder setPageCnt(Integer pageCnt) {
-            this.pageCnt = pageCnt;
-            return this;
-        }
-
-        public AssignmentBuilder setPdf(File pdf) {
-            this.pdf = pdf;
-            return this;
-        }
-
-        public AssignmentBuilder setOutputDir(File outputDir) {
-            this.outputDir = outputDir;
-            return this;
-        }
-
-        public Assignment build() {
-            return new Assignment(this);
-        }
-
+    public Assignment(Bookmark bookmark) {
+        this.bookmark = bookmark;
     }
 
-    private Assignment(AssignmentBuilder builder) {
-        pageNum = builder.pageNum;
-        pageCnt = builder.pageCnt;
-        pdf = builder.pdf;
-        outputDir = builder.outputDir;
-        assert pageNum != null;
-        assert pageCnt != null;
-        assert pdf != null;
-        assert outputDir != null;
+    public File getCurrImgPath() {
+        return new File(bookmark.getImgPath()
+                + removeExtension(bookmark.getFile().getName()) + "_"
+                + (bookmark.getPageNum() + ".png"));
     }
 
-    public int getPageNum() {
-        return pageNum;
-    }
-
-    public File getFile() {
-        return pdf;
-    }
-
-    public File getOutputDir() {
-        return outputDir;
+    public Bookmark getBookmark() {
+        return bookmark;
     }
 
     public static int getDefaultWidth() {
@@ -89,35 +46,29 @@ public class Assignment {
     }
 
     /**
-     * Creates a new Bookmark assignment with the succeeding page
-     * @return Assignment that will be rendered, null if the next page is out
-     * of bound
+     * Removes the extension from a given full qualified file.
+     * @param fullFileName full qualified file name
+     * @return name without extension
      */
-    public Assignment next() {
-        int nextPageNum = pageNum + 1;
-        if (nextPageNum > pageCnt) {
-            return null;
+    protected static String removeExtension(String fullFileName) {
+        int idx = fullFileName.lastIndexOf('.');
+        if (idx > 0) {
+            fullFileName = fullFileName.substring(0, idx);
         }
-        return new AssignmentBuilder().setPageNum(nextPageNum)
-                .setPageCnt(pageCnt)
-                .setPdf(pdf)
-                .setOutputDir(outputDir)
-                .build();
+        return fullFileName;
     }
 
-    /**
-     * See next-method javadoc
-     * @return
-     */
     public Assignment prev() {
-        int nextPageNum = pageNum - 1;
-        if (nextPageNum < 1) {
-            return null;
-        }
-        return new AssignmentBuilder().setPageNum(nextPageNum)
-                .setPageCnt(pageCnt)
-                .setPdf(pdf)
-                .setOutputDir(outputDir)
-                .build();
+        int prevPageNum = bookmark.getPageNum() - 1;
+        Bookmark newBookmark = bookmark.copy();
+        newBookmark.setCurrPageIdx(prevPageNum);
+        return new Assignment(newBookmark);
+    }
+
+    public Assignment next() {
+        int nextPageNum = bookmark.getPageNum() + 1;
+        Bookmark newBookmark = bookmark.copy();
+        newBookmark.setCurrPageIdx(nextPageNum);
+        return new Assignment(newBookmark);
     }
 }
