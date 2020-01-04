@@ -72,7 +72,7 @@
             <manifest>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
-              <mainClass>com.dermacon.app.Main</mainClass>
+              <mainClass>com.dermacon.app.FxmlApp</mainClass>
             </manifest>
           </archive>
         </configuration>
