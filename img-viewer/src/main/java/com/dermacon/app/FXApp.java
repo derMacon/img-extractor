@@ -29,11 +29,10 @@ public class FXApp extends Application {
     }
 
     public static void main(String[] args) {
-        FileHandler fileHandler = new FileHandler(args);
-        TerminalUI ui = new TerminalUI(fileHandler.getBookmarks(), fileHandler);
-        Bookmark user_select = ui.waitForUserSelection();
-
         try {
+            FileHandler fileHandler = new FileHandler(args);
+            TerminalUI ui = new TerminalUI(fileHandler.getBookmarks(), fileHandler);
+            Bookmark user_select = ui.waitForUserSelection();
             Renderer renderer = new Manager(user_select);
         } catch (IOException e) {
 //             todo
