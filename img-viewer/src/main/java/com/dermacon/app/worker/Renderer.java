@@ -20,6 +20,9 @@ public interface Renderer {
      */
     public void renderPageIntervall();
 
+    /**
+     * Stops the whole rendering process
+     */
     public void stop();
 
 }

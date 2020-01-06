@@ -1,7 +1,7 @@
 package com.dermacon.app.worker;
 
-import com.dermacon.app.Bookmark;
-import com.dermacon.app.PropertyValues;
+import com.dermacon.app.dataStructures.Bookmark;
+import com.dermacon.app.dataStructures.PropertyValues;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
@@ -11,12 +11,16 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Worker class rendering the actual images that will be displayed / copied
+ * to the clipboard.
+ */
 class Worker implements Runnable {
 
     /**
-     * Assignment holding the actual bookmark instance that should be rendered
+     * Assignment stack instance holding a thread safe bookmark stack
      */
-    private final Assignment assignment;
+    private final AssignmentStack stack;
 
     /**
      * Property values distributed by the .config file. Holds information
@@ -24,8 +28,8 @@ class Worker implements Runnable {
      */
     private final PropertyValues props;
 
-    public Worker(Assignment assignment, PropertyValues props) {
-        this.assignment = assignment;
+    public Worker(AssignmentStack stack, PropertyValues props) {
+        this.stack = stack;
         this.props = props;
     }
 
@@ -51,9 +55,10 @@ class Worker implements Runnable {
      * @throws IOException Exception that will be thrown if the selected pdf document cannot be read
      */
     private void render() throws IOException {
-        System.out.println(Thread.currentThread().getName() + " processes " +
-                "page " + assignment.getBookmark().getPageNum());
+        Assignment assignment = stack.getAssignment();
         Bookmark bm = assignment.getBookmark();
+        System.out.println(Thread.currentThread().getName() + " processes " +
+                "page " + bm.getPageNum());
         File file = bm.getFile();
         PDDocument pdf = PDDocument.load(file);
         PDFRenderer pdfRenderer = new PDFRenderer(pdf);
@@ -61,7 +66,7 @@ class Worker implements Runnable {
                 pdfRenderer.renderImageWithDPI(bm.getPageNum() - 1,
                 props.getDpi(),
                 ImageType.RGB);
-        File currPageImg = assignment.getCurrImgPath();
+        File currPageImg = assignment.translateCurrImgPath(props.getImgPath());
 
         ImageIOUtil.writeImage(bim,
                 currPageImg.getPath(),

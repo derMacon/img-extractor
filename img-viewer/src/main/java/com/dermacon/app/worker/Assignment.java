@@ -1,6 +1,6 @@
 package com.dermacon.app.worker;
 
-import com.dermacon.app.Bookmark;
+import com.dermacon.app.dataStructures.Bookmark;
 
 import java.io.File;
 
@@ -12,11 +12,18 @@ public class Assignment {
         this.bookmark = bookmark;
     }
 
-    public File getCurrImgPath() {
-        return new File(bookmark.getImgPath()
+//    public File getCurrImgPath() {
+//        return new File(bookmark.getImgPath()
+//                + removeExtension(bookmark.getFile().getName()) + "_"
+//                + (bookmark.getPageNum() + ".png"));
+//    }
+
+    public File translateCurrImgPath(String path) {
+        return new File(path
                 + removeExtension(bookmark.getFile().getName()) + "_"
                 + (bookmark.getPageNum() + ".png"));
     }
+
 
     public Bookmark getBookmark() {
         return bookmark;
