@@ -27,7 +27,6 @@ public class TerminalUI {
             + "Input: ";
 
     private static final String WARNING = "please try again: ";
-    private static final String EXIT = "exit";
     private static final char DELIMITER_CHAR = '-';
 
     private final List<Bookmark> bookmarks;
@@ -76,18 +75,17 @@ public class TerminalUI {
             bookmark = null;
         } else {
 
-            int idx = opt - 1;
-            switch (idx) {
-                case 0:
+            switch (opt) {
+                case 1:
                     System.exit(0);
                     break;
-                case 1:
+                case 2:
                     bookmark = fileHandler.openNewBookmark();
                     fileHandler.appendHistory(bookmark);
 //                    out = new MockBookmark();
                     break;
                 default:
-//            out = fileHandler.getBookmarks().get(idx);
+//            out = fileHandler.getBookmarks().get(idx - 1);
                     bookmark = new MockBookmark();
             }
 
