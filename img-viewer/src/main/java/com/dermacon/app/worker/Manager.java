@@ -1,6 +1,7 @@
 package com.dermacon.app.worker;
 
 import com.dermacon.app.Bookmark;
+import com.dermacon.app.PropertyValues;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class Manager implements Renderer {
     private final Bookmark bookmark;
     private final int pageCnt;
 
-    public Manager(Bookmark bookmark) throws IOException {
+    public Manager(Bookmark bookmark, PropertyValues props) throws IOException {
         pageCnt = PDDocument.load(bookmark.getFile()).getNumberOfPages();
 
         this.bookmark = bookmark;
@@ -24,7 +25,8 @@ public class Manager implements Renderer {
 
         Thread thread;
         for (int i = 0; i < THREAD_CNT; i++) {
-            thread = new Thread(new Worker(assignmentStack.getAssignment()));
+            thread = new Thread(new Worker(assignmentStack.getAssignment(),
+                    props));
             thread.start();
             workers.add(thread);
         }
@@ -39,7 +41,7 @@ public class Manager implements Renderer {
 
     @Override
     public void stop() {
-        for(Thread worker : workers) {
+        for (Thread worker : workers) {
             worker.interrupt();
         }
     }

@@ -29,8 +29,8 @@ public class FileHandler {
         if (!f.exists() || f.isDirectory()) {
             f = copyConfigResource();
         }
-//        props = new PropertyValues(f);
-//        System.out.println(props);
+        props = new PropertyValues(f);
+        System.out.println(props);
     }
 
     public List<Bookmark> getBookmarks() {

@@ -33,7 +33,8 @@ public class FXApp extends Application {
             FileHandler fileHandler = new FileHandler(args);
             TerminalUI ui = new TerminalUI(fileHandler.getBookmarks(), fileHandler);
             Bookmark user_select = ui.waitForUserSelection();
-            Renderer renderer = new Manager(user_select);
+//            Renderer renderer = new Manager(user_select);
+//            renderer.renderPageIntervall();
         } catch (IOException e) {
 //             todo
             e.printStackTrace();

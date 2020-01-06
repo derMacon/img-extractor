@@ -6,17 +6,6 @@ import java.io.File;
 
 public class Assignment {
 
-    // QXGA resolution -> needs at least 192 dpi
-    // aspect ratio calculator: https://www.aspectratiocalculator.com/4-3.html
-    // dpi calculator: http://dpi.lv/
-    private static final int DEFAULT_WIDTH = 2048;
-    private static final int DEFAULT_HEIGHT = 1536;
-
-    /**
-     * Default output resolution of the images (in dots per inch)
-     */
-    private static int DEFAULT_DPI = 200;
-
     private final Bookmark bookmark;
 
     public Assignment(Bookmark bookmark) {
@@ -31,18 +20,6 @@ public class Assignment {
 
     public Bookmark getBookmark() {
         return bookmark;
-    }
-
-    public static int getDefaultWidth() {
-        return DEFAULT_WIDTH;
-    }
-
-    public static int getDefaultHeight() {
-        return DEFAULT_HEIGHT;
-    }
-
-    public static int getDefaultDpi() {
-        return DEFAULT_DPI;
     }
 
     /**

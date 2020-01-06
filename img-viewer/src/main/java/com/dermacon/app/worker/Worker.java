@@ -1,13 +1,32 @@
 package com.dermacon.app.worker;
 
+import com.dermacon.app.Bookmark;
+import com.dermacon.app.PropertyValues;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.ImageType;
+import org.apache.pdfbox.rendering.PDFRenderer;
+import org.apache.pdfbox.tools.imageio.ImageIOUtil;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 class Worker implements Runnable {
 
+    /**
+     * Assignment holding the actual bookmark instance that should be rendered
+     */
     private final Assignment assignment;
 
-    public Worker(Assignment assignment) {
+    /**
+     * Property values distributed by the .config file. Holds information
+     * about the rendering size, etc.
+     */
+    private final PropertyValues props;
+
+    public Worker(Assignment assignment, PropertyValues props) {
         this.assignment = assignment;
+        this.props = props;
     }
 
     @Override
@@ -34,26 +53,26 @@ class Worker implements Runnable {
     private void render() throws IOException {
         System.out.println(Thread.currentThread().getName() + " processes " +
                 "page " + assignment.getBookmark().getPageNum());
-//        Bookmark bm = assignment.getBookmark();
-//        File file = bm.getFile();
-//        PDDocument pdf = PDDocument.load(file);
-//        PDFRenderer pdfRenderer = new PDFRenderer(pdf);
-//        BufferedImage bim =
-//                pdfRenderer.renderImageWithDPI(bm.getPageNum() - 1,
-//                assignment.getDefaultDpi(),
-//                ImageType.RGB);
-//        File currPageImg = assignment.getCurrImgPath();
-//
-//        ImageIOUtil.writeImage(bim,
-//                currPageImg.getPath(),
-//                assignment.getDefaultDpi()
-//        );
-//
-//        ImageResizer.resizeImage(
-//                currPageImg.getPath(),
-//                currPageImg.getPath(),
-//                assignment.getDefaultWidth(),
-//                assignment.getDefaultHeight()
-//        );
+        Bookmark bm = assignment.getBookmark();
+        File file = bm.getFile();
+        PDDocument pdf = PDDocument.load(file);
+        PDFRenderer pdfRenderer = new PDFRenderer(pdf);
+        BufferedImage bim =
+                pdfRenderer.renderImageWithDPI(bm.getPageNum() - 1,
+                props.getDpi(),
+                ImageType.RGB);
+        File currPageImg = assignment.getCurrImgPath();
+
+        ImageIOUtil.writeImage(bim,
+                currPageImg.getPath(),
+                props.getDpi()
+        );
+
+        ImageResizer.resizeImage(
+                currPageImg.getPath(),
+                currPageImg.getPath(),
+                props.getWidth(),
+                props.getHeight()
+        );
     }
 }
