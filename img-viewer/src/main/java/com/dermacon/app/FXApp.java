@@ -1,14 +1,15 @@
 package com.dermacon.app;
 
 import com.dermacon.app.dataStructures.Bookmark;
-import com.dermacon.app.dataStructures.MockBookmark;
+import com.dermacon.app.dataStructures.PropertyValues;
 import com.dermacon.app.fileio.FileHandler;
 import com.dermacon.app.hook.HookRunner;
 import com.dermacon.app.hook.MyListener;
-import com.dermacon.app.logik.MockTerminalUI;
+import com.dermacon.app.jfx.FXMLController;
+import com.dermacon.app.logik.Organizer;
 import com.dermacon.app.logik.TerminalUI;
 import com.dermacon.app.logik.UserInterface;
-import com.dermacon.app.worker.MockRenderer;
+import com.dermacon.app.logik.ViewerOrganizer;
 import com.dermacon.app.worker.RenderManager;
 import com.dermacon.app.worker.Renderer;
 import javafx.application.Application;
@@ -20,25 +21,29 @@ import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FXApp extends Application {
 
-    private Bookmark bookmark;
 
     private boolean running = true;
+
+    private static Bookmark bookmark;
+    private static Organizer organizer;
+    private static PropertyValues props;
 
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader =
                 new FXMLLoader(FXApp.class.getResource("viewer.fxml"));
-//        fxmlLoader.setController(new FXMLController());
+        fxmlLoader.setController(new FXMLController());
         Parent parent = fxmlLoader.load();
 
-//        FXMLController controller = fxmlLoader.getController();
-//        controller.setProjectController(this.projectController);
-//        SpringApiController.setJFXController(controller);
+        FXMLController controller = fxmlLoader.getController();
+        organizer.setFXController(controller);
+        controller.setBookmark(bookmark);
 
         Scene scene = new Scene(parent);
         stage.setScene(scene);
@@ -48,22 +53,31 @@ public class FXApp extends Application {
 
     /**
      * Main method of the whole application.
+     *
      * @param args command line args, the user may specify a separate config
      *             file other than the default config.properties.
      */
     public static void main(String[] args) {
         try {
-//            FileHandler fileHandler = new FileHandler(args);
-//            UserInterface ui = new TerminalUI(fileHandler.getBookmarks(),
-            UserInterface ui = new MockTerminalUI();
-//            fileHandler);
+            FileHandler fileHandler = new FileHandler(args);
+            props = fileHandler.getProps();
+            UserInterface ui = new TerminalUI(fileHandler.getBookmarks(),
+                    fileHandler);
 
-//            Bookmark user_select = ui.waitForUserSelection();
+            bookmark = ui.waitForUserSelection();
 
-//            Renderer renderer = new RenderManager(user_select, fileHandler.getProps());
-            Renderer renderer = new MockRenderer();
-            Thread runner = new Thread(new HookRunner(renderer));
+//            props = new MockProperties();
+//            UserInterface ui = new MockTerminalUI();
+//            bookmark = new MockBookmark();
+//            Renderer renderer = new MockRenderer();
+
+            Renderer renderer = new RenderManager(props);
+            organizer = new ViewerOrganizer(bookmark, renderer);
+            Thread runner = new Thread(new HookRunner(organizer));
             runner.start();
+
+            System.out.println("launch");
+            launch(args);
 
             ui.waitForExit();
             runner.join();
@@ -74,13 +88,11 @@ public class FXApp extends Application {
 //            Renderer renderer = new RenderManager(user_select, fileHandler.getProps());
 //            renderer.renderPageIntervall();
 
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | IOException e) {
 //             todo
             e.printStackTrace();
         }
 
-        System.out.println("launch");
-        launch(args);
     }
 
     // todo
@@ -98,10 +110,10 @@ public class FXApp extends Application {
         MyListener list = new MyListener();
         GlobalScreen.addNativeKeyListener(list);
 
-        while(running) {
+        while (running) {
             try {
                 Thread.sleep(300);
-            } catch(InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }

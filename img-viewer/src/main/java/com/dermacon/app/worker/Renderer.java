@@ -1,5 +1,7 @@
 package com.dermacon.app.worker;
 
+import com.dermacon.app.dataStructures.Bookmark;
+
 /**
  * Opens a pseudo priority queue for assignements which consists of
  * page numbers that should be rendered by the worker. The workers
@@ -10,7 +12,7 @@ package com.dermacon.app.worker;
 public interface Renderer {
 
     /**
-     * Adds the given page number (currpage in projInfo) to the beginning of the
+     * Adds the given bookmark (as an assignment) to the beginning of the
      * queue (highest priority) and adds the surrounding page numbers afterwards.
      * A constant determines how many page numbers should be rendered.
      *
@@ -18,11 +20,11 @@ public interface Renderer {
      * 1. Add page 5: queue == [5, 6, 4, 7, 3]
      * 2. Add page 8: queue == [8, 9, 7, 10, 6, 5, 6, 4, 7, 3]
      */
-    public void renderPageIntervall();
+    public void renderPageIntervall(Bookmark bookmar);
 
     /**
      * Stops the whole rendering process
      */
-    public void stop();
+    public void stop(); // todo use this method
 
 }

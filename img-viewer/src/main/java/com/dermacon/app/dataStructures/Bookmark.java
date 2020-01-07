@@ -5,6 +5,8 @@ import java.io.File;
 public class Bookmark {
 
     private final File pdf;
+
+    private File currPageImg; // todo
     private int currPageIdx;
 
     // todo builder
@@ -13,6 +15,11 @@ public class Bookmark {
         this.pdf = pdf;
         this.currPageIdx = currPageIdx;
     }
+
+    public File getCurrPageImg() {
+        return currPageImg;
+    }
+
 
     public File getFile() {
         return pdf;
@@ -24,6 +31,18 @@ public class Bookmark {
 
     public void setCurrPageIdx(int currPageIdx) {
         this.currPageIdx = currPageIdx;
+    }
+
+    public void incPageIdx() {
+        int pageCnt = 42; // todo
+        System.out.println("check / set max page cnt");
+        this.currPageIdx++;
+    }
+
+    public void decPageIdx() {
+        int pageCnt = 42; // todo
+        System.out.println("check / set max page cnt");
+        this.currPageIdx--;
     }
 
 

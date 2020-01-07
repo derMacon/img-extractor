@@ -55,29 +55,32 @@ class Worker implements Runnable {
      * @throws IOException Exception that will be thrown if the selected pdf document cannot be read
      */
     private void render() throws IOException {
+        System.out.println("render");
         Assignment assignment = stack.getAssignment();
         Bookmark bm = assignment.getBookmark();
         System.out.println(Thread.currentThread().getName() + " processes " +
                 "page " + bm.getPageNum());
-        File file = bm.getFile();
-        PDDocument pdf = PDDocument.load(file);
-        PDFRenderer pdfRenderer = new PDFRenderer(pdf);
-        BufferedImage bim =
-                pdfRenderer.renderImageWithDPI(bm.getPageNum() - 1,
-                props.getDpi(),
-                ImageType.RGB);
-        File currPageImg = assignment.translateCurrImgPath(props.getImgPath());
+//        File file = bm.getFile();
+//        PDDocument pdf = PDDocument.load(file);
+//        PDFRenderer pdfRenderer = new PDFRenderer(pdf);
+//        BufferedImage bim =
+//                pdfRenderer.renderImageWithDPI(bm.getPageNum() - 1,
+//                props.getDpi(),
+//                ImageType.RGB);
+//        File currPageImg = assignment.translateCurrImgPath(props.getImgPath());
+//
+//        ImageIOUtil.writeImage(bim,
+//                currPageImg.getPath(),
+//                props.getDpi()
+//        );
+//
+//        ImageResizer.resizeImage(
+//                currPageImg.getPath(),
+//                currPageImg.getPath(),
+//                props.getWidth(),
+//                props.getHeight()
+//        );
 
-        ImageIOUtil.writeImage(bim,
-                currPageImg.getPath(),
-                props.getDpi()
-        );
 
-        ImageResizer.resizeImage(
-                currPageImg.getPath(),
-                currPageImg.getPath(),
-                props.getWidth(),
-                props.getHeight()
-        );
     }
 }

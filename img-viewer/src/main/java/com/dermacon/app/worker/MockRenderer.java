@@ -1,9 +1,12 @@
 package com.dermacon.app.worker;
 
+import com.dermacon.app.dataStructures.Bookmark;
+
 public class MockRenderer  implements Renderer {
+
     @Override
-    public void renderPageIntervall() {
-        System.out.println("renderPageIntervall");
+    public void renderPageIntervall(Bookmark bookmar) {
+
     }
 
     @Override

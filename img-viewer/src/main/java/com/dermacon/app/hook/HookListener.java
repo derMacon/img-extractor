@@ -1,31 +1,37 @@
 package com.dermacon.app.hook;
 
 
+import com.dermacon.app.logik.Organizer;
+import com.dermacon.app.worker.Renderer;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
-
-import java.io.File;
 
 /**
  * Class that listens for a given shortcut combination and delegates the user input to an appropriate parser.
  */
 public class HookListener implements NativeKeyListener {
 
-    private static final int F7_RAW_CODE = 118;
+    private static final int PREV_COMMAND = 65478;
+    private static final int NEXT_COMMAND = 65479;
+    private static final int GOTO_COMMAND = 65480;
+
     private static final int ZERO_RAW_CODE = 48;
     private static final int NINE_RAW_CODE = 57;
 
     private boolean normalMode = false;
     private StringBuilder userInput = new StringBuilder();
 //    private Organizer organizer;
+//    private Renderer renderer;
 
-    /**
-     * Constructor initializing an organizer object with a given path
-//     * @param doc pdf document that will be converted
-     */
-//    public HookListener(File doc) {
-//        this.organizer = new Organizer(doc);
+//    public HookListener(Renderer renderer) {
+//        this.renderer = renderer;
 //    }
+
+    private Organizer organizer;
+
+    public HookListener(Organizer organizer) {
+        this.organizer = organizer;
+    }
 
     @Override
     public void nativeKeyTyped(NativeKeyEvent nativeKeyEvent) {
@@ -47,16 +53,28 @@ public class HookListener implements NativeKeyListener {
      */
     @Override
     public void nativeKeyPressed(NativeKeyEvent event) {
-        System.out.println("key pressed");
-        System.out.println(event.getKeyChar());
-        System.out.println(event);
-//        Integer pageNum = translateToPageNum(event);
-//        boolean successfulCopy = this.organizer.copyToClipboard(pageNum);
-//        printState(pageNum, successfulCopy);
+        System.out.println(event.getRawCode());
+        switch (event.getRawCode()) {
+            case PREV_COMMAND:
+                System.out.println("prev");
+                organizer.prevPage();
+                break;
+            case NEXT_COMMAND:
+                System.out.println("next");
+                organizer.nextPage();
+            case GOTO_COMMAND:
+                System.out.println("goto page");
+                // todo
+//                Integer pageNum = translateToPageNum(event);
+//                boolean successfulCopy = this.organizer.copyToClipboard(pageNum);
+//                printState(pageNum, successfulCopy);
+        }
+
     }
 
     /**
      * Translates a given NativeKeyEvent to the appropriate page number.
+     *
      * @param event event triggered by the system wide hook
      * @return Page number that should be copied.
      */
@@ -71,7 +89,7 @@ public class HookListener implements NativeKeyListener {
                 userInput = new StringBuilder();
             }
         } else {
-            normalMode = F7_RAW_CODE == event.getRawCode();
+            normalMode = PREV_COMMAND == event.getRawCode();
         }
         return output;
     }

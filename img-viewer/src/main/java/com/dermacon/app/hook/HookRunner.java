@@ -1,6 +1,7 @@
 package com.dermacon.app.hook;
 
 import com.dermacon.app.dataStructures.Bookmark;
+import com.dermacon.app.logik.Organizer;
 import com.dermacon.app.worker.RenderManager;
 import com.dermacon.app.worker.Renderer;
 import org.jnativehook.GlobalScreen;
@@ -14,11 +15,18 @@ public class HookRunner implements Runnable {
 
     private static boolean running = true;
 //    private Bookmark bookmark;
-    private Renderer renderer;
+//    private Renderer renderer;
 
-    public HookRunner(Renderer renderer) {
-//        this.bookmark = bookmark;
-        this.renderer = renderer;
+    private Organizer organizer;
+
+//    public HookRunner(Renderer renderer) {
+////        this.bookmark = bookmark;
+//        this.renderer = renderer;
+//    }
+
+
+    public HookRunner(Organizer organizer) {
+        this.organizer = organizer;
     }
 
     @Override
@@ -47,7 +55,7 @@ public class HookRunner implements Runnable {
         l.setLevel(Level.OFF);
 
         GlobalScreen.registerNativeHook();
-        HookListener hookListener = new HookListener(renderer);
+        HookListener hookListener = new HookListener(organizer);
         GlobalScreen.addNativeKeyListener(hookListener);
         while (running) {
             try {

@@ -36,6 +36,8 @@ public class FileHandler {
         }
         props = new PropertyValues(f);
         System.out.println(props);
+
+        // todo read history csv file
     }
 
     public List<Bookmark> getBookmarks() {
@@ -75,7 +77,7 @@ public class FileHandler {
 
     public Bookmark openNewBookmark() {
         System.out.println("todo open file explorer");
-        JFileChooser chooser = new JFileChooser();
+        JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
         int opt = chooser.showOpenDialog(null);
         File out = null;
         if(opt == JFileChooser.APPROVE_OPTION) {
