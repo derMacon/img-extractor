@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-public class TerminalUI {
+public class TerminalUI implements UserInterface {
 
     private static final String TITLE = "PDFToImage-Viewer V2";
 
@@ -27,6 +27,10 @@ public class TerminalUI {
             + "Input: ";
 
     private static final String WARNING = "please try again: ";
+    private static final String EXIT_KEYWORD = "exit";
+    private static final String EXIT_USAGE = "Type " + EXIT_KEYWORD + " to " +
+            "exit program.";
+
     private static final char DELIMITER_CHAR = '-';
 
     private final List<Bookmark> bookmarks;
@@ -37,6 +41,7 @@ public class TerminalUI {
         this.fileHandler = fileHandler;
     }
 
+    @Override
     public Bookmark waitForUserSelection() throws IOException {
         List<Bookmark> bookmarks = fileHandler.getBookmarks();
         List<String> options = createStrLst(bookmarks);
@@ -93,6 +98,14 @@ public class TerminalUI {
         return bookmark;
     }
 
+    @Override
+    public void waitForExit() {
+        String userInput = null;
+        while (!EXIT_KEYWORD.equals(userInput)) {
+            System.out.print(EXIT_USAGE + "\nuser input: ");
+            userInput = new Scanner(System.in).next().toLowerCase();
+        }
+    }
 
     // todo stream
     private static <E> List<String> createStrLst(List<E> lst) {

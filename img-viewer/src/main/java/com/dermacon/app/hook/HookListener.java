@@ -47,7 +47,10 @@ public class HookListener implements NativeKeyListener {
      */
     @Override
     public void nativeKeyPressed(NativeKeyEvent event) {
-        Integer pageNum = translateToPageNum(event);
+        System.out.println("key pressed");
+        System.out.println(event.getKeyChar());
+        System.out.println(event);
+//        Integer pageNum = translateToPageNum(event);
 //        boolean successfulCopy = this.organizer.copyToClipboard(pageNum);
 //        printState(pageNum, successfulCopy);
     }

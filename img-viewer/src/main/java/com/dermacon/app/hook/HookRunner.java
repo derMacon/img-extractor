@@ -1,5 +1,8 @@
 package com.dermacon.app.hook;
 
+import com.dermacon.app.dataStructures.Bookmark;
+import com.dermacon.app.worker.RenderManager;
+import com.dermacon.app.worker.Renderer;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
@@ -10,10 +13,12 @@ import java.util.logging.Logger;
 public class HookRunner implements Runnable {
 
     private static boolean running = true;
-    private File selectedPdf;
+//    private Bookmark bookmark;
+    private Renderer renderer;
 
-    public HookRunner(File selectedPdf) {
-        this.selectedPdf = selectedPdf;
+    public HookRunner(Renderer renderer) {
+//        this.bookmark = bookmark;
+        this.renderer = renderer;
     }
 
     @Override
@@ -42,8 +47,8 @@ public class HookRunner implements Runnable {
         l.setLevel(Level.OFF);
 
         GlobalScreen.registerNativeHook();
-//        HookListener hookListener = new HookListener(selectedPdf);
-//        GlobalScreen.addNativeKeyListener(hookListener);
+        HookListener hookListener = new HookListener(renderer);
+        GlobalScreen.addNativeKeyListener(hookListener);
         while (running) {
             try {
                 Thread.sleep(300);

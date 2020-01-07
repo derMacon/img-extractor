@@ -1,9 +1,14 @@
 package com.dermacon.app;
 
 import com.dermacon.app.dataStructures.Bookmark;
+import com.dermacon.app.dataStructures.MockBookmark;
 import com.dermacon.app.fileio.FileHandler;
+import com.dermacon.app.hook.HookRunner;
 import com.dermacon.app.hook.MyListener;
+import com.dermacon.app.logik.MockTerminalUI;
 import com.dermacon.app.logik.TerminalUI;
+import com.dermacon.app.logik.UserInterface;
+import com.dermacon.app.worker.MockRenderer;
 import com.dermacon.app.worker.RenderManager;
 import com.dermacon.app.worker.Renderer;
 import javafx.application.Application;
@@ -48,16 +53,33 @@ public class FXApp extends Application {
      */
     public static void main(String[] args) {
         try {
-            FileHandler fileHandler = new FileHandler(args);
-            TerminalUI ui = new TerminalUI(fileHandler.getBookmarks(), fileHandler);
-            Bookmark user_select = ui.waitForUserSelection();
-            Renderer renderer = new RenderManager(user_select, fileHandler.getProps());
-            renderer.renderPageIntervall();
-        } catch (IOException e) {
+//            FileHandler fileHandler = new FileHandler(args);
+//            UserInterface ui = new TerminalUI(fileHandler.getBookmarks(),
+            UserInterface ui = new MockTerminalUI();
+//            fileHandler);
+
+//            Bookmark user_select = ui.waitForUserSelection();
+
+//            Renderer renderer = new RenderManager(user_select, fileHandler.getProps());
+            Renderer renderer = new MockRenderer();
+            Thread runner = new Thread(new HookRunner(renderer));
+            runner.start();
+
+            ui.waitForExit();
+            runner.join();
+            // todo set history csv file
+            System.out.println("user terminated program");
+            System.exit(0);
+
+//            Renderer renderer = new RenderManager(user_select, fileHandler.getProps());
+//            renderer.renderPageIntervall();
+
+        } catch (InterruptedException e) {
 //             todo
             e.printStackTrace();
         }
 
+        System.out.println("launch");
         launch(args);
     }
 
