@@ -2,6 +2,7 @@ package com.dermacon.app.worker;
 
 import com.dermacon.app.dataStructures.Bookmark;
 import com.dermacon.app.dataStructures.PropertyValues;
+import com.dermacon.app.jfx.FXMLController;
 import org.apache.commons.io.FileUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
@@ -11,6 +12,7 @@ import org.apache.pdfbox.tools.imageio.ImageIOUtil;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.function.Consumer;
 
 /**
  * Worker class rendering the actual images that will be displayed / copied
@@ -29,9 +31,13 @@ class Worker implements Runnable {
      */
     private final PropertyValues props;
 
-    public Worker(AssignmentStack stack, PropertyValues props) {
+    private final FXMLController controller;
+
+    public Worker(AssignmentStack stack, PropertyValues props,
+                  FXMLController controller) {
         this.stack = stack;
         this.props = props;
+        this.controller = controller;
     }
 
     @Override
@@ -83,7 +89,8 @@ class Worker implements Runnable {
             );
         }
 
-        bookmark.setCurrPageImg(outputImg);
+        controller.updateGui(outputImg, bookmark.getPageNum());
+//        bookmark.setCurrPageImg(outputImg);
 
     }
 

@@ -23,7 +23,7 @@ public class ViewerOrganizer implements Organizer {
      */
     @Override
     public void setFXController(FXMLController fxController) {
-        this.fxController = fxController;
+        this.fxController = fxController; // todo
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ViewerOrganizer implements Organizer {
         System.out.println("prev");
         bookmark.decPageIdx();
         renderer.renderPageIntervall(bookmark);
-        fxController.updateGui();
+//        fxController.updateGui();
     }
 
     @Override
@@ -39,6 +39,6 @@ public class ViewerOrganizer implements Organizer {
         System.out.println("next");
         bookmark.incPageIdx();
         renderer.renderPageIntervall(bookmark);
-        fxController.updateGui();
+//        fxController.updateGui();
     }
 }

@@ -36,7 +36,7 @@ public class FXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lbl.setAlignment(Pos.CENTER);
         lbl.setFont(new Font("Cambria", 25));
-        updateGui();
+//        updateGui();
     }
 
     public void setBookmark(Bookmark bookmark) {
@@ -56,7 +56,8 @@ public class FXMLController implements Initializable {
      * Update the guis image view with the current image and the label with
      * the current page number.
      */
-    public void updateGui() {
+    public void updateGui(File page, int pageNum) {
+        System.out.println("update gui with page: " + page.getAbsolutePath());
         Platform.runLater(() -> {
 
             // todo img not showing if rendering is too slow
@@ -71,11 +72,16 @@ public class FXMLController implements Initializable {
 
 //            imgVw_page.setImage(projectController.getCurrPageImage());
 
-            File page = bookmark.getCurrPageImg();
+//            File page = bookmark.getCurrPageImg();
+
+            System.out.println("update gui with page: " + page.getAbsolutePath());
+
+
             if (page != null) {
-                Image img = new Image(bookmark.getCurrPageImg().getPath());
+                Image img = new Image(page.toURI().toString());
                 imgVw_page.setImage(img);
-                lbl.setText(String.valueOf(bookmark.getPageNum()));
+                lbl.setText(String.valueOf(pageNum));
+//                lbl.setText(String.valueOf(bookmark.getPageNum()));
             }
 
         });

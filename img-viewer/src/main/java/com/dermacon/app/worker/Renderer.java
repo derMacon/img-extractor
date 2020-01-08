@@ -1,6 +1,7 @@
 package com.dermacon.app.worker;
 
 import com.dermacon.app.dataStructures.Bookmark;
+import com.dermacon.app.jfx.FXMLController;
 
 /**
  * Opens a pseudo priority queue for assignements which consists of
@@ -10,6 +11,8 @@ import com.dermacon.app.dataStructures.Bookmark;
  * of stopping these worker threads wait for the next assignments.
  */
 public interface Renderer {
+
+    public void setController(FXMLController controller);
 
     /**
      * Adds the given bookmark (as an assignment) to the beginning of the

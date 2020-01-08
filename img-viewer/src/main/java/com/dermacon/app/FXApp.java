@@ -5,7 +5,6 @@ import com.dermacon.app.dataStructures.PropertyValues;
 import com.dermacon.app.fileio.CSVException;
 import com.dermacon.app.fileio.FileHandler;
 import com.dermacon.app.hook.HookRunner;
-import com.dermacon.app.hook.MyListener;
 import com.dermacon.app.jfx.FXMLController;
 import com.dermacon.app.logik.Organizer;
 import com.dermacon.app.logik.TerminalUI;
@@ -18,21 +17,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.jnativehook.GlobalScreen;
-import org.jnativehook.NativeHookException;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class FXApp extends Application {
 
 //    private boolean running = true;
 
-    private static Bookmark bookmark;
-    private static Organizer organizer;
-    private static PropertyValues props;
+    //    private static Bookmark bookmark;
+//    private static Organizer organizer;
+//    private static PropertyValues props;
+    private static Renderer renderer;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -42,8 +37,9 @@ public class FXApp extends Application {
         Parent parent = fxmlLoader.load();
 
         FXMLController controller = fxmlLoader.getController();
-        organizer.setFXController(controller);
-        controller.setBookmark(bookmark);
+//        organizer.setFXController(controller);
+        renderer.setController(controller);
+//        controller.setBookmark(bookmark);
 
         Scene scene = new Scene(parent);
         stage.setScene(scene);
@@ -53,7 +49,7 @@ public class FXApp extends Application {
 
     /**
      * Main method of the whole application.
-     *
+     * <p>
      * - loads up properties and terminal user interface / menu
      * - waits for user to select a displayed bookmark
      * - select a new bookmark via a file explorer if necessary
@@ -68,11 +64,11 @@ public class FXApp extends Application {
     public static void main(String[] args) {
         try {
             FileHandler fileHandler = new FileHandler(args);
-            props = fileHandler.getProps();
+            PropertyValues props = fileHandler.getProps();
             UserInterface ui = new TerminalUI(fileHandler.getBookmarks(),
                     props);
 
-            bookmark = ui.waitForUserSelection();
+            Bookmark bookmark = ui.waitForUserSelection();
 
             if (bookmark == null) {
                 bookmark = fileHandler.openNewBookmark();
@@ -85,8 +81,9 @@ public class FXApp extends Application {
 //            bookmark = new MockBookmark();
 //            Renderer renderer = new MockRenderer();
 
-            Renderer renderer = new RenderManager(props);
-            organizer = new ViewerOrganizer(bookmark, renderer);
+//            Consumer<File> updater = new Updater();
+            renderer = new RenderManager(props);
+            Organizer organizer = new ViewerOrganizer(bookmark, renderer);
             Thread runner = new Thread(new HookRunner(organizer));
             runner.start();
 
