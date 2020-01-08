@@ -52,7 +52,9 @@ public class Bookmark {
 
     @Override
     public String toString() {
-        return "todo";
+        return "Bookmark: \n\tfile: " + this.pdf
+                + "\n\tcurrImg: " + this.currPageImg
+                + "\n\tpageNum: " + this.currPageIdx;
     }
 
 }

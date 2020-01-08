@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
 import java.util.Properties;
 
 /**
@@ -23,10 +22,10 @@ public class PropertyValues {
     private File historyCSV = null;
 
     public PropertyValues(File file) throws IOException {
-        getPropValues(file);
+        initPropValues(file);
     }
 
-    private void getPropValues(File file) throws IOException {
+    private void initPropValues(File file) throws IOException {
         assert file != null;
         InputStream inputStream = null;
 
@@ -41,9 +40,6 @@ public class PropertyValues {
                         "' not found in the classpath");
             }
 
-//            Date time = new Date(System.currentTimeMillis());
-
-            // get the property value and print it out
             width = Integer.parseInt(prop.getProperty("width"));
             height = Integer.parseInt(prop.getProperty("height"));
             dpi = Integer.parseInt(prop.getProperty("dpi"));
@@ -55,7 +51,6 @@ public class PropertyValues {
         } finally {
             inputStream.close();
         }
-//        return result;
     }
 
 

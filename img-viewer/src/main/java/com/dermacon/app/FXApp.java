@@ -2,6 +2,7 @@ package com.dermacon.app;
 
 import com.dermacon.app.dataStructures.Bookmark;
 import com.dermacon.app.dataStructures.PropertyValues;
+import com.dermacon.app.fileio.CSVException;
 import com.dermacon.app.fileio.FileHandler;
 import com.dermacon.app.hook.HookRunner;
 import com.dermacon.app.hook.MyListener;
@@ -27,8 +28,7 @@ import java.util.logging.Logger;
 
 public class FXApp extends Application {
 
-
-    private boolean running = true;
+//    private boolean running = true;
 
     private static Bookmark bookmark;
     private static Organizer organizer;
@@ -54,6 +54,14 @@ public class FXApp extends Application {
     /**
      * Main method of the whole application.
      *
+     * - loads up properties and terminal user interface / menu
+     * - waits for user to select a displayed bookmark
+     * - select a new bookmark via a file explorer if necessary
+     * - inits renderer for the backround processing of the images
+     * - inits organizer to delegate the user input regarding the pdf
+     * navigation to the appropriate instances
+     * - exits and joins threads
+     *
      * @param args command line args, the user may specify a separate config
      *             file other than the default config.properties.
      */
@@ -62,10 +70,16 @@ public class FXApp extends Application {
             FileHandler fileHandler = new FileHandler(args);
             props = fileHandler.getProps();
             UserInterface ui = new TerminalUI(fileHandler.getBookmarks(),
-                    fileHandler);
+                    props);
 
             bookmark = ui.waitForUserSelection();
 
+            if (bookmark == null) {
+                bookmark = fileHandler.openNewBookmark();
+                fileHandler.appendHistory(bookmark);
+            }
+
+            // mock data for testing
 //            props = new MockProperties();
 //            UserInterface ui = new MockTerminalUI();
 //            bookmark = new MockBookmark();
@@ -81,48 +95,17 @@ public class FXApp extends Application {
 
             ui.waitForExit();
             runner.join();
+
             // todo set history csv file
+
             System.out.println("user terminated program");
             System.exit(0);
 
-//            Renderer renderer = new RenderManager(user_select, fileHandler.getProps());
-//            renderer.renderPageIntervall();
-
-        } catch (InterruptedException | IOException e) {
+        } catch (InterruptedException | IOException | CSVException e) {
 //             todo
             e.printStackTrace();
         }
 
     }
 
-    // todo
-    private void launchListener() {
-        Logger l = Logger.getLogger(GlobalScreen.class.getPackage().getName());
-        l.setLevel(Level.OFF);
-
-        try {
-            GlobalScreen.registerNativeHook();
-        } catch (NativeHookException e) {
-            System.out.println("error");
-            e.printStackTrace();
-        }
-
-        MyListener list = new MyListener();
-        GlobalScreen.addNativeKeyListener(list);
-
-        while (running) {
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        try {
-            GlobalScreen.unregisterNativeHook();
-        } catch (NativeHookException e) {
-            System.out.println("error");
-            e.printStackTrace();
-        }
-    }
 }

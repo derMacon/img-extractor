@@ -19,13 +19,13 @@ public class CSVReader {
     private static final char DEFAULT_SEPARATOR = ',';
     private static final char DEFAULT_QUOTE = '"';
 
-    public static Map<String, List<String>> readCSV(String name) throws IOException {
-        List<List<String>> grid = readGrid(name);
+    public static Map<String, List<String>> readCSV(File file) throws IOException {
+        List<List<String>> grid = readGrid(file);
         return createMap(grid);
     }
 
-    private static List<List<String>> readGrid(String csvFile) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(csvFile));
+    private static List<List<String>> readGrid(File file) throws FileNotFoundException {
+        Scanner scanner = new Scanner(file);
         List<List<String>> grid = new LinkedList<>();
         while (scanner.hasNext()) {
             List<String> line = parseLine(scanner.nextLine());
@@ -58,7 +58,7 @@ public class CSVReader {
         return out;
     }
 
-    public static List<String> parseLine(String cvsLine) {
+    private static List<String> parseLine(String cvsLine) {
         return parseLine(cvsLine, DEFAULT_SEPARATOR, DEFAULT_QUOTE);
     }
 
@@ -66,7 +66,8 @@ public class CSVReader {
         return parseLine(cvsLine, separators, DEFAULT_QUOTE);
     }
 
-    public static List<String> parseLine(String cvsLine, char separators, char customQuote) {
+    public static List<String> parseLine(String cvsLine, char separators,
+                                    char customQuote) {
 
         List<String> result = new ArrayList<>();
 
