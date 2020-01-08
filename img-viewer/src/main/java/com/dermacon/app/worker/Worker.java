@@ -55,7 +55,6 @@ class Worker implements Runnable {
      * @throws IOException Exception that will be thrown if the selected pdf document cannot be read
      */
     private void render() throws IOException {
-        System.out.println("render");
         Assignment assignment = stack.getAssignment();
         Bookmark bm = assignment.getBookmark();
         System.out.println(Thread.currentThread().getName() + " processes " +
