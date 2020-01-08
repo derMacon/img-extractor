@@ -2,6 +2,7 @@ package com.dermacon.app.worker;
 
 import com.dermacon.app.dataStructures.Bookmark;
 import com.dermacon.app.dataStructures.PropertyValues;
+import org.apache.commons.io.FileUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
@@ -56,30 +57,53 @@ class Worker implements Runnable {
      */
     private void render() throws IOException {
         Assignment assignment = stack.getAssignment();
-        Bookmark bm = assignment.getBookmark();
+        Bookmark bookmark = assignment.getBookmark();
         System.out.println(Thread.currentThread().getName() + " processes " +
-                "page " + bm.getPageNum());
-//        File file = bm.getFile();
-//        PDDocument pdf = PDDocument.load(file);
-//        PDFRenderer pdfRenderer = new PDFRenderer(pdf);
-//        BufferedImage bim =
-//                pdfRenderer.renderImageWithDPI(bm.getPageNum() - 1,
-//                props.getDpi(),
-//                ImageType.RGB);
-//        File currPageImg = assignment.translateCurrImgPath(props.getImgPath());
-//
-//        ImageIOUtil.writeImage(bim,
-//                currPageImg.getPath(),
-//                props.getDpi()
-//        );
-//
-//        ImageResizer.resizeImage(
-//                currPageImg.getPath(),
-//                currPageImg.getPath(),
-//                props.getWidth(),
-//                props.getHeight()
-//        );
+                "page " + bookmark.getPageNum());
 
+        File outputImg = assignment.translateCurrImgPath(props.getImgPath());
 
+        if (outputImg != null && !outputImg.exists()) {
+            initOutputDir();
+            BufferedImage buffered_img = createBufferedImg(bookmark);
+
+            // write img
+            System.out.println("save " + outputImg.getAbsolutePath());
+            ImageIOUtil.writeImage(buffered_img,
+                    outputImg.getPath(),
+                    props.getDpi()
+            );
+
+            // resize img to ./config.property values
+            ImageResizer.resizeImage(
+                    outputImg.getPath(),
+                    outputImg.getPath(),
+                    props.getWidth(),
+                    props.getHeight()
+            );
+        }
+
+        bookmark.setCurrPageImg(outputImg);
+
+    }
+
+    private void initOutputDir() throws IOException {
+        File output_dir = new File(props.getImgPath());
+        if (output_dir != null && !output_dir.exists()) {
+            FileUtils.forceMkdir(output_dir);
+        }
+    }
+
+    private BufferedImage createBufferedImg(Bookmark bookmark) throws IOException {
+
+        File file = bookmark.getFile();
+        PDDocument pdf = PDDocument.load(file);
+        PDFRenderer pdfRenderer = new PDFRenderer(pdf);
+        BufferedImage out =
+                pdfRenderer.renderImageWithDPI(bookmark.getPageNum(),
+                        props.getDpi(),
+                        ImageType.RGB);
+        pdf.close();
+        return out;
     }
 }

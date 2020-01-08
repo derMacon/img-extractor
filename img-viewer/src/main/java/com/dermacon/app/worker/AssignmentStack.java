@@ -16,35 +16,19 @@ class AssignmentStack {
     /**
      * Adds a new (valid) assignment to the stack and generates the previous
      * / next page assignment and also adds it to the stack.
+     *
      * @param assignment
      */
     public synchronized void addAssignment(Assignment assignment) {
         if (assignment != null) {
             assignments.add(0, assignment);
-
-            Assignment next, prev;
             for (int i = 1; i < PAGE_INTERVALL; i++) {
-                next = assignment.next();
-                prev = assignment.prev();
-
-                if (isValidAssignment(prev)) {
-                    assignments.add(i, prev);
-                }
-
-                if (isValidAssignment(next)) {
-                    assignments.add(i, next);
-                }
-
+                assignments.add(i, assignment.prev());
+                assignments.add(i, assignment.next());
             }
         }
 
         this.notifyAll();
-    }
-
-    private boolean isValidAssignment(Assignment assignment) {
-//        int pageNum = assignment.getBookmark().getPageNum();
-//        return pageNum > 0 && pageNum <= pageCnt;
-        return true; // todo
     }
 
     public synchronized Assignment getAssignment() {

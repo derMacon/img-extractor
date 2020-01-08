@@ -19,7 +19,7 @@ public class Assignment {
 //    }
 
     public File translateCurrImgPath(String path) {
-        return new File(path
+        return new File(path + File.separator
                 + removeExtension(bookmark.getFile().getName()) + "_"
                 + (bookmark.getPageNum() + ".png"));
     }
@@ -43,16 +43,18 @@ public class Assignment {
     }
 
     public Assignment prev() {
-        int prevPageNum = bookmark.getPageNum() - 1;
-        Bookmark newBookmark = bookmark.copy();
-        newBookmark.setCurrPageIdx(prevPageNum);
-        return new Assignment(newBookmark);
+        Bookmark newCopy = bookmark.copy();
+        // following function is bound safe, no need to check if copy is
+        // valid afterwards
+        newCopy.decPageIdx();
+        return new Assignment(newCopy);
     }
 
     public Assignment next() {
-        int nextPageNum = bookmark.getPageNum() + 1;
-        Bookmark newBookmark = bookmark.copy();
-        newBookmark.setCurrPageIdx(nextPageNum);
-        return new Assignment(newBookmark);
+        Bookmark newCopy = bookmark.copy();
+        // following function is bound safe, no need to check if copy is
+        // valid afterwards
+        newCopy.incPageIdx();
+        return new Assignment(newCopy);
     }
 }

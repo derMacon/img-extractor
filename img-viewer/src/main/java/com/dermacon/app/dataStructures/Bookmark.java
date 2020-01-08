@@ -21,7 +21,9 @@ public class Bookmark {
 
         int temp;
         try {
-            temp = PDDocument.load(pdf).getNumberOfPages();
+            PDDocument doc = PDDocument.load(pdf);
+            temp = doc.getNumberOfPages();
+            doc.close();
         } catch (IOException e) {
             temp = Integer.MAX_VALUE;
         }
@@ -41,8 +43,8 @@ public class Bookmark {
         return 0;
     }
 
-    public void setCurrPageIdx(int currPageIdx) {
-        this.currPageIdx = currPageIdx;
+    public void setCurrPageImg(File currPageImg) {
+        this.currPageImg = currPageImg;
     }
 
     public void incPageIdx() {
