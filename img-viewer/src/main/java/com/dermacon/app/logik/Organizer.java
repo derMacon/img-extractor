@@ -17,7 +17,7 @@ public interface Organizer {
      * javafx framework
      * @param controller fxml controller of the preview panel
      */
-    public void setFXController(FXMLController controller);
+//    public void setFXController(FXMLController controller);
 
     /**
      * Renders the prev page (if inbound)

@@ -8,23 +8,23 @@ public class ViewerOrganizer implements Organizer {
 
     private final Bookmark bookmark;
     private final Renderer renderer;
-    private FXMLController fxController;
+//    private FXMLController fxController;
 
     public ViewerOrganizer(Bookmark bookmark, Renderer renderer) {
         this.bookmark = bookmark;
         this.renderer = renderer;
     }
 
-    /**
-     * Cannot be in constructor, because controller is constructed after the
-     * whole construction process of this instance.
-     * @param fxController fx controller to display the rendered output /
-     *                     preview
-     */
-    @Override
-    public void setFXController(FXMLController fxController) {
-        this.fxController = fxController; // todo
-    }
+//    /**
+//     * Cannot be in constructor, because controller is constructed after the
+//     * whole construction process of this instance.
+//     * @param fxController fx controller to display the rendered output /
+//     *                     preview
+//     */
+//    @Override
+//    public void setFXController(FXMLController fxController) {
+//        this.fxController = fxController; // todo
+//    }
 
     @Override
     public void prevPage() {

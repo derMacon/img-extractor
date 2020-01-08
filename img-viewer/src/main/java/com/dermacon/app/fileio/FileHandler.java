@@ -1,12 +1,10 @@
 package com.dermacon.app.fileio;
 
-import com.dermacon.app.dataStructures.PropertyValues;
 import com.dermacon.app.dataStructures.Bookmark;
+import com.dermacon.app.dataStructures.PropertyValues;
 import org.apache.commons.io.FileUtils;
-import org.apache.pdfbox.rendering.PDFRenderer;
 
 import javax.swing.*;
-import java.awt.print.Book;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -47,25 +45,28 @@ public class FileHandler {
     }
 
     public void initBookmarks() throws IOException, CSVException {
-        Map<String, List<String>> map = CSVReader.readCSV(props.getHistoryCSV());
+        File file = props.getHistoryCSV();
+        if (file != null && file.exists()) {
+            Map<String, List<String>> map = CSVReader.readCSV(props.getHistoryCSV());
 
-        if (map == null || map.size() != 2) {
-            throw new CSVException("csv file - wrong column names, please " +
-                    "delete csv file and let program reload.");
-        }
+            if (map == null || map.size() != 2) {
+                throw new CSVException("csv file - wrong column names, please " +
+                        "delete csv file and let program reload.");
+            }
 
-        List<File> pdfs = map.get(PDF_CSV_CAPTION).stream()
-                        .map(e -> new File(e)).collect(Collectors.toList());
-        List<Integer> pageNums = map.get(PAGENUM_CSV_CAPTION).stream()
-                .map(e -> Integer.parseInt(e)).collect(Collectors.toList());
+            List<File> pdfs = map.get(PDF_CSV_CAPTION).stream()
+                    .map(e -> new File(e)).collect(Collectors.toList());
+            List<Integer> pageNums = map.get(PAGENUM_CSV_CAPTION).stream()
+                    .map(e -> Integer.parseInt(e)).collect(Collectors.toList());
 
-        if (pdfs.size() != pageNums.size()) {
-            throw new CSVException("csv file - column lengths vary, please " +
-                    "delete csv file and let program reload.");
-        }
+            if (pdfs.size() != pageNums.size()) {
+                throw new CSVException("csv file - column lengths vary, please " +
+                        "delete csv file and let program reload.");
+            }
 
-        for (int i = 0; i < pdfs.size(); i++) {
-            bookmarks.add(new Bookmark(pdfs.get(i), pageNums.get(i)));
+            for (int i = 0; i < pdfs.size(); i++) {
+                bookmarks.add(new Bookmark(pdfs.get(i), pageNums.get(i)));
+            }
         }
     }
 

@@ -25,34 +25,38 @@ public class CSVReader {
     }
 
     private static List<List<String>> readGrid(File file) throws FileNotFoundException {
-        Scanner scanner = new Scanner(file);
-        List<List<String>> grid = new LinkedList<>();
-        while (scanner.hasNext()) {
-            List<String> line = parseLine(scanner.nextLine());
-            grid.add(line);
+        if (file.exists()) {
+            Scanner scanner = new Scanner(file);
+            List<List<String>> grid = new LinkedList<>();
+            while (scanner.hasNext()) {
+                List<String> line = parseLine(scanner.nextLine());
+                grid.add(line);
+            }
+            scanner.close();
+            return grid;
         }
-        scanner.close();
-        return grid;
+
+        return new LinkedList<>();
     }
 
     private static Map<String, List<String>> createMap(List<List<String>> grid) {
-        assert grid.size() > 0;
         Map<String, List<String>> out = new HashMap<>();
-
-        // extracting headings from first line
-        List<String> headings = grid.get(0);
-        for (String heading : headings) {
-            out.put(heading, new LinkedList<String>());
-        }
-
-        // extracting lines from rest -> the grid is mirrored allong the main
-        // diagonal, that's why the loop looks so fishy.
-        for (int column = 0; column < grid.get(0).size(); column++) {
-            List<String> colContent = new LinkedList<>();
-            for (int row = 1; row < grid.size(); row++) {
-                colContent.add(grid.get(row).get(column));
+        if (grid.size() > 0) {
+            // extracting headings from first line
+            List<String> headings = grid.get(0);
+            for (String heading : headings) {
+                out.put(heading, new LinkedList<String>());
             }
-            out.put(headings.get(column), colContent);
+
+            // extracting lines from rest -> the grid is mirrored allong the main
+            // diagonal, that's why the loop looks so fishy.
+            for (int column = 0; column < grid.get(0).size(); column++) {
+                List<String> colContent = new LinkedList<>();
+                for (int row = 1; row < grid.size(); row++) {
+                    colContent.add(grid.get(row).get(column));
+                }
+                out.put(headings.get(column), colContent);
+            }
         }
 
         return out;

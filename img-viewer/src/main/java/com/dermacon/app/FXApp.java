@@ -84,7 +84,7 @@ public class FXApp extends Application {
 //            Consumer<File> updater = new Updater();
             renderer = new RenderManager(props);
             Organizer organizer = new ViewerOrganizer(bookmark, renderer);
-            Thread runner = new Thread(new HookRunner(organizer));
+            Thread runner = new Thread(new HookRunner(organizer, props));
             runner.start();
 
             System.out.println("launch");

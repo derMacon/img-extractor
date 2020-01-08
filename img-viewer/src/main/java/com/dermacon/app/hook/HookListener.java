@@ -1,8 +1,8 @@
 package com.dermacon.app.hook;
 
 
+import com.dermacon.app.dataStructures.PropertyValues;
 import com.dermacon.app.logik.Organizer;
-import com.dermacon.app.worker.Renderer;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
@@ -20,17 +20,15 @@ public class HookListener implements NativeKeyListener {
 
     private boolean normalMode = false;
     private StringBuilder userInput = new StringBuilder();
-//    private Organizer organizer;
-//    private Renderer renderer;
 
-//    public HookListener(Renderer renderer) {
-//        this.renderer = renderer;
-//    }
+    private final Organizer organizer;
+    private final int prev_command;
+    private final int next_command;
 
-    private Organizer organizer;
-
-    public HookListener(Organizer organizer) {
+    public HookListener(Organizer organizer, PropertyValues props) {
         this.organizer = organizer;
+        this.prev_command = props.getPrev_command();
+        this.next_command = props.getNext_command();
     }
 
     @Override
@@ -54,21 +52,38 @@ public class HookListener implements NativeKeyListener {
     @Override
     public void nativeKeyPressed(NativeKeyEvent event) {
         System.out.println(event.getRawCode());
-        switch (event.getRawCode()) {
-            case PREV_COMMAND:
-                System.out.println("prev");
-                organizer.prevPage();
-                break;
-            case NEXT_COMMAND:
-                System.out.println("next");
-                organizer.nextPage();
-            case GOTO_COMMAND:
-                System.out.println("goto page");
-                // todo
+
+//        switch (event.getRawCode()) {
+//            case prev_command:
+//                System.out.println("prev");
+//                organizer.prevPage();
+//                break;
+//            case next_command:
+//                System.out.println("next");
+//                organizer.nextPage();
+//            case GOTO_COMMAND:
+//                System.out.println("goto page");
+//                // todo
+////                Integer pageNum = translateToPageNum(event);
+////                boolean successfulCopy = this.organizer.copyToClipboard(pageNum);
+////                printState(pageNum, successfulCopy);
+//        }
+
+        int event_rawCode = event.getRawCode();
+        if (event_rawCode == prev_command) {
+            System.out.println("prev");
+            organizer.prevPage();
+        } else if (event_rawCode == next_command) {
+            System.out.println("next");
+            organizer.nextPage();
+        }
+//        } else {
+//            System.out.println("goto page");
+//             todo
 //                Integer pageNum = translateToPageNum(event);
 //                boolean successfulCopy = this.organizer.copyToClipboard(pageNum);
 //                printState(pageNum, successfulCopy);
-        }
+//        }
 
     }
 
@@ -102,6 +117,7 @@ public class HookListener implements NativeKeyListener {
      * @return true if the key corresponding to the given event represents a number (excluding the numpad).
      */
     private boolean isNum(NativeKeyEvent event) {
+        // todo
         int eventRawCode = event.getRawCode();
         return ZERO_RAW_CODE <= eventRawCode && NINE_RAW_CODE >= eventRawCode;
     }

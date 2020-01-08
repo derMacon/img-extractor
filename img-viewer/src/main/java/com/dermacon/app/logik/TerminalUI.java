@@ -88,17 +88,23 @@ public class TerminalUI implements UserInterface {
 
     private Bookmark evaluateUserInput() {
         Scanner scanner = new Scanner(System.in);
-        Bookmark out = extractOption(scanner.nextLine());
-
-        while (out == null) {
-            System.out.print(WARNING);
+        Bookmark out = null;
+        try {
             out = extractOption(scanner.nextLine());
+        } catch (InvalidInputException e) {
+            System.out.print(WARNING);
+            out = evaluateUserInput();
         }
+
+//        while (correctInput) {
+//            System.out.print(WARNING);
+//            out = extractOption(scanner.nextLine());
+//        }
 
         return out;
     }
 
-    private Bookmark extractOption(String in) {
+    private Bookmark extractOption(String in) throws InvalidInputException {
         Integer opt = null;
         Bookmark bookmark = null;
         try {
@@ -111,7 +117,7 @@ public class TerminalUI implements UserInterface {
                 bookmarks.size();
 
         if (opt == null || opt < 0 || opt > bm_cnt) {
-            bookmark = null;
+            throw new InvalidInputException();
         } else {
 
             switch (opt) {
