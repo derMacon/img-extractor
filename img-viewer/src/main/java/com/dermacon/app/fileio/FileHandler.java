@@ -101,7 +101,7 @@ public class FileHandler {
             history = new File(HISTORY_DEFAULT_PATH);
             input = HISTORY_HEADING;
         }
-        input += bookmark.getFile().getPath() + ',' + bookmark.getPageNum();
+        input += bookmark.getFile().getPath() + ',' + bookmark.getPageIdx();
         FileUtils.writeStringToFile(history, input);
     }
 

@@ -21,10 +21,10 @@ class AssignmentStack {
      */
     public synchronized void addAssignment(Assignment assignment) {
         if (assignment != null) {
-            assignments.add(0, assignment);
+            assignments.add(0, assignment.displayGui(true));
             for (int i = 1; i < PAGE_INTERVALL; i++) {
-                assignments.add(i, assignment.prev());
-                assignments.add(i, assignment.next());
+                assignments.add(i, assignment.prev().displayGui(false));
+                assignments.add(i, assignment.next().displayGui(false));
             }
         }
 

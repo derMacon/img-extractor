@@ -8,25 +8,34 @@ public class Assignment {
 
     private final Bookmark bookmark;
 
+    /**
+     * True: States if the assigned (rendered) page from the bookmark should
+     * actually be displayed on the gui
+     * False: run as a simple background assignment (buffer for feature renders)
+     */
+    private boolean displayed_on_gui = false;
+
     public Assignment(Bookmark bookmark) {
         this.bookmark = bookmark;
     }
 
-//    public File getCurrImgPath() {
-//        return new File(bookmark.getImgPath()
-//                + removeExtension(bookmark.getFile().getName()) + "_"
-//                + (bookmark.getPageNum() + ".png"));
-//    }
-
     public File translateCurrImgPath(String path) {
         return new File(path + File.separator
                 + removeExtension(bookmark.getFile().getName()) + "_"
-                + (bookmark.getPageNum() + ".png"));
+                + (bookmark.getPageIdx() + ".png"));
     }
-
 
     public Bookmark getBookmark() {
         return bookmark;
+    }
+
+    public Assignment displayGui(boolean displayed_on_gui) {
+        this.displayed_on_gui = displayed_on_gui;
+        return this;
+    }
+
+    public boolean shouldDisplayGui() {
+        return displayed_on_gui;
     }
 
     /**
@@ -57,4 +66,5 @@ public class Assignment {
         newCopy.incPageIdx();
         return new Assignment(newCopy);
     }
+
 }

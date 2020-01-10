@@ -11,24 +11,27 @@ import org.jnativehook.keyboard.NativeKeyListener;
  */
 public class HookListener implements NativeKeyListener {
 
-    private static final int PREV_COMMAND = 65478;
-    private static final int NEXT_COMMAND = 65479;
-    private static final int GOTO_COMMAND = 65480;
-
+    //    private static final int PREV_COMMAND = 65478;
+//    private static final int NEXT_COMMAND = 65479;
+//    private static final int GOTO_COMMAND = 65480;
+//
     private static final int ZERO_RAW_CODE = 48;
-    private static final int NINE_RAW_CODE = 57;
+//    private static final int NINE_RAW_CODE = 57;
 
-    private boolean normalMode = false;
-    private StringBuilder userInput = new StringBuilder();
+    private boolean gotoMode = false;
+    private StringBuilder pageNum_goto = new StringBuilder();
 
     private final Organizer organizer;
     private final int prev_command;
     private final int next_command;
+    private final int goto_command;
+    private int gotoPageBuffer;
 
     public HookListener(Organizer organizer, PropertyValues props) {
         this.organizer = organizer;
         this.prev_command = props.getPrev_command();
         this.next_command = props.getNext_command();
+        this.goto_command = props.getGoto_command();
     }
 
     @Override
@@ -53,28 +56,16 @@ public class HookListener implements NativeKeyListener {
     public void nativeKeyPressed(NativeKeyEvent event) {
         System.out.println(event.getRawCode());
 
-//        switch (event.getRawCode()) {
-//            case prev_command:
-//                System.out.println("prev");
-//                organizer.prevPage();
-//                break;
-//            case next_command:
-//                System.out.println("next");
-//                organizer.nextPage();
-//            case GOTO_COMMAND:
-//                System.out.println("goto page");
-//                // todo
-////                Integer pageNum = translateToPageNum(event);
-////                boolean successfulCopy = this.organizer.copyToClipboard(pageNum);
-////                printState(pageNum, successfulCopy);
-//        }
-
         int event_rawCode = event.getRawCode();
-        if (event_rawCode == prev_command) {
-            System.out.println("prev");
+
+        if (event_rawCode == goto_command || gotoMode) {
+            System.out.println("goto command");
+            handleGotoPage(event);
+        } else if (event_rawCode == prev_command) {
+            System.out.println("prev command");
             organizer.prevPage();
         } else if (event_rawCode == next_command) {
-            System.out.println("next");
+            System.out.println("next command");
             organizer.nextPage();
         }
 //        } else {
@@ -84,29 +75,34 @@ public class HookListener implements NativeKeyListener {
 //                boolean successfulCopy = this.organizer.copyToClipboard(pageNum);
 //                printState(pageNum, successfulCopy);
 //        }
-
     }
 
     /**
-     * Translates a given NativeKeyEvent to the appropriate page number.
+     * Translates a given NativeKeyEvent to the appropriate page number and
+     * pushes it to the organizer instance.
      *
      * @param event event triggered by the system wide hook
      * @return Page number that should be copied.
      */
-    private Integer translateToPageNum(NativeKeyEvent event) {
-        Integer output = null;
-        if (normalMode) {
+    private void handleGotoPage(NativeKeyEvent event) {
+        // user already in goto mode
+        if (gotoMode) {
+
+            // user types (another) digit from page number
             if (isNum(event)) {
-                userInput.append(event.getRawCode() - ZERO_RAW_CODE);
+                pageNum_goto.append(event.getRawCode() - ZERO_RAW_CODE);
             } else {
-                output = Integer.parseInt(this.userInput.toString());
-                this.normalMode = false;
-                userInput = new StringBuilder();
+                // user exits goto mode
+                gotoMode = false;
+                String userInput = pageNum_goto.toString();
+                organizer.gotoPage(Integer.parseInt(userInput));
             }
+
         } else {
-            normalMode = PREV_COMMAND == event.getRawCode();
+            // user enters goto mode
+            gotoMode = goto_command == event.getRawCode();
         }
-        return output;
+
     }
 
     /**
@@ -117,9 +113,8 @@ public class HookListener implements NativeKeyListener {
      * @return true if the key corresponding to the given event represents a number (excluding the numpad).
      */
     private boolean isNum(NativeKeyEvent event) {
-        // todo
         int eventRawCode = event.getRawCode();
-        return ZERO_RAW_CODE <= eventRawCode && NINE_RAW_CODE >= eventRawCode;
+        return ZERO_RAW_CODE <= eventRawCode && ZERO_RAW_CODE + 9 >= eventRawCode;
     }
 
     /**
@@ -128,15 +123,16 @@ public class HookListener implements NativeKeyListener {
      * @param pageNum           Page number that should be copied to the clipboard
      * @param copiedToClipboard flag determining if the copy process to the clipboard was successful or not.
      */
+    // todo maybe delete this???
     private void printState(Integer pageNum, boolean copiedToClipboard) {
         if (null != pageNum && copiedToClipboard) {
             System.out.println("Page " + pageNum + " copied to the clipboard. Puffer cleared.");
         } else if (null != pageNum && !copiedToClipboard) {
             System.out.println("Error: Page " + pageNum + " cannot be copied to clipboard.");
-        } else if (normalMode && this.userInput.length() == 0) {
+        } else if (gotoMode && this.pageNum_goto.length() == 0) {
             System.out.println("User entered normal mode");
-        } else if (this.normalMode && this.userInput.length() > 0) {
-            System.out.println("Current digit puffer: " + this.userInput);
+        } else if (this.gotoMode && this.pageNum_goto.length() > 0) {
+            System.out.println("Current digit puffer: " + this.pageNum_goto);
         }
     }
 

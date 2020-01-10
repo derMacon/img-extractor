@@ -33,4 +33,11 @@ public interface Organizer {
      */
     void nextPage();
 
+
+    /**
+     * todo
+     * @param page
+     */
+    void gotoPage(int page);
+
 }

@@ -1,6 +1,7 @@
 package com.dermacon.app.logik;
 
 import com.dermacon.app.dataStructures.Bookmark;
+import com.dermacon.app.dataStructures.ClipboardImage;
 import com.dermacon.app.jfx.FXMLController;
 import com.dermacon.app.worker.Renderer;
 
@@ -30,15 +31,20 @@ public class ViewerOrganizer implements Organizer {
     public void prevPage() {
         System.out.println("prev");
         bookmark.decPageIdx();
-        renderer.renderPageIntervall(bookmark);
-//        fxController.updateGui();
+        renderer.renderPageIntervall(bookmark); // todo copy bm???
     }
 
     @Override
     public void nextPage() {
         System.out.println("next");
         bookmark.incPageIdx();
-        renderer.renderPageIntervall(bookmark);
-//        fxController.updateGui();
+        renderer.renderPageIntervall(bookmark);// todo copy bm???
+    }
+
+    @Override
+    public void gotoPage(int page) {
+        System.out.println("goto page " + page);
+        bookmark.setCurrPageIdx(page - 1);
+        renderer.renderPageIntervall(bookmark);// todo copy bm???
     }
 }

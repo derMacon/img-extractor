@@ -22,6 +22,7 @@ public class PropertyValues {
     private File historyCSV = null;
     private int next_command;
     private int prev_command;
+    private int goto_command;
 
     public PropertyValues(File file) throws IOException {
         initPropValues(file);
@@ -47,6 +48,7 @@ public class PropertyValues {
             dpi = Integer.parseInt(prop.getProperty("dpi"));
             prev_command = Integer.parseInt(prop.getProperty("nextPage"));
             next_command = Integer.parseInt(prop.getProperty("prevPage"));
+            goto_command = Integer.parseInt(prop.getProperty("gotoPage"));
             imgPath = prop.getProperty("imgPath");
             historyCSV = new File(prop.getProperty("historyCSV"));
 
@@ -84,6 +86,10 @@ public class PropertyValues {
 
     public int getPrev_command() {
         return prev_command;
+    }
+
+    public int getGoto_command() {
+        return goto_command;
     }
 
     @Override

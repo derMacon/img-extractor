@@ -10,7 +10,6 @@ public class Bookmark {
     private final File pdf;
     private final int pageCnt;
 
-    private File currPageImg; // todo
     private int currPageIdx;
 
     // todo builder
@@ -30,21 +29,16 @@ public class Bookmark {
         this.pageCnt = temp;
     }
 
-    public File getCurrPageImg() {
-        return currPageImg;
-    }
-
-
     public File getFile() {
         return pdf;
     }
 
-    public int getPageNum() {
-        return 0;
+    public int getPageIdx() {
+        return currPageIdx;
     }
 
-    public void setCurrPageImg(File currPageImg) {
-        this.currPageImg = currPageImg;
+    public void setCurrPageIdx(int currPageIdx) {
+        this.currPageIdx = currPageIdx;
     }
 
     public void incPageIdx() {
@@ -69,8 +63,7 @@ public class Bookmark {
     @Override
     public String toString() {
         return "Bookmark: \n\tfile: " + this.pdf
-                + "\n\tcurrImg: " + this.currPageImg
-                + "\n\tpageNum: " + this.currPageIdx;
+                + "\n\tpageNum: " + this.currPageIdx + "/" + this.pageCnt;
     }
 
 }

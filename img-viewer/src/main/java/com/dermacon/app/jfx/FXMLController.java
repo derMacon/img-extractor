@@ -57,7 +57,8 @@ public class FXMLController implements Initializable {
      * the current page number.
      */
     public void updateGui(File page, int pageNum) {
-        System.out.println("update gui with page: " + page.getAbsolutePath());
+        System.out.println("Thread: " + Thread.currentThread().getName() +
+                ", update gui with page: " + page.getAbsolutePath());
         Platform.runLater(() -> {
 
             // todo img not showing if rendering is too slow
@@ -73,9 +74,6 @@ public class FXMLController implements Initializable {
 //            imgVw_page.setImage(projectController.getCurrPageImage());
 
 //            File page = bookmark.getCurrPageImg();
-
-            System.out.println("update gui with page: " + page.getAbsolutePath());
-
 
             if (page != null) {
                 Image img = new Image(page.toURI().toString());
