@@ -9,9 +9,10 @@ public class ViewerOrganizer implements Organizer {
 
     private final Bookmark bookmark;
     private final Renderer renderer;
-//    private FXMLController fxController;
 
     public ViewerOrganizer(Bookmark bookmark, Renderer renderer) {
+        renderer.renderPageIntervall(bookmark);
+
         this.bookmark = bookmark;
         this.renderer = renderer;
     }

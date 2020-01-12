@@ -62,14 +62,14 @@ public class FXMLController implements Initializable {
         Platform.runLater(() -> {
 
             // todo img not showing if rendering is too slow
-//            while(!(new File(path).exists())) {
-//                try {
-//                    Thread.sleep(50);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                System.out.println("waiting for img");
-//            }
+            while(!(page.exists())) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("waiting for img");
+            }
 
 //            imgVw_page.setImage(projectController.getCurrPageImage());
 

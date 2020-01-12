@@ -56,6 +56,7 @@ class Worker implements Runnable {
                 Thread.currentThread().interrupt();
             }
         }
+        System.out.println("Woker - interrupted");
     }
 
     /**
@@ -66,34 +67,36 @@ class Worker implements Runnable {
      */
     private void render() throws IOException {
         Assignment assignment = stack.getAssignment();
-        Bookmark bookmark = assignment.getBookmark();
+        if (assignment != null) {
+            Bookmark bookmark = assignment.getBookmark();
 
-        File outputImg = assignment.translateCurrImgPath(props.getImgPath());
+            File outputImg = assignment.translateCurrImgPath(props.getImgPath());
 
-        // todo maybe go with the rendered images list of this class
-        if (outputImg != null && !outputImg.exists()) {
-            initOutputDir();
-            BufferedImage buffered_img = createBufferedImg(bookmark);
+            // todo maybe go with the rendered images list of this class
+            if (outputImg != null && !outputImg.exists()) {
+                initOutputDir();
+                BufferedImage buffered_img = createBufferedImg(bookmark);
 
-            // write img
-            System.out.println("save " + outputImg.getAbsolutePath());
-            ImageIOUtil.writeImage(buffered_img,
-                    outputImg.getPath(),
-                    props.getDpi()
-            );
+                // write img
+                System.out.println("save " + outputImg.getAbsolutePath());
+                ImageIOUtil.writeImage(buffered_img,
+                        outputImg.getPath(),
+                        props.getDpi()
+                );
 
-            // resize img to ./config.property values
-            ImageResizer.resizeImage(
-                    outputImg.getPath(),
-                    outputImg.getPath(),
-                    props.getWidth(),
-                    props.getHeight()
-            );
-        }
+                // resize img to ./config.property values
+                ImageResizer.resizeImage(
+                        outputImg.getPath(),
+                        outputImg.getPath(),
+                        props.getWidth(),
+                        props.getHeight()
+                );
+            }
 
-        if (assignment.shouldDisplayGui()) {
-            controller.updateGui(outputImg, bookmark.getPageIdx() + 1);
-            copyToClipboard(outputImg);
+            if (assignment.shouldDisplayGui()) {
+                controller.updateGui(outputImg, bookmark.getPageIdx() + 1);
+                copyToClipboard(outputImg);
+            }
         }
 
     }
