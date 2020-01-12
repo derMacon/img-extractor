@@ -53,7 +53,7 @@ public class HookListener implements NativeKeyListener {
      */
     @Override
     public void nativeKeyPressed(NativeKeyEvent event) {
-//        System.out.println(event.getRawCode());
+        System.out.println(event.getRawCode());
 
         int event_rawCode = event.getRawCode();
 
