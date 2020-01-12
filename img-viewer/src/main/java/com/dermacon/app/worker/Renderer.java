@@ -30,4 +30,13 @@ public interface Renderer {
      */
     void stop(); // todo use this method
 
+
+    /**
+     * Necessary to clear render stack when calling the goto function of the
+     * viewer. When this method is called we do not need the current page
+     * interval that's in the process of being rendered because we jump to an
+     * entirely different part of the document anyway.
+     */
+    void clearPipeline();
+
 }

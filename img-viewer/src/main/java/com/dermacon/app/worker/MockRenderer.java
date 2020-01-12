@@ -20,4 +20,9 @@ public class MockRenderer  implements Renderer {
         System.out.println("stop");
 
     }
+
+    @Override
+    public void clearPipeline() {
+
+    }
 }

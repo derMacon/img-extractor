@@ -70,6 +70,8 @@ public class FXApp extends Application {
 
             Bookmark bookmark = ui.waitForUserSelection();
 
+
+
             if (bookmark == null) {
                 bookmark = fileHandler.openNewBookmark();
                 fileHandler.prependsHistory(bookmark);

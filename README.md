@@ -12,4 +12,5 @@ This program will be useful when working with ankidroid so that you don't have t
 
 ### Todo:
 * implement clean mode, where all temp directories etc. are deleted.
+* interval render not working for some reason, only seeing the current page in the ./img directory...
 

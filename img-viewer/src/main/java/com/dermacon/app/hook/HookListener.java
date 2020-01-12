@@ -25,7 +25,6 @@ public class HookListener implements NativeKeyListener {
     private final int prev_command;
     private final int next_command;
     private final int goto_command;
-    private int gotoPageBuffer;
 
     public HookListener(Organizer organizer, PropertyValues props) {
         this.organizer = organizer;
@@ -87,7 +86,6 @@ public class HookListener implements NativeKeyListener {
     private void handleGotoPage(NativeKeyEvent event) {
         // user already in goto mode
         if (gotoMode) {
-
             // user types (another) digit from page number
             if (isNum(event)) {
                 pageNum_goto.append(event.getRawCode() - ZERO_RAW_CODE);
@@ -97,12 +95,10 @@ public class HookListener implements NativeKeyListener {
                 String userInput = pageNum_goto.toString();
                 organizer.gotoPage(Integer.parseInt(userInput));
             }
-
         } else {
             // user enters goto mode
             gotoMode = goto_command == event.getRawCode();
         }
-
     }
 
     /**

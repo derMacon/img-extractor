@@ -49,4 +49,9 @@ public class RenderManager implements Renderer {
             worker.interrupt();
         }
     }
+
+    @Override
+    public void clearPipeline() {
+        this.assignmentStack.clear();
+    }
 }

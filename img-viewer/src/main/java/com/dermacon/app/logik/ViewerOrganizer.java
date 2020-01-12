@@ -17,35 +17,22 @@ public class ViewerOrganizer implements Organizer {
         this.renderer = renderer;
     }
 
-//    /**
-//     * Cannot be in constructor, because controller is constructed after the
-//     * whole construction process of this instance.
-//     * @param fxController fx controller to display the rendered output /
-//     *                     preview
-//     */
-//    @Override
-//    public void setFXController(FXMLController fxController) {
-//        this.fxController = fxController; // todo
-//    }
-
     @Override
     public void prevPage() {
-        System.out.println("prev");
         bookmark.decPageIdx();
         renderer.renderPageIntervall(bookmark); // todo copy bm???
     }
 
     @Override
     public void nextPage() {
-        System.out.println("next");
         bookmark.incPageIdx();
         renderer.renderPageIntervall(bookmark);// todo copy bm???
     }
 
     @Override
     public void gotoPage(int page) {
-        System.out.println("goto page " + page);
         bookmark.setCurrPageIdx(page - 1);
+        renderer.clearPipeline();
         renderer.renderPageIntervall(bookmark);// todo copy bm???
     }
 }

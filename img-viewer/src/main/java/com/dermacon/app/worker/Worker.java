@@ -48,15 +48,11 @@ class Worker implements Runnable {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 render();
-                // todo check
-//            } catch (InterruptedException e) {
-//                Thread.currentThread().interrupt();
             } catch (IOException e) {
                 System.err.println("image render error: " + e.getMessage());
                 Thread.currentThread().interrupt();
             }
         }
-        System.out.println("Woker - interrupted");
     }
 
     /**
@@ -72,8 +68,8 @@ class Worker implements Runnable {
 
             File outputImg = assignment.translateCurrImgPath(props.getImgPath());
 
-            // todo maybe go with the rendered images list of this class
-            if (outputImg != null && !outputImg.exists()) {
+            if (shouldUpdateImg(outputImg, bookmark.getFile())) {
+                System.out.println("update img - " + bookmark);
                 initOutputDir();
                 BufferedImage buffered_img = createBufferedImg(bookmark);
 
@@ -91,6 +87,8 @@ class Worker implements Runnable {
                         props.getWidth(),
                         props.getHeight()
                 );
+            } else {
+                System.out.println("should not update img - " + assignment.getBookmark());
             }
 
             if (assignment.shouldDisplayGui()) {
@@ -99,6 +97,26 @@ class Worker implements Runnable {
             }
         }
 
+    }
+
+    /**
+     * Determines if the image with the given path should be rendered or not.
+     * When the file is not existent it should be rendered.
+     * When the file is already rendered but older than the linked bookmark
+     * file than it also should be rendered since the pdf can be updated.
+     *
+     * @param img
+     * @return
+     */
+    private static boolean shouldUpdateImg(File img, File pdf) {
+        return !img.exists() || fstFileNewer(pdf, img);
+    }
+
+    private static boolean fstFileNewer(File f1, File f2) {
+        long d1 = f1.lastModified();
+        long d2 = f2.lastModified();
+
+        return d1 == d2 || d1 > d2;
     }
 
     /**
