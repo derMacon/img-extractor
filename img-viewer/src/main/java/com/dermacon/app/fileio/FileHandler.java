@@ -96,7 +96,13 @@ public class FileHandler {
         return d;
     }
 
-    public void appendHistory(Bookmark bookmark) throws IOException {
+
+    /**
+     * Puts the given bookmark to the top of the history bookmarks.
+     * @param bookmark bookmark that should be put into the history file.
+     * @throws IOException
+     */
+    public void prependsHistory(Bookmark bookmark) throws IOException {
         System.out.println("appending history - " + bookmark.toString());
 
         String bm_selectedFile = bookmark.getFile().getPath();

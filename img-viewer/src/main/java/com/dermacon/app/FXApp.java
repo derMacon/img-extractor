@@ -72,7 +72,7 @@ public class FXApp extends Application {
 
             if (bookmark == null) {
                 bookmark = fileHandler.openNewBookmark();
-                fileHandler.appendHistory(bookmark);
+                fileHandler.prependsHistory(bookmark);
             }
 
             // mock data for testing
@@ -95,7 +95,7 @@ public class FXApp extends Application {
 //            runner.join();
 
             // todo set history csv file
-            fileHandler.appendHistory(bookmark);
+            fileHandler.prependsHistory(bookmark);
 
 
 
