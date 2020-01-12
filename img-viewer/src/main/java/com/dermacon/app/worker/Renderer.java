@@ -23,11 +23,11 @@ public interface Renderer {
      * 1. Add page 5: queue == [5, 6, 4, 7, 3]
      * 2. Add page 8: queue == [8, 9, 7, 10, 6, 5, 6, 4, 7, 3]
      */
-    public void renderPageIntervall(Bookmark bookmar);
+    void renderPageIntervall(Bookmark bookmar);
 
     /**
      * Stops the whole rendering process
      */
-    public void stop(); // todo use this method
+    void stop(); // todo use this method
 
 }

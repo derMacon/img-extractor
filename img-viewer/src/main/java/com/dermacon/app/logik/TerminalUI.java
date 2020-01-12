@@ -70,8 +70,8 @@ public class TerminalUI implements UserInterface {
 
     private void displayOptions(PropertyValues props) {
         List<String> options = bookmarks.stream()
-                .map(Bookmark::getFile)
-                .map(File::toString)
+                .map(Bookmark::toString)
+//                .map(File::toString)
                 .collect(Collectors.toList());
 
         options.add(0, EXIT_COMMAND);

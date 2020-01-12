@@ -7,6 +7,9 @@ import org.apache.commons.io.FileUtils;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +19,7 @@ public class FileHandler {
 
     private static final String PROPERTIES_DEFAULT_PATH = "config.properties";
     private static final String HISTORY_DEFAULT_PATH = "pdf2img_history.csv";
-    private static final String HISTORY_HEADING = "pdf,page\n";
+    private static final String HISTORY_HEADING = "pdf,page";
 
     private static final String PDF_CSV_CAPTION = "pdf";
     private static final String PAGENUM_CSV_CAPTION = "page";
@@ -94,14 +97,37 @@ public class FileHandler {
     }
 
     public void appendHistory(Bookmark bookmark) throws IOException {
-        // todo
+        System.out.println("appending history - " + bookmark.toString());
+
+        String bm_selectedFile = bookmark.getFile().getPath();
+        String input = HISTORY_HEADING + "\n"
+                + bm_selectedFile
+                + ',' + bookmark.getPageIdx();
+
         File history = props.getHistoryCSV();
-        String input = "";
         if (history == null || !history.exists() || history.isDirectory()) {
             history = new File(HISTORY_DEFAULT_PATH);
-            input = HISTORY_HEADING;
+        } else {
+
+            // todo stream
+//        input += Files.lines(Paths.get(bm_selectedFile))
+//                .filter(e -> !e.contains(bm_selectedFile))
+//                .collect(Collectors.joining("\n"));
+//
+            List<String> lines = FileUtils.readLines(props.getHistoryCSV(),
+                    StandardCharsets.UTF_8);
+            StringBuilder filtered_content = new StringBuilder();
+            for (String line : lines) {
+                if (!line.contains(bm_selectedFile)
+                        && !line.contains(HISTORY_HEADING)) {
+                    filtered_content.append(line);
+                }
+            }
+            input += filtered_content.toString();
+
         }
-        input += bookmark.getFile().getPath() + ',' + bookmark.getPageIdx();
+
+        System.out.println("input " + input);
         FileUtils.writeStringToFile(history, input);
     }
 

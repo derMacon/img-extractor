@@ -90,15 +90,20 @@ public class FXApp extends Application {
             System.out.println("launch");
             launch(args);
 
-            ui.waitForExit();
-            runner.join();
+//            ui.waitForExit();
+            renderer.stop();
+//            runner.join();
 
             // todo set history csv file
+            fileHandler.appendHistory(bookmark);
+
+
+
 
             System.out.println("user terminated program");
             System.exit(0);
 
-        } catch (InterruptedException | IOException | CSVException e) {
+        } catch (IOException | CSVException e) {
 //             todo
             e.printStackTrace();
         }

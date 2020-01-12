@@ -62,8 +62,8 @@ public class Bookmark {
 
     @Override
     public String toString() {
-        return "Bookmark: \n\tfile: " + this.pdf
-                + "\n\tpageNum: " + this.currPageIdx + "/" + this.pageCnt;
+        return "file: " + this.pdf
+                + ", page: " + (this.currPageIdx + 1) + "/" + this.pageCnt;
     }
 
 }

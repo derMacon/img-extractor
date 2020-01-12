@@ -10,6 +10,6 @@ This program will be useful when working with ankidroid so that you don't have t
 * Resize image: https://deano.me/2012/02/java-resize-an-image-keeping-the-proportions-correct/
 * Pdf box Framework - Apache: https://pdfbox.apache.org/
 
-### Todo: Problem
-Not possible to call the update function of the fx controller in the worker class because every deamon Thread will update for each page rendered in the interval. 
+### Todo:
+* implement clean mode, where all temp directories etc. are deleted.
 

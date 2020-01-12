@@ -101,6 +101,7 @@ public class PropertyValues {
                 + ", historyCSV: " + historyCSV
                 + ", next_rawCode: " + next_command
                 + ", prev_rawCode: " + prev_command
+                + ", goto_rawCode: " + goto_command
                 + "}";
     }
 
