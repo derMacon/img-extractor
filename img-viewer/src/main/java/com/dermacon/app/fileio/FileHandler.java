@@ -106,35 +106,46 @@ public class FileHandler {
         System.out.println("appending history - " + bookmark.toString());
 
         String bm_selectedFile = bookmark.getFile().getPath();
-        String input = HISTORY_HEADING + "\n"
+        String history_content = HISTORY_HEADING + "\n"
                 + bm_selectedFile
                 + ',' + bookmark.getPageIdx();
 
-        File history = props.getHistoryCSV();
-        if (history == null || !history.exists() || history.isDirectory()) {
-            history = new File(HISTORY_DEFAULT_PATH);
+        File history_file = props.getHistoryCSV();
+        if (history_file == null || !history_file.exists() || history_file.isDirectory()) {
+            history_file = new File(HISTORY_DEFAULT_PATH);
         } else {
+            history_content += filterHistoryFile(bm_selectedFile);
+        }
 
-            // todo stream
+        FileUtils.writeStringToFile(history_file, history_content);
+    }
+
+    /**
+     * Transforms the lines of the csv file to a string where each line if
+     * seperated by a line break.
+     * Only those lines which do not contain the selected file path and who
+     * differ from the overall title / header line from the file will be
+     * evaluated / appended.
+     * @param bm_selectedFile bookmark selected file path
+     * @return String
+     * @throws IOException
+     */
+    private String filterHistoryFile(String bm_selectedFile) throws IOException {
+        // todo stream
 //        input += Files.lines(Paths.get(bm_selectedFile))
 //                .filter(e -> !e.contains(bm_selectedFile))
 //                .collect(Collectors.joining("\n"));
 //
-            List<String> lines = FileUtils.readLines(props.getHistoryCSV(),
-                    StandardCharsets.UTF_8);
-            StringBuilder filtered_content = new StringBuilder();
-            for (String line : lines) {
-                if (!line.contains(bm_selectedFile)
-                        && !line.contains(HISTORY_HEADING)) {
-                    filtered_content.append(line);
-                }
+        List<String> lines = FileUtils.readLines(props.getHistoryCSV(),
+                StandardCharsets.UTF_8);
+        StringBuilder filtered_content = new StringBuilder();
+        for (String line : lines) {
+            if (!line.contains(bm_selectedFile)
+                    && !line.contains(HISTORY_HEADING)) {
+                filtered_content.append(line);
             }
-            input += filtered_content.toString();
-
         }
-
-        System.out.println("input " + input);
-        FileUtils.writeStringToFile(history, input);
+        return filtered_content.toString();
     }
 
     public Bookmark openNewBookmark() {
@@ -147,6 +158,25 @@ public class FileHandler {
             System.out.println("User selected: " + out.getPath());
         }
         return new Bookmark(out, 0);
+    }
+
+    /**
+     * Deletes temp directories
+     * - config.properties
+     * - rendered img directory
+     */
+    public void clean() throws IOException {
+        File history = props.getHistoryCSV();
+        System.out.println("Delete " + history);
+        FileUtils.forceDelete(history);
+
+        File img = new File(props.getImgPath());
+        System.out.println("delete " + img);
+        FileUtils.forceDelete(img);
+
+        File config = new File(PROPERTIES_DEFAULT_PATH);
+        System.out.println("delete " + config);
+        FileUtils.forceDelete(config);
     }
 
 }

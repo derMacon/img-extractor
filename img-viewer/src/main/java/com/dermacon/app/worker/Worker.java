@@ -64,9 +64,6 @@ class Worker implements Runnable {
     private void render() throws IOException {
         Assignment assignment = stack.getAssignment();
 
-        System.out.println("Worker: stack - " + assignment.toString());
-
-
         if (assignment != null) {
             Bookmark bookmark = assignment.getBookmark();
 
@@ -77,7 +74,7 @@ class Worker implements Runnable {
                 BufferedImage buffered_img = createBufferedImg(bookmark);
 
                 // write img
-                System.out.println("save " + outputImg.getAbsolutePath());
+//                System.out.println("save " + outputImg.getAbsolutePath());
                 ImageIOUtil.writeImage(buffered_img,
                         outputImg.getPath(),
                         props.getDpi()

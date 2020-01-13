@@ -6,13 +6,7 @@ class AssignmentStack {
 
     private static final int PAGE_INTERVALL = 2; //todo
     private LinkedList<Assignment> assignments = new LinkedList<>();
-    private LinkedList<Assignment> renderedImages = new LinkedList<>(); //
-    // todo maybe just use the file in the dir, check if up to date
-//    private int pageCnt;
-//
-//    public AssignmentStack(int pageCnt) {
-//        this.pageCnt = pageCnt;
-//    }
+    private LinkedList<Assignment> renderedImages = new LinkedList<>();
 
     /**
      * Adds a new (valid) assignment to the stack and generates the previous

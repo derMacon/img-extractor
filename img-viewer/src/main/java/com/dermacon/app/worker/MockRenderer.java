@@ -11,7 +11,7 @@ public class MockRenderer  implements Renderer {
     }
 
     @Override
-    public void renderPageIntervall(Bookmark bookmar) {
+    public void renderPageIntervall(Bookmark bookmark) {
 
     }
 

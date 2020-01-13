@@ -5,14 +5,15 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Class that links a page index to a pdf file.
+ */
 public class Bookmark {
 
     private final File pdf;
     private final int pageCnt;
 
     private int currPageIdx;
-
-    // todo builder
 
     public Bookmark(File pdf, int currPageIdx) {
         this.pdf = pdf;
@@ -26,6 +27,7 @@ public class Bookmark {
         } catch (IOException e) {
             temp = Integer.MAX_VALUE;
         }
+
         this.pageCnt = temp;
     }
 

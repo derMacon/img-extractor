@@ -12,9 +12,17 @@ import com.dermacon.app.jfx.FXMLController;
  */
 public interface Renderer {
 
-    public void setController(FXMLController controller);
+    /**
+     * Initializes threads with a given controller. Whenever one of the
+     * threads finishes rendering an assignment it will call the given
+     * controller instance to update the gui if necessary
+     * @param controller gui controller instance to update the gui with if
+     *                   necessary
+     */
+    void setController(FXMLController controller);
 
     /**
+     * todo
      * Adds the given bookmark (as an assignment) to the beginning of the
      * queue (highest priority) and adds the surrounding page numbers afterwards.
      * A constant determines how many page numbers should be rendered.
@@ -23,13 +31,12 @@ public interface Renderer {
      * 1. Add page 5: queue == [5, 6, 4, 7, 3]
      * 2. Add page 8: queue == [8, 9, 7, 10, 6, 5, 6, 4, 7, 3]
      */
-    void renderPageIntervall(Bookmark bookmar);
+    void renderPageIntervall(Bookmark bookmark);
 
     /**
      * Stops the whole rendering process
      */
-    void stop(); // todo use this method
-
+    void stop();
 
     /**
      * Necessary to clear render stack when calling the goto function of the

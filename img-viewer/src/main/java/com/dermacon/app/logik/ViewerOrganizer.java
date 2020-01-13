@@ -20,19 +20,19 @@ public class ViewerOrganizer implements Organizer {
     @Override
     public void prevPage() {
         bookmark.decPageIdx();
-        renderer.renderPageIntervall(bookmark); // todo copy bm???
+        renderer.renderPageIntervall(bookmark);
     }
 
     @Override
     public void nextPage() {
         bookmark.incPageIdx();
-        renderer.renderPageIntervall(bookmark);// todo copy bm???
+        renderer.renderPageIntervall(bookmark);
     }
 
     @Override
     public void gotoPage(int page) {
         bookmark.setCurrPageIdx(page - 1);
         renderer.clearPipeline();
-        renderer.renderPageIntervall(bookmark);// todo copy bm???
+        renderer.renderPageIntervall(bookmark);
     }
 }
