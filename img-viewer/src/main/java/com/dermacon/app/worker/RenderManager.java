@@ -41,6 +41,8 @@ public class RenderManager implements Renderer {
     public void renderPageIntervall(Bookmark bookmark) {
         Assignment assignment = new Assignment(bookmark);
         assignmentStack.addAssignment(assignment);
+
+        System.out.println("rm: stack - " + assignmentStack);
     }
 
     @Override

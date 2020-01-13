@@ -44,17 +44,14 @@ public class Bookmark {
     public void incPageIdx() {
         if (currPageIdx + 1 < pageCnt) {
             currPageIdx++;
-            System.out.println("increment page idx to: " + currPageIdx + "/" + pageCnt);
         }
     }
 
     public void decPageIdx() {
         if (currPageIdx - 1 >= 0) {
             currPageIdx--;
-            System.out.println("decrement page idx to: " + currPageIdx + "/" + pageCnt);
         }
     }
-
 
     public Bookmark copy() {
         return new Bookmark(pdf, currPageIdx);

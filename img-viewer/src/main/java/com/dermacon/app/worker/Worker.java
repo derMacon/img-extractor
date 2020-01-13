@@ -63,13 +63,16 @@ class Worker implements Runnable {
      */
     private void render() throws IOException {
         Assignment assignment = stack.getAssignment();
+
+        System.out.println("Worker: stack - " + assignment.toString());
+
+
         if (assignment != null) {
             Bookmark bookmark = assignment.getBookmark();
 
             File outputImg = assignment.translateCurrImgPath(props.getImgPath());
 
             if (shouldUpdateImg(outputImg, bookmark.getFile())) {
-                System.out.println("update img - " + bookmark);
                 initOutputDir();
                 BufferedImage buffered_img = createBufferedImg(bookmark);
 
@@ -87,8 +90,6 @@ class Worker implements Runnable {
                         props.getWidth(),
                         props.getHeight()
                 );
-            } else {
-                System.out.println("should not update img - " + assignment.getBookmark());
             }
 
             if (assignment.shouldDisplayGui()) {
