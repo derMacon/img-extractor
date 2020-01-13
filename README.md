@@ -4,13 +4,12 @@ The program copies a previewed page of a given pdf document to the systems clipb
 
 This program will be useful when working with ankidroid so that you don't have to screenshot each page you want to make a flashcard for. Just move to the page in the preview window and the page can be pasted directly.
 
+# Example:
+![Example workflow](./otherDocs/gif/pdf2img_example.gif)
+
 ### Credits
 * Image to clipboard: http://omtlab.com/java-store-image-in-clipboard/
 * JNativeHook Framework - system wide shortcut hook: https://github.com/kwhat/jnativehook/releases
 * Resize image: https://deano.me/2012/02/java-resize-an-image-keeping-the-proportions-correct/
 * Pdf box Framework - Apache: https://pdfbox.apache.org/
-
-### Todo:
-* implement clean mode, where all temp directories etc. are deleted.
-* NPE in Worker on windows laptop
 

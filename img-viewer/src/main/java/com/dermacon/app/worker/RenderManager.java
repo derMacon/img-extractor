@@ -12,7 +12,7 @@ import java.util.List;
 
 public class RenderManager implements Renderer {
 
-    private static final int THREAD_CNT = 2; //todo
+    private static final int THREAD_CNT = 8; //todo
 
     private final AssignmentStack assignmentStack;
     private final List<Thread> workers = new LinkedList<>();

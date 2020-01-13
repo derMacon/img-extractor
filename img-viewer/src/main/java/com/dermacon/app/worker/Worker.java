@@ -74,7 +74,6 @@ class Worker implements Runnable {
                 BufferedImage buffered_img = createBufferedImg(bookmark);
 
                 // write img
-//                System.out.println("save " + outputImg.getAbsolutePath());
                 ImageIOUtil.writeImage(buffered_img,
                         outputImg.getPath(),
                         props.getDpi()

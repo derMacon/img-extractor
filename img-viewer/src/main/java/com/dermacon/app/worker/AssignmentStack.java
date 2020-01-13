@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 class AssignmentStack {
 
-    private static final int PAGE_INTERVALL = 5; //todo
+    private static final int PAGE_INTERVALL = 10; //todo
     private LinkedList<Assignment> assignments = new LinkedList<>();
     private LinkedList<Assignment> renderedImages = new LinkedList<>();
 
