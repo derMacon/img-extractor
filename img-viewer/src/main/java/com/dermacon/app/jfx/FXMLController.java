@@ -50,6 +50,7 @@ public class FXMLController implements Initializable {
      */
     public void setImgVwResponsive(Stage stage) {
         imgVw_page.fitWidthProperty().bind(stage.widthProperty());
+        imgVw_page.fitHeightProperty().bind(stage.heightProperty());
     }
 
     /**
