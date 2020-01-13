@@ -4,6 +4,11 @@ The program copies a previewed page of a given pdf document to the systems clipb
 
 This program will be useful when working with ankidroid so that you don't have to screenshot each page you want to make a flashcard for. Just move to the page in the preview window and the page can be pasted directly.
 
+## Usage: 
+* `f9`: go to previous page
+* `f10`: go to previous page
+* `f11` + number + `Enter`: go to specified page number
+
 # Example:
 ![Example workflow](./otherDocs/gif/pdf2img_example.gif)
 
