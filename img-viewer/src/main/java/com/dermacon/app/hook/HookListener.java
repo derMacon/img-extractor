@@ -16,7 +16,6 @@ public class HookListener implements NativeKeyListener {
 //    private static final int GOTO_COMMAND = 65480;
 //
     private static final int ZERO_RAW_CODE = 48;
-//    private static final int NINE_RAW_CODE = 57;
 
     private boolean gotoMode = false;
     private StringBuilder pageNum_goto = new StringBuilder();

@@ -128,7 +128,6 @@ public class TerminalUI implements UserInterface {
                     bookmark = null;
                     break;
                 case 3:
-                    // todo
                     System.out.println("clean up");
                     fileHandler.clean();
                     System.exit(0);

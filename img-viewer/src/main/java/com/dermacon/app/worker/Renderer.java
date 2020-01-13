@@ -22,7 +22,6 @@ public interface Renderer {
     void setController(FXMLController controller);
 
     /**
-     * todo
      * Adds the given bookmark (as an assignment) to the beginning of the
      * queue (highest priority) and adds the surrounding page numbers afterwards.
      * A constant determines how many page numbers should be rendered.

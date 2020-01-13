@@ -51,8 +51,6 @@ public class ClipboardImage implements Transferable, ClipboardOwner {
 
     @Override
     public void lostOwnership(Clipboard clipboard, Transferable contents) {
-        // TODO Auto-generated method stub
-
     }
 
 }

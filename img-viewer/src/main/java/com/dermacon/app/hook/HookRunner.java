@@ -3,20 +3,15 @@ package com.dermacon.app.hook;
 import com.dermacon.app.dataStructures.Bookmark;
 import com.dermacon.app.dataStructures.PropertyValues;
 import com.dermacon.app.logik.Organizer;
-import com.dermacon.app.worker.RenderManager;
-import com.dermacon.app.worker.Renderer;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
-import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class HookRunner implements Runnable {
 
     private static boolean running = true;
-//    private Bookmark bookmark;
-//    private Renderer renderer;
 
     private Organizer organizer;
     private final PropertyValues props;
