@@ -50,6 +50,7 @@ public class FXMLController implements Initializable {
      */
     public void setImgVwResponsive(Stage stage) {
         imgVw_page.fitWidthProperty().bind(stage.widthProperty());
+        imgVw_page.fitHeightProperty().bind(stage.heightProperty());
     }
 
     /**
@@ -57,29 +58,23 @@ public class FXMLController implements Initializable {
      * the current page number.
      */
     public void updateGui(File page, int pageNum) {
-        System.out.println("Thread: " + Thread.currentThread().getName() +
-                ", update gui with page: " + page.getAbsolutePath());
+//        System.out.println("Thread: " + Thread.currentThread().getName() +
+//                ", update gui with page: " + page.getAbsolutePath());
         Platform.runLater(() -> {
 
-            // todo img not showing if rendering is too slow
-            while(!(page.exists())) {
+            while(!page.exists()) {
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println("waiting for img");
+                System.out.println("waiting for img: " + page);
             }
-
-//            imgVw_page.setImage(projectController.getCurrPageImage());
-
-//            File page = bookmark.getCurrPageImg();
 
             if (page != null) {
                 Image img = new Image(page.toURI().toString());
                 imgVw_page.setImage(img);
                 lbl.setText(String.valueOf(pageNum));
-//                lbl.setText(String.valueOf(bookmark.getPageNum()));
             }
 
         });

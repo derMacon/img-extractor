@@ -63,18 +63,17 @@ class Worker implements Runnable {
      */
     private void render() throws IOException {
         Assignment assignment = stack.getAssignment();
+
         if (assignment != null) {
             Bookmark bookmark = assignment.getBookmark();
 
             File outputImg = assignment.translateCurrImgPath(props.getImgPath());
 
             if (shouldUpdateImg(outputImg, bookmark.getFile())) {
-                System.out.println("update img - " + bookmark);
                 initOutputDir();
                 BufferedImage buffered_img = createBufferedImg(bookmark);
 
                 // write img
-                System.out.println("save " + outputImg.getAbsolutePath());
                 ImageIOUtil.writeImage(buffered_img,
                         outputImg.getPath(),
                         props.getDpi()
@@ -87,8 +86,6 @@ class Worker implements Runnable {
                         props.getWidth(),
                         props.getHeight()
                 );
-            } else {
-                System.out.println("should not update img - " + assignment.getBookmark());
             }
 
             if (assignment.shouldDisplayGui()) {

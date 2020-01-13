@@ -9,12 +9,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.function.Consumer;
 
 public class RenderManager implements Renderer {
 
-    private static final int THREAD_CNT = 2; //todo
+    private static final int THREAD_CNT = 8; //todo
 
     private final AssignmentStack assignmentStack;
     private final List<Thread> workers = new LinkedList<>();
@@ -23,7 +21,6 @@ public class RenderManager implements Renderer {
     public RenderManager(PropertyValues props) {
         assignmentStack = new AssignmentStack();
         this.props = props;
-
     }
 
     @Override
@@ -39,7 +36,7 @@ public class RenderManager implements Renderer {
 
     @Override
     public void renderPageIntervall(Bookmark bookmark) {
-        Assignment assignment = new Assignment(bookmark);
+        Assignment assignment = new Assignment(bookmark.copy());
         assignmentStack.addAssignment(assignment);
     }
 

@@ -16,7 +16,6 @@ public class HookListener implements NativeKeyListener {
 //    private static final int GOTO_COMMAND = 65480;
 //
     private static final int ZERO_RAW_CODE = 48;
-//    private static final int NINE_RAW_CODE = 57;
 
     private boolean gotoMode = false;
     private StringBuilder pageNum_goto = new StringBuilder();
@@ -54,26 +53,14 @@ public class HookListener implements NativeKeyListener {
     @Override
     public void nativeKeyPressed(NativeKeyEvent event) {
 //        System.out.println(event.getRawCode());
-
         int event_rawCode = event.getRawCode();
-
         if (event_rawCode == goto_command || gotoMode) {
-            System.out.println("goto command");
             handleGotoPage(event);
         } else if (event_rawCode == prev_command) {
-            System.out.println("prev command");
             organizer.prevPage();
         } else if (event_rawCode == next_command) {
-            System.out.println("next command");
             organizer.nextPage();
         }
-//        } else {
-//            System.out.println("goto page");
-//             todo
-//                Integer pageNum = translateToPageNum(event);
-//                boolean successfulCopy = this.organizer.copyToClipboard(pageNum);
-//                printState(pageNum, successfulCopy);
-//        }
     }
 
     /**
@@ -111,25 +98,6 @@ public class HookListener implements NativeKeyListener {
     private boolean isNum(NativeKeyEvent event) {
         int eventRawCode = event.getRawCode();
         return ZERO_RAW_CODE <= eventRawCode && ZERO_RAW_CODE + 9 >= eventRawCode;
-    }
-
-    /**
-     * Prints the current state of the system.
-     *
-     * @param pageNum           Page number that should be copied to the clipboard
-     * @param copiedToClipboard flag determining if the copy process to the clipboard was successful or not.
-     */
-    // todo maybe delete this???
-    private void printState(Integer pageNum, boolean copiedToClipboard) {
-        if (null != pageNum && copiedToClipboard) {
-            System.out.println("Page " + pageNum + " copied to the clipboard. Puffer cleared.");
-        } else if (null != pageNum && !copiedToClipboard) {
-            System.out.println("Error: Page " + pageNum + " cannot be copied to clipboard.");
-        } else if (gotoMode && this.pageNum_goto.length() == 0) {
-            System.out.println("User entered normal mode");
-        } else if (this.gotoMode && this.pageNum_goto.length() > 0) {
-            System.out.println("Current digit puffer: " + this.pageNum_goto);
-        }
     }
 
 }

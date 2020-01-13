@@ -1,7 +1,5 @@
 package com.dermacon.app.logik;
 
-import com.dermacon.app.jfx.FXMLController;
-
 /**
  * Class holding it all together.
  * Delegates the appropriate data to the actual renderer and the different
@@ -33,9 +31,10 @@ public interface Organizer {
      */
     void nextPage();
 
-
     /**
-     * todo
+     * Renders the given page
+     * copies it to the systems clipboard
+     * shows it in the preview window
      * @param page
      */
     void gotoPage(int page);

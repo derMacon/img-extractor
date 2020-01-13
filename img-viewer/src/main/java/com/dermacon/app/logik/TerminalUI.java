@@ -38,6 +38,7 @@ public class TerminalUI implements UserInterface {
 
     private static final String NEW_PDF_COMMAND = "new pdf document";
     private static final String EXIT_COMMAND = "to exit program";
+    private static final String CLEAN_COMMAND = "clean temp files / dirs";
 
     private static final String INSTRUCTIONS = TITLE + "\n"
             + "To edit the properties edit the ./config.properties file.\n"
@@ -56,10 +57,12 @@ public class TerminalUI implements UserInterface {
 
     private static final char DELIMITER_CHAR = '-';
 
-    private final List<Bookmark> bookmarks;
+//    private final List<Bookmark> bookmarks;
+    private FileHandler fileHandler;
 
-    public TerminalUI(List<Bookmark> bookmarks, PropertyValues props) {
-        this.bookmarks = bookmarks;
+    public TerminalUI(FileHandler fileHandler, PropertyValues props) {
+//        this.bookmarks = bookmarks;
+        this.fileHandler = fileHandler;
         displayOptions(props);
     }
 
@@ -69,13 +72,13 @@ public class TerminalUI implements UserInterface {
     }
 
     private void displayOptions(PropertyValues props) {
-        List<String> options = bookmarks.stream()
+        List<String> options = fileHandler.getBookmarks().stream()
                 .map(Bookmark::toString)
-//                .map(File::toString)
                 .collect(Collectors.toList());
 
         options.add(0, EXIT_COMMAND);
         options.add(1, NEW_PDF_COMMAND);
+        options.add(2, CLEAN_COMMAND);
         String strOptions = formatLst(options);
 
         String delimiter = createDelimiter(options);
@@ -91,20 +94,15 @@ public class TerminalUI implements UserInterface {
         Bookmark out = null;
         try {
             out = extractOption(scanner.nextLine());
-        } catch (InvalidInputException e) {
+        } catch (InvalidInputException | IOException e) {
             System.out.print(WARNING);
             out = evaluateUserInput();
         }
 
-//        while (correctInput) {
-//            System.out.print(WARNING);
-//            out = extractOption(scanner.nextLine());
-//        }
-
         return out;
     }
 
-    private Bookmark extractOption(String in) throws InvalidInputException {
+    private Bookmark extractOption(String in) throws InvalidInputException, IOException {
         Integer opt = null;
         Bookmark bookmark = null;
         try {
@@ -112,6 +110,8 @@ public class TerminalUI implements UserInterface {
         } catch (NumberFormatException e) {
             bookmark = null;
         }
+
+        List<Bookmark> bookmarks = fileHandler.getBookmarks();
 
         int bm_cnt = bookmark == null ? Integer.MAX_VALUE :
                 bookmarks.size();
@@ -127,8 +127,13 @@ public class TerminalUI implements UserInterface {
                 case 2:
                     bookmark = null;
                     break;
+                case 3:
+                    System.out.println("clean up");
+                    fileHandler.clean();
+                    System.exit(0);
+                    break;
                 default:
-                    bookmark = bookmarks.get(opt - 3);
+                    bookmark = bookmarks.get(opt - 4);
             }
 
         }

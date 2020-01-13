@@ -94,15 +94,16 @@ public class PropertyValues {
 
     @Override
     public String toString() {
-        return "props: {height: " + height
-                + ", width: " + width
-                + ", dpi: " + dpi
-                + ", imgPath: " + imgPath
-                + ", historyCSV: " + historyCSV
-                + ", next_rawCode: " + next_command
-                + ", prev_rawCode: " + prev_command
-                + ", goto_rawCode: " + goto_command
-                + "}";
+        return "props: {"
+                + "\n\theight: " + height
+                + "\n\twidth: " + width
+                + "\n\tdpi: " + dpi
+                + "\n\timgPath: " + imgPath
+                + "\n\thistoryCSV: " + historyCSV
+                + "\n\tnext_rawCode: " + next_command
+                + "\n\tprev_rawCode: " + prev_command
+                + "\n\tgoto_rawCode: " + goto_command
+                + "\n}";
     }
 
 

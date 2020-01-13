@@ -22,7 +22,7 @@ public class Assignment {
     public File translateCurrImgPath(String path) {
         return new File(path + File.separator
                 + removeExtension(bookmark.getFile().getName()) + "_"
-                + (bookmark.getPageIdx() + ".png"));
+                + ((bookmark.getPageIdx() + 1) + ".png"));
     }
 
     public Bookmark getBookmark() {
@@ -65,6 +65,11 @@ public class Assignment {
         // valid afterwards
         newCopy.incPageIdx();
         return new Assignment(newCopy);
+    }
+
+    @Override
+    public String toString() {
+        return "Assignment: " + bookmark.toString();
     }
 
 }

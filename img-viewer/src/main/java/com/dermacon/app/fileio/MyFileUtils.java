@@ -14,27 +14,37 @@ import java.util.List;
 public class MyFileUtils {
 
     public static File findResourceFile(String fileName) {
+
+//        getClass().getClassLoader().getResourceAsStream("resources/");
+
+        return null;
+
+//        File out = new File(System.getProperty("java.class" +
+//                ".path") + "/src/main/resources/config.properties");
+//        System.out.println("file exists: " + out.exists());
+//        return out;
+
+
 //        try {
 //            main(new String[0]);
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        List<File> list = MyFileUtils.getFiles(System.getProperty("java.class.path"));
-        System.out.println("file lst: ");
-        System.out.println(list);
-        Iterator<File> it = list.iterator();
-        File out = null;
-        File temp = null;
-        while (out == null && it.hasNext()) {
-            temp = it.next();
-            if (temp.getName().equals(fileName)) {
-                out = temp;
-            }
-        }
-        return out;
+//        List<File> list = MyFileUtils.getFiles(System.getProperty("java.class" +
+//                ".path") + "/src/main/resources");
+//        System.out.println("file lst: ");
+//        System.out.println(list);
+//        Iterator<File> it = list.iterator();
+//        File out = null;
+//        File temp = null;
+//        while (out == null && it.hasNext()) {
+//            temp = it.next();
+//            if (temp.getName().equals(fileName)) {
+//                out = temp;
+//            }
+//        }
+//        return out;
     }
-
-
 
     /**
      * list files in the given directory and subdirs (with recursion)
@@ -42,6 +52,7 @@ public class MyFileUtils {
      * @return
      */
     private static List<File> getFiles(String paths) {
+        System.out.println("get files: " + paths);
         List<File> filesList = new ArrayList<File>();
         for (final String path : paths.split(File.pathSeparator)) {
             final File file = new File(path);

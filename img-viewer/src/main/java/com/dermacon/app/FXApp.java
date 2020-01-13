@@ -22,11 +22,9 @@ import java.io.IOException;
 
 public class FXApp extends Application {
 
-//    private boolean running = true;
+    private static final int WINDOW_HEIGHT = 1000;
+    private static final int WINDOW_WIDTH = 1000;
 
-    //    private static Bookmark bookmark;
-//    private static Organizer organizer;
-//    private static PropertyValues props;
     private static Renderer renderer;
 
     @Override
@@ -37,13 +35,14 @@ public class FXApp extends Application {
         Parent parent = fxmlLoader.load();
 
         FXMLController controller = fxmlLoader.getController();
-//        organizer.setFXController(controller);
         renderer.setController(controller);
-//        controller.setBookmark(bookmark);
 
         Scene scene = new Scene(parent);
         stage.setScene(scene);
-//        controller.setImgVwResponsive(stage);
+        stage.setHeight(WINDOW_HEIGHT);
+        stage.setWidth(WINDOW_WIDTH);
+        stage.setTitle("Clipboard Preview");
+        controller.setImgVwResponsive(stage);
         stage.show();
     }
 
@@ -65,49 +64,31 @@ public class FXApp extends Application {
         try {
             FileHandler fileHandler = new FileHandler(args);
             PropertyValues props = fileHandler.getProps();
-            UserInterface ui = new TerminalUI(fileHandler.getBookmarks(),
+            UserInterface ui = new TerminalUI(fileHandler,
                     props);
 
             Bookmark bookmark = ui.waitForUserSelection();
-
-
 
             if (bookmark == null) {
                 bookmark = fileHandler.openNewBookmark();
                 fileHandler.prependsHistory(bookmark);
             }
 
-            // mock data for testing
-//            props = new MockProperties();
-//            UserInterface ui = new MockTerminalUI();
-//            bookmark = new MockBookmark();
-//            Renderer renderer = new MockRenderer();
-
-//            Consumer<File> updater = new Updater();
             renderer = new RenderManager(props);
             Organizer organizer = new ViewerOrganizer(bookmark, renderer);
             Thread runner = new Thread(new HookRunner(organizer, props));
             runner.start();
 
-            System.out.println("launch");
             launch(args);
 
-//            ui.waitForExit();
             renderer.stop();
 //            runner.join();
 
-            // todo set history csv file
             fileHandler.prependsHistory(bookmark);
-
-
-
-
             System.out.println("user terminated program");
             System.exit(0);
-
         } catch (IOException | CSVException e) {
-//             todo
-            e.printStackTrace();
+            System.err.println("ups something went wrong - " + e.getMessage());
         }
 
     }
