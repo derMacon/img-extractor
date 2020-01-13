@@ -9,10 +9,10 @@ This program will be useful when working with ankidroid so that you don't have t
 * `f10`: go to previous page
 * `f11` + number + `Enter`: go to specified page number
 
-# Example:
+## Example:
 ![Example workflow](./otherDocs/gif/pdf2img_example.gif)
 
-### Credits
+## Credits
 * Image to clipboard: http://omtlab.com/java-store-image-in-clipboard/
 * JNativeHook Framework - system wide shortcut hook: https://github.com/kwhat/jnativehook/releases
 * Resize image: https://deano.me/2012/02/java-resize-an-image-keeping-the-proportions-correct/
