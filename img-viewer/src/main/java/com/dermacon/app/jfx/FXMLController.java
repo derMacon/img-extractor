@@ -57,7 +57,7 @@ public class FXMLController implements Initializable {
      * Update the guis image view with the current image and the label with
      * the current page number.
      */
-    public void updateGui(File page, int pageNum) {
+    public synchronized void updateGui(File page, int pageNum) {
 //        System.out.println("Thread: " + Thread.currentThread().getName() +
 //                ", update gui with page: " + page.getAbsolutePath());
         Platform.runLater(() -> {
