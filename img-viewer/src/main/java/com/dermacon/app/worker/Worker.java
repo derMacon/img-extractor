@@ -1,7 +1,9 @@
 package com.dermacon.app.worker;
 
+import com.dermacon.app.dataStructures.AssignmentStack;
 import com.dermacon.app.dataStructures.Bookmark;
 import com.dermacon.app.dataStructures.ClipboardImage;
+import com.dermacon.app.dataStructures.MainStack;
 import com.dermacon.app.dataStructures.PropertyValues;
 import com.dermacon.app.jfx.FXMLController;
 import org.apache.commons.io.FileUtils;
@@ -26,7 +28,7 @@ class Worker implements Runnable {
     /**
      * Assignment stack instance holding a thread safe bookmark stack
      */
-    private final AssignmentStack stack;
+    private final MainStack assignments;
 
     /**
      * Property values distributed by the .config file. Holds information
@@ -36,9 +38,11 @@ class Worker implements Runnable {
 
     private final FXMLController controller;
 
-    public Worker(AssignmentStack stack, PropertyValues props,
+    // todo builder
+    public Worker(MainStack assignments,
+                  PropertyValues props,
                   FXMLController controller) {
-        this.stack = stack;
+        this.assignments = assignments;
         this.props = props;
         this.controller = controller;
     }
@@ -47,7 +51,7 @@ class Worker implements Runnable {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                render();
+                render(getAssignment());
             } catch (IOException e) {
                 System.err.println("image render error: " + e.getMessage());
                 Thread.currentThread().interrupt();
@@ -61,39 +65,52 @@ class Worker implements Runnable {
      * @return an cliboard image which can be saved in the systems clipboard
      * @throws IOException Exception that will be thrown if the selected pdf document cannot be read
      */
-    private void render() throws IOException {
-        Assignment assignment = stack.getAssignment();
+    protected void render(Assignment assignment) throws IOException {
+        System.out.println("thr: " + Thread.currentThread().getName() +
+                "assignment: " + assignment);
 
-        if (assignment != null) {
-            Bookmark bookmark = assignment.getBookmark();
+        assert assignment != null;
 
-            File outputImg = assignment.translateCurrImgPath(props.getImgPath());
+        Bookmark bookmark = assignment.getBookmark();
 
-            if (shouldUpdateImg(outputImg, bookmark.getFile())) {
-                initOutputDir();
-                BufferedImage buffered_img = createBufferedImg(bookmark);
+        File outputImg = assignment.translateCurrImgPath();
 
-                // write img
-                ImageIOUtil.writeImage(buffered_img,
-                        outputImg.getPath(),
-                        props.getDpi()
-                );
+        if (shouldUpdateImg(outputImg, bookmark.getFile())) {
+            initOutputDir();
+            BufferedImage buffered_img = createBufferedImg(bookmark);
 
-                // resize img to ./config.property values
-                ImageResizer.resizeImage(
-                        outputImg.getPath(),
-                        outputImg.getPath(),
-                        props.getWidth(),
-                        props.getHeight()
-                );
-            }
+            // write img
+            ImageIOUtil.writeImage(buffered_img,
+                    outputImg.getPath(),
+                    props.getDpi()
+            );
 
-            if (assignment.shouldDisplayGui()) {
-                controller.updateGui(outputImg, bookmark.getPageIdx() + 1);
-                copyToClipboard(outputImg);
-            }
+            // resize img to ./config.property values
+            ImageResizer.resizeImage(
+                    outputImg.getPath(),
+                    outputImg.getPath(),
+                    props.getWidth(),
+                    props.getHeight()
+            );
         }
 
+        if (assignment.shouldDisplayGui()) {
+            System.out.println("assignment: " + assignment);
+            controller.updateGui(outputImg, bookmark.getPageIdx() + 1);
+            copyToClipboard(outputImg);
+        }
+
+    }
+
+    private Assignment getAssignment() {
+        Assignment out = assignments.getAssignment();
+
+        if (out == null) {
+            assignments.blockThread();
+            out = getAssignment();
+        }
+
+        return out;
     }
 
     /**
@@ -138,7 +155,6 @@ class Worker implements Runnable {
     }
 
     private BufferedImage createBufferedImg(Bookmark bookmark) throws IOException {
-
         File file = bookmark.getFile();
         PDDocument pdf = PDDocument.load(file);
         PDFRenderer pdfRenderer = new PDFRenderer(pdf);

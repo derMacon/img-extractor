@@ -1,33 +1,53 @@
 package com.dermacon.app.worker;
 
 import com.dermacon.app.dataStructures.Bookmark;
+import com.dermacon.app.dataStructures.MainStack;
 import com.dermacon.app.dataStructures.PropertyValues;
 import com.dermacon.app.jfx.FXMLController;
-import org.apache.pdfbox.pdmodel.PDDocument;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
 public class RenderManager implements Renderer {
 
-    private static final int THREAD_CNT = 8; //todo
+    private static final int BACKGROUND_THREAD_CNT = 8; //todo
+    private static final int FOREGROUND_THREAD_CNT = 4; //todo
 
-    private final AssignmentStack assignmentStack;
+    private final MainStack displayStack = new MainStack(true);
+    private final MainStack lookaheadStack = new MainStack(false);
+    private final MainStack lookbackStack = new MainStack(false);
+
     private final List<Thread> workers = new LinkedList<>();
     private final PropertyValues props;
 
     public RenderManager(PropertyValues props) {
-        assignmentStack = new AssignmentStack();
         this.props = props;
     }
 
     @Override
     public void setController(FXMLController controller) {
+        Thread mainRenderingThread = new Thread(new Worker(displayStack, props,
+                controller));
+        workers.add(mainRenderingThread);
+
+        // init foreground tasks
         Thread thread;
-        for (int i = 0; i < THREAD_CNT; i++) {
-            thread = new Thread(new Worker(assignmentStack,
+        for (int i = 0; i < FOREGROUND_THREAD_CNT; i++) {
+            thread = new Thread(new Worker(displayStack,
+                    props, controller));
+            thread.start();
+            workers.add(thread);
+        }
+
+        // init background tasks
+        for (int i = 0; i < BACKGROUND_THREAD_CNT; i++) {
+            thread = new Thread(new LookaheadWorker(lookaheadStack,
+                    props, controller));
+            thread.start();
+            workers.add(thread);
+        }
+        for (int i = 0; i < BACKGROUND_THREAD_CNT; i++) {
+            thread = new Thread(new LookbehindWorker(lookbackStack,
                     props, controller));
             thread.start();
             workers.add(thread);
@@ -36,8 +56,28 @@ public class RenderManager implements Renderer {
 
     @Override
     public void renderPageIntervall(Bookmark bookmark) {
-        Assignment assignment = new Assignment(bookmark.copy());
-        assignmentStack.addAssignment(assignment);
+        System.out.println("render pi" + bookmark);
+        Assignment assignment = new Assignment(bookmark, props.getImgPath());
+        displayStack.addAssignment(assignment);
+        lookaheadStack.addAssignment(assignment);
+        lookbackStack.addAssignment(assignment);
+
+//        Thread main = new Thread(() -> {
+//            displayStack.addAssignment(assignment.displayGui(true));
+//            System.out.println("appended 1");
+//        });
+//        main.start();
+//        main.interrupt();
+
+//        Thread thr = new Thread(() -> {
+//            for (int i = 0; i < BACKGROUND_THREAD_CNT; i++) {
+//                lookaheadStack.addAssignment(new Assignment(bookmark).prev().displayGui(false));
+//                lookaheadStack.addAssignment(new Assignment(bookmark).next().displayGui(false));
+//                System.out.println("appended 2");
+//            }
+//        });
+//        thr.start();
+//        thr.interrupt();
     }
 
     @Override
@@ -49,6 +89,7 @@ public class RenderManager implements Renderer {
 
     @Override
     public void clearPipeline() {
-        this.assignmentStack.clear();
+        // todo
+//        this.displayStack.clear();
     }
 }

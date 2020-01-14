@@ -1,8 +1,14 @@
-package com.dermacon.app.worker;
+package com.dermacon.app.dataStructures;
+
+import com.dermacon.app.worker.Assignment;
 
 import java.util.LinkedList;
 
-class AssignmentStack {
+/**
+ * Class blocks the current thread if there are no more elements in the
+ * collection.
+ */
+public class BackgroundStack implements AssignmentStack {
 
 //    private static final int PAGE_INTERVALL = 10; //todo
     private LinkedList<Assignment> assignments = new LinkedList<>();
@@ -14,6 +20,7 @@ class AssignmentStack {
      *
      * @param assignment
      */
+    @Override
     public synchronized void addAssignment(Assignment assignment) {
         if (assignment != null) {
             assignments.add(0, assignment.displayGui(true));
@@ -26,15 +33,16 @@ class AssignmentStack {
         this.notifyAll();
     }
 
+    @Override
     public synchronized Assignment getAssignment() {
 
-        while (assignments.isEmpty() && !Thread.currentThread().isInterrupted()) {
-            try {
-                this.wait();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
+//        while (assignments.isEmpty() && !Thread.currentThread().isInterrupted()) {
+//            try {
+//                this.wait();
+//            } catch (InterruptedException e) {
+//                Thread.currentThread().interrupt();
+//            }
+//        }
 
         Assignment assignment = null;
         if (!Thread.currentThread().isInterrupted()) {
@@ -53,6 +61,12 @@ class AssignmentStack {
         return assignment;
     }
 
+    @Override
+    public synchronized void blockThread() {
+        // todo nothing - part of the main_stack
+    }
+
+    // todo
     public void clear() {
         this.assignments.clear();
     }
