@@ -66,11 +66,9 @@ class Worker implements Runnable {
      * @throws IOException Exception that will be thrown if the selected pdf document cannot be read
      */
     protected void render(Assignment assignment) throws IOException {
+        assert assignment != null;
         System.out.println("thr: " + Thread.currentThread().getName() +
                 "assignment: " + assignment);
-
-        assert assignment != null;
-
         Bookmark bookmark = assignment.getBookmark();
 
         File outputImg = assignment.translateCurrImgPath();
@@ -94,7 +92,9 @@ class Worker implements Runnable {
             );
         }
 
-        if (assignment.shouldDisplayGui()) {
+//        if (assignment.shouldDisplayGui()) {
+        System.out.println("disp: " + assignments.shouldDisplay());
+        if (this.assignments.shouldDisplay()) {
             System.out.println("assignment: " + assignment);
             controller.updateGui(outputImg, bookmark.getPageIdx() + 1);
             copyToClipboard(outputImg);

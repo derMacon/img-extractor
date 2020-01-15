@@ -30,7 +30,7 @@ public class RenderManager implements Renderer {
                 controller));
         workers.add(mainRenderingThread);
 
-        // init foreground tasks
+        // init foreground / main tasks
         Thread thread;
         for (int i = 0; i < FOREGROUND_THREAD_CNT; i++) {
             thread = new Thread(new Worker(displayStack,
@@ -46,6 +46,7 @@ public class RenderManager implements Renderer {
             thread.start();
             workers.add(thread);
         }
+
         for (int i = 0; i < BACKGROUND_THREAD_CNT; i++) {
             thread = new Thread(new LookbehindWorker(lookbackStack,
                     props, controller));
@@ -56,28 +57,13 @@ public class RenderManager implements Renderer {
 
     @Override
     public void renderPageIntervall(Bookmark bookmark) {
-        System.out.println("render pi" + bookmark);
+        System.out.println("render pi " + bookmark);
         Assignment assignment = new Assignment(bookmark, props.getImgPath());
         displayStack.addAssignment(assignment);
         lookaheadStack.addAssignment(assignment);
         lookbackStack.addAssignment(assignment);
 
-//        Thread main = new Thread(() -> {
-//            displayStack.addAssignment(assignment.displayGui(true));
-//            System.out.println("appended 1");
-//        });
-//        main.start();
-//        main.interrupt();
-
-//        Thread thr = new Thread(() -> {
-//            for (int i = 0; i < BACKGROUND_THREAD_CNT; i++) {
-//                lookaheadStack.addAssignment(new Assignment(bookmark).prev().displayGui(false));
-//                lookaheadStack.addAssignment(new Assignment(bookmark).next().displayGui(false));
-//                System.out.println("appended 2");
-//            }
-//        });
-//        thr.start();
-//        thr.interrupt();
+        System.out.println("disp stack: " + displayStack.shouldDisplay());
     }
 
     @Override

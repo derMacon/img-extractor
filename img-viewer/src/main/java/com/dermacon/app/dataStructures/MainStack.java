@@ -35,7 +35,7 @@ public class MainStack {
 //        }
     }
 
-    public boolean isShouldDisplay() {
+    public boolean shouldDisplay() {
         return shouldDisplay;
     }
 
@@ -52,5 +52,10 @@ public class MainStack {
                 Thread.currentThread().interrupt();
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return this.assignments.toString();
     }
 }

@@ -6,7 +6,7 @@ import com.dermacon.app.jfx.FXMLController;
 
 import java.io.IOException;
 
-public class LookaheadWorker extends Worker{
+public class LookaheadWorker extends Worker {
 
     private final int interval_width = 5; // todo
 
