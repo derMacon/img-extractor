@@ -62,8 +62,6 @@ public class RenderManager implements Renderer {
         displayStack.addAssignment(assignment);
         lookaheadStack.addAssignment(assignment);
         lookbackStack.addAssignment(assignment);
-
-        System.out.println("disp stack: " + displayStack.shouldDisplay());
     }
 
     @Override

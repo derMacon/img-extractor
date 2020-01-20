@@ -67,8 +67,8 @@ class Worker implements Runnable {
      */
     protected void render(Assignment assignment) throws IOException {
         assert assignment != null;
-        System.out.println("thr: " + Thread.currentThread().getName() +
-                "assignment: " + assignment);
+//        System.out.println("thr: " + Thread.currentThread().getName() +
+//                "assignment: " + assignment);
         Bookmark bookmark = assignment.getBookmark();
 
         File outputImg = assignment.translateCurrImgPath();
@@ -92,10 +92,7 @@ class Worker implements Runnable {
             );
         }
 
-//        if (assignment.shouldDisplayGui()) {
-        System.out.println("disp: " + assignments.shouldDisplay());
         if (this.assignments.shouldDisplay()) {
-            System.out.println("assignment: " + assignment);
             controller.updateGui(outputImg, bookmark.getPageIdx() + 1);
             copyToClipboard(outputImg);
         }

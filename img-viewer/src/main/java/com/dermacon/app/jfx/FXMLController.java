@@ -58,8 +58,8 @@ public class FXMLController implements Initializable {
      * the current page number.
      */
     public synchronized void updateGui(File page, int pageNum) {
-        System.out.println("Thread: " + Thread.currentThread().getName() +
-                ", update gui with page: " + page.getAbsolutePath());
+//        System.out.println("Thread: " + Thread.currentThread().getName() +
+//                ", update gui with page: " + page.getAbsolutePath());
         Platform.runLater(() -> {
 
             while(!page.exists()) {
