@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.InvalidPropertiesFormatException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -187,6 +188,5 @@ public class FileHandler {
         FileUtils.forceDelete(config);
     }
 
-//    public void editPropertyValue(String)
 
 }

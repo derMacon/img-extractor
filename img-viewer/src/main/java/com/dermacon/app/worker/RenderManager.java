@@ -57,7 +57,7 @@ public class RenderManager implements Renderer {
 
     @Override
     public void renderPageIntervall(Bookmark bookmark) {
-        System.out.println("render pi " + bookmark);
+//        System.out.println("render pi " + bookmark);
         Assignment assignment = new Assignment(bookmark, props.getImgPath());
         displayStack.addAssignment(assignment);
         lookaheadStack.addAssignment(assignment);
@@ -73,7 +73,7 @@ public class RenderManager implements Renderer {
 
     @Override
     public void clearPipeline() {
-        // todo
+        // todo delete method
 //        this.displayStack.clear();
     }
 }
