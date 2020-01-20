@@ -152,6 +152,11 @@ public class FileHandler {
         return filtered_content.toString();
     }
 
+    /**
+     * todo filter so that only pdfs will be selectable
+     * Opens file chooser to select a pdf.
+     * @return bookmark instance wrapped around the pdf
+     */
     public Bookmark openNewBookmark() {
         JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
         int opt = chooser.showOpenDialog(null);
@@ -181,5 +186,7 @@ public class FileHandler {
         System.out.println("delete " + config);
         FileUtils.forceDelete(config);
     }
+
+//    public void editPropertyValue(String)
 
 }

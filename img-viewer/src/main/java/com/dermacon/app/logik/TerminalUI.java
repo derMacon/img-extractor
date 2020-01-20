@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * ui implementation using the terminal
+ */
 public class TerminalUI implements UserInterface {
 
 //    private static final String TITLE = "PDFToImage-Viewer V2";
@@ -39,6 +42,7 @@ public class TerminalUI implements UserInterface {
     private static final String NEW_PDF_COMMAND = "new pdf document";
     private static final String EXIT_COMMAND = "to exit program";
     private static final String CLEAN_COMMAND = "clean temp files / dirs";
+    private static final String SET_SHORTCUTS = "set shortcuts";
 
     private static final String INSTRUCTIONS = TITLE + "\n"
             + "To edit the properties edit the ./config.properties file.\n"
@@ -57,11 +61,9 @@ public class TerminalUI implements UserInterface {
 
     private static final char DELIMITER_CHAR = '-';
 
-//    private final List<Bookmark> bookmarks;
     private FileHandler fileHandler;
 
     public TerminalUI(FileHandler fileHandler, PropertyValues props) {
-//        this.bookmarks = bookmarks;
         this.fileHandler = fileHandler;
         displayOptions(props);
     }
@@ -71,6 +73,11 @@ public class TerminalUI implements UserInterface {
         return evaluateUserInput();
     }
 
+    /**
+     * Displays given property values and displays all the possible commands
+     * which the user can call
+     * @param props property values distrubuted by the .properties file
+     */
     private void displayOptions(PropertyValues props) {
         List<String> options = fileHandler.getBookmarks().stream()
                 .map(Bookmark::toString)
@@ -79,6 +86,7 @@ public class TerminalUI implements UserInterface {
         options.add(0, EXIT_COMMAND);
         options.add(1, NEW_PDF_COMMAND);
         options.add(2, CLEAN_COMMAND);
+        options.add(3, SET_SHORTCUTS);
         String strOptions = formatLst(options);
 
         String delimiter = createDelimiter(options);
@@ -89,6 +97,11 @@ public class TerminalUI implements UserInterface {
         System.out.print(menu);
     }
 
+    /**
+     * Evaluates the user input to a Bookmark
+     * @return bookmark which the user selected, null if user executed a
+     * command which does not select a bookmark.
+     */
     private Bookmark evaluateUserInput() {
         Scanner scanner = new Scanner(System.in);
         Bookmark out = null;
@@ -102,6 +115,13 @@ public class TerminalUI implements UserInterface {
         return out;
     }
 
+    /**
+     * Extracts a bookmark from the given terminal input given by the user.
+     * @param in terminal command distributed by the user
+     * @return selected Bookmark instance
+     * @throws InvalidInputException invalid terminal input (no number in range)
+     * @throws IOException bookmark cannot be created
+     */
     private Bookmark extractOption(String in) throws InvalidInputException, IOException {
         Integer opt = null;
         Bookmark bookmark = null;
@@ -132,8 +152,12 @@ public class TerminalUI implements UserInterface {
                     fileHandler.clean();
                     System.exit(0);
                     break;
+                case 4:
+                    System.out.println(SET_SHORTCUTS);
+                    System.exit(0);
+                    break;
                 default:
-                    bookmark = bookmarks.get(opt - 4);
+                    bookmark = bookmarks.get(opt - 5);
             }
 
         }
