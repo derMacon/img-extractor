@@ -138,6 +138,14 @@ class Worker implements Runnable {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         ImageIcon icon = new ImageIcon(page.getPath(), "");
 
+//        // resize img to ./config.property values
+//        ImageResizer.resizeImage(
+//                page.getPath(),
+//                page.getPath(),
+//                props.getClipboard_width(),
+//                props.getClipboard_height()
+//        );
+
         ClipboardImage clipboardImage = new ClipboardImage(icon.getImage());
         clipboard.setContents(clipboardImage, clipboardImage);
 

@@ -21,9 +21,14 @@ public class PropertyValues {
     public static final String GOTO_PAGE = "gotoPage";
     public static final String IMG_PATH = "imgPath";
     public static final String HISTORY_CSV = "historyCSV";
-    public static final String DPI = "dpi";
-    public static final String HEIGHT = "height";
-    public static final String WIDTH = "width";
+
+    public static final String DISPLAY_DPI = "display_dpi";
+    public static final String DISPLAY_HEIGHT = "display_height";
+    public static final String DISPLAY_WIDTH = "display_width";
+
+    public static final String CLIPBOARD_DPI = "clipboard_dpi";
+    public static final String CLIPBOARD_HEIGHT = "clipboard_height";
+    public static final String CLIPBOARD_WIDTH = "clipboard_width";
 
     private int display_height = 0;
     private int display_width = 0;
@@ -63,10 +68,13 @@ public class PropertyValues {
                         "' not found in the classpath");
             }
 
-            display_width = Integer.parseInt(prop.getProperty(WIDTH));
-            display_height = Integer.parseInt(prop.getProperty(HEIGHT));
-            display_dpi = Integer.parseInt(prop.getProperty(DPI));
+            display_width = Integer.parseInt(prop.getProperty(DISPLAY_WIDTH));
+            display_height = Integer.parseInt(prop.getProperty(DISPLAY_HEIGHT));
+            display_dpi = Integer.parseInt(prop.getProperty(DISPLAY_DPI));
 
+            clipboard_width = Integer.parseInt(prop.getProperty(CLIPBOARD_WIDTH));
+            clipboard_height = Integer.parseInt(prop.getProperty(CLIPBOARD_HEIGHT));
+            clipboard_dpi = Integer.parseInt(prop.getProperty(CLIPBOARD_DPI));
 
             prev_command = Integer.parseInt(prop.getProperty(NEXT_PAGE));
             next_command = Integer.parseInt(prop.getProperty(PREV_PAGE));
@@ -92,6 +100,18 @@ public class PropertyValues {
 
     public int getDisplay_dpi() {
         return display_dpi;
+    }
+
+    public int getClipboard_height() {
+        return clipboard_height;
+    }
+
+    public int getClipboard_width() {
+        return clipboard_width;
+    }
+
+    public int getClipboard_dpi() {
+        return clipboard_dpi;
     }
 
     public String getImgPath() {
