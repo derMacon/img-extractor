@@ -64,15 +64,13 @@ public class FXApp extends Application {
         try {
             FileHandler fileHandler = new FileHandler(args);
             PropertyValues props = fileHandler.getProps();
-            UserInterface ui = new TerminalUI(fileHandler,
-                    props);
+            UserInterface ui = new TerminalUI(fileHandler);
 
-            Bookmark bookmark = ui.waitForUserSelection();
-
-            if (bookmark == null) {
-                bookmark = fileHandler.openNewBookmark();
-                fileHandler.prependsHistory(bookmark);
-            }
+            Bookmark bookmark = null;
+            do {
+                ui.displayOptions();
+                bookmark = ui.waitForUserSelection();
+            } while (bookmark == null);
 
             renderer = new RenderManager(props);
             Organizer organizer = new ViewerOrganizer(bookmark, renderer);

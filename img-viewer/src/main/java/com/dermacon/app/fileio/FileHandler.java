@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.InvalidPropertiesFormatException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -152,6 +153,11 @@ public class FileHandler {
         return filtered_content.toString();
     }
 
+    /**
+     * todo filter so that only pdfs will be selectable
+     * Opens file chooser to select a pdf.
+     * @return bookmark instance wrapped around the pdf
+     */
     public Bookmark openNewBookmark() {
         JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
         int opt = chooser.showOpenDialog(null);
@@ -169,9 +175,9 @@ public class FileHandler {
      * - rendered img directory
      */
     public void clean() throws IOException {
-        File history = props.getHistoryCSV();
-        System.out.println("Delete " + history);
-        FileUtils.forceDelete(history);
+//        File history = props.getHistoryCSV();
+//        System.out.println("Delete " + history);
+//        FileUtils.forceDelete(history);
 
         File img = new File(props.getImgPath());
         System.out.println("delete " + img);
@@ -181,5 +187,6 @@ public class FileHandler {
         System.out.println("delete " + config);
         FileUtils.forceDelete(config);
     }
+
 
 }

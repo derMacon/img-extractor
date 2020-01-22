@@ -13,14 +13,17 @@ public class Assignment {
      * actually be displayed on the gui
      * False: run as a simple background assignment (buffer for feature renders)
      */
-    private boolean displayed_on_gui = false;
+    private boolean displayed_on_gui = true;
 
-    public Assignment(Bookmark bookmark) {
-        this.bookmark = bookmark;
+    private final String imgPath;
+
+    public Assignment(Bookmark bookmark, String imgPath) {
+        this.bookmark = bookmark.copy();
+        this.imgPath = imgPath;
     }
 
-    public File translateCurrImgPath(String path) {
-        return new File(path + File.separator
+    public File translateCurrImgPath() {
+        return new File(imgPath + File.separator
                 + removeExtension(bookmark.getFile().getName()) + "_"
                 + ((bookmark.getPageIdx() + 1) + ".png"));
     }
@@ -56,7 +59,7 @@ public class Assignment {
         // following function is bound safe, no need to check if copy is
         // valid afterwards
         newCopy.decPageIdx();
-        return new Assignment(newCopy);
+        return new Assignment(newCopy, imgPath);
     }
 
     public Assignment next() {
@@ -64,12 +67,12 @@ public class Assignment {
         // following function is bound safe, no need to check if copy is
         // valid afterwards
         newCopy.incPageIdx();
-        return new Assignment(newCopy);
+        return new Assignment(newCopy, imgPath);
     }
 
     @Override
     public String toString() {
-        return "Assignment: " + bookmark.toString();
+        return "Assignment: " + bookmark.toString() + ",  displayed: " + this.displayed_on_gui;
     }
 
 }

@@ -36,7 +36,6 @@ public class FXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lbl.setAlignment(Pos.CENTER);
         lbl.setFont(new Font("Cambria", 25));
-//        updateGui();
     }
 
     public void setBookmark(Bookmark bookmark) {
@@ -57,7 +56,7 @@ public class FXMLController implements Initializable {
      * Update the guis image view with the current image and the label with
      * the current page number.
      */
-    public void updateGui(File page, int pageNum) {
+    public synchronized void updateGui(File page, int pageNum) {
 //        System.out.println("Thread: " + Thread.currentThread().getName() +
 //                ", update gui with page: " + page.getAbsolutePath());
         Platform.runLater(() -> {
