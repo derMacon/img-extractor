@@ -1,4 +1,4 @@
-package com.dermacon.app.logik;
+package com.dermacon.app.logik.configEditor;
 
 public class ShortcutEditor {
 

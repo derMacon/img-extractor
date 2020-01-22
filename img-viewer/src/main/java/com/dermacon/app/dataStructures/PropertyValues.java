@@ -107,12 +107,10 @@ public class PropertyValues {
         return goto_command;
     }
 
-    public void setNext_command(int next_command) throws IOException {
+    private void setNext_command(int next_command) throws IOException {
         this.next_command = next_command;
-        System.out.println("todo update prop file with " + next_command + "\n");
         updatePropertiesFile(PropertyValues.NEXT_PAGE,
                 String.valueOf(next_command));
-
     }
 
     private void updatePropertiesFile(String key, String value) throws IOException {
@@ -127,8 +125,8 @@ public class PropertyValues {
                 throw new FileNotFoundException("property file '" + propertiesFile.getName() +
                         "' not found in the classpath");
             }
-            System.out.println("old value: " + prop.getProperty(key));
-            System.out.println("setting: " + key + ", " + value + ", " + propertiesFile);
+//            System.out.println("old value: " + prop.getProperty(key));
+//            System.out.println("setting: " + key + ", " + value + ", " + propertiesFile);
             prop.setProperty(key, value);
 
             try {
@@ -146,18 +144,38 @@ public class PropertyValues {
 
     }
 
-    public void setPrev_command(int prev_command) throws IOException {
+    private void setPrev_command(int prev_command) throws IOException {
         this.prev_command = prev_command;
-        System.out.println("todo update prop file with " + prev_command + "\n");
         updatePropertiesFile(PropertyValues.PREV_PAGE,
                 String.valueOf(next_command));
     }
 
-    public void setGoto_command(int goto_command) throws IOException {
+    private void setGoto_command(int goto_command) throws IOException {
         this.goto_command = goto_command;
-        System.out.println("todo update prop file with " + goto_command + "\n");
         updatePropertiesFile(PropertyValues.GOTO_PAGE,
                 String.valueOf(next_command));
+    }
+
+    public void setMovementRawCode(String key, int rawCode) {
+        try {
+            switch (key) {
+                case PropertyValues.PREV_PAGE:
+                    setPrev_command(rawCode);
+                    break;
+                case PropertyValues.NEXT_PAGE:
+                    setNext_command(rawCode);
+                    break;
+                case PropertyValues.GOTO_PAGE:
+                    setGoto_command(rawCode);
+                    break;
+                default:
+                    // todo
+            }
+        } catch (IOException e) {
+            // todo
+            e.printStackTrace();
+        }
+
     }
 
     @Override

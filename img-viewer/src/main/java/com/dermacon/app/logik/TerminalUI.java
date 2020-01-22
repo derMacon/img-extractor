@@ -3,6 +3,8 @@ package com.dermacon.app.logik;
 import com.dermacon.app.dataStructures.Bookmark;
 import com.dermacon.app.dataStructures.PropertyValues;
 import com.dermacon.app.fileio.FileHandler;
+import com.dermacon.app.logik.configEditor.ConfigListener;
+import com.dermacon.app.logik.configEditor.ConfigRunner;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -179,40 +181,52 @@ public class TerminalUI implements UserInterface {
      * - goto page
      */
     private void changeHotkeys_dialog() {
-        System.out.println("change hotkeys");
-
-        String[] commands = new String[]{"next page", "previous page", "goto" +
-                " command"};
-
-        String currCommand;
-        String userInput;
-        int keyVal;
-
-        Scanner scanner = new Scanner(System.in);
-        for (int i = 0; i < commands.length; i++) {
-            currCommand = commands[i];
-            System.out.print("change " + currCommand + ": ");
-
-            userInput = scanner.nextLine();
-            // todo translate key to NativeKeyEvent
-            keyVal = 42;
-
-            try {
-                switch (i) {
-                    case 0:
-                        fileHandler.getProps().setNext_command(keyVal);
-                        break;
-                    case 1:
-                        fileHandler.getProps().setPrev_command(keyVal);
-                        break;
-                    case 2:
-                        fileHandler.getProps().setGoto_command(keyVal);
-                        break;
-                }
-            } catch(IOException e){
-                System.err.println("could not update properties: " + e.getMessage());
-            }
+        ConfigRunner configRunner =
+                new ConfigRunner(this.fileHandler.getProps());
+        Thread thr = new Thread(configRunner);
+        thr.start();
+        try {
+            thr.join();
+        } catch (InterruptedException e) {
+            // todo
+            e.printStackTrace();
         }
+
+
+//        System.out.println("change hotkeys");
+//
+//        String[] commands = new String[]{"next page", "previous page", "goto" +
+//                " command"};
+//
+//        String currCommand;
+//        String userInput;
+//        int keyVal;
+//
+//        Scanner scanner = new Scanner(System.in);
+//        for (int i = 0; i < commands.length; i++) {
+//            currCommand = commands[i];
+//            System.out.print("change " + currCommand + ": ");
+//
+//            userInput = scanner.nextLine();
+//            // todo translate key to NativeKeyEvent
+//            keyVal = 42;
+//
+//            try {
+//                switch (i) {
+//                    case 0:
+//                        fileHandler.getProps().setNext_command(keyVal);
+//                        break;
+//                    case 1:
+//                        fileHandler.getProps().setPrev_command(keyVal);
+//                        break;
+//                    case 2:
+//                        fileHandler.getProps().setGoto_command(keyVal);
+//                        break;
+//                }
+//            } catch(IOException e){
+//                System.err.println("could not update properties: " + e.getMessage());
+//            }
+//        }
     }
 
     @Override
