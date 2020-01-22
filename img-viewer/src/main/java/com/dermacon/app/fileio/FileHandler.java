@@ -175,9 +175,9 @@ public class FileHandler {
      * - rendered img directory
      */
     public void clean() throws IOException {
-        File history = props.getHistoryCSV();
-        System.out.println("Delete " + history);
-        FileUtils.forceDelete(history);
+//        File history = props.getHistoryCSV();
+//        System.out.println("Delete " + history);
+//        FileUtils.forceDelete(history);
 
         File img = new File(props.getImgPath());
         System.out.println("delete " + img);

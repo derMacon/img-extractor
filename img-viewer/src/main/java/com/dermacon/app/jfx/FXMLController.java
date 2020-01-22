@@ -36,7 +36,6 @@ public class FXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lbl.setAlignment(Pos.CENTER);
         lbl.setFont(new Font("Cambria", 25));
-//        updateGui();
     }
 
     public void setBookmark(Bookmark bookmark) {
