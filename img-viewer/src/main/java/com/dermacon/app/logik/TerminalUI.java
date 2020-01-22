@@ -149,6 +149,7 @@ public class TerminalUI implements UserInterface {
                     System.exit(0);
                     break;
                 case 2:
+                    System.out.println("open editor");
                     bookmark = fileHandler.openNewBookmark();
                     fileHandler.prependsHistory(bookmark);
 //                    bookmark = null;

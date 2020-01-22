@@ -1,6 +1,5 @@
 package com.dermacon.app.worker;
 
-import com.dermacon.app.dataStructures.AssignmentStack;
 import com.dermacon.app.dataStructures.Bookmark;
 import com.dermacon.app.dataStructures.ClipboardImage;
 import com.dermacon.app.dataStructures.MainStack;
@@ -80,15 +79,15 @@ class Worker implements Runnable {
             // write img
             ImageIOUtil.writeImage(buffered_img,
                     outputImg.getPath(),
-                    props.getDpi()
+                    props.getDisplay_dpi()
             );
 
             // resize img to ./config.property values
             ImageResizer.resizeImage(
                     outputImg.getPath(),
                     outputImg.getPath(),
-                    props.getWidth(),
-                    props.getHeight()
+                    props.getDisplay_width(),
+                    props.getDisplay_height()
             );
         }
 
@@ -157,7 +156,7 @@ class Worker implements Runnable {
         PDFRenderer pdfRenderer = new PDFRenderer(pdf);
         BufferedImage out =
                 pdfRenderer.renderImageWithDPI(bookmark.getPageIdx(),
-                        props.getDpi(),
+                        props.getDisplay_dpi(),
                         ImageType.RGB);
         pdf.close();
         return out;

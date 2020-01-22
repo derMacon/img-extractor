@@ -25,9 +25,14 @@ public class PropertyValues {
     public static final String HEIGHT = "height";
     public static final String WIDTH = "width";
 
-    private int height = 0;
-    private int width = 0;
-    private int dpi = 0;
+    private int display_height = 0;
+    private int display_width = 0;
+    private int display_dpi = 0;
+
+    private int clipboard_height = 0;
+    private int clipboard_width = 0;
+    private int clipboard_dpi = 0;
+
     private String imgPath = null;
     private File historyCSV = null;
     private int next_command;
@@ -58,9 +63,11 @@ public class PropertyValues {
                         "' not found in the classpath");
             }
 
-            width = Integer.parseInt(prop.getProperty(WIDTH));
-            height = Integer.parseInt(prop.getProperty(HEIGHT));
-            dpi = Integer.parseInt(prop.getProperty(DPI));
+            display_width = Integer.parseInt(prop.getProperty(WIDTH));
+            display_height = Integer.parseInt(prop.getProperty(HEIGHT));
+            display_dpi = Integer.parseInt(prop.getProperty(DPI));
+
+
             prev_command = Integer.parseInt(prop.getProperty(NEXT_PAGE));
             next_command = Integer.parseInt(prop.getProperty(PREV_PAGE));
             goto_command = Integer.parseInt(prop.getProperty(GOTO_PAGE));
@@ -75,16 +82,16 @@ public class PropertyValues {
     }
 
 
-    public int getHeight() {
-        return height;
+    public int getDisplay_height() {
+        return display_height;
     }
 
-    public int getWidth() {
-        return width;
+    public int getDisplay_width() {
+        return display_width;
     }
 
-    public int getDpi() {
-        return dpi;
+    public int getDisplay_dpi() {
+        return display_dpi;
     }
 
     public String getImgPath() {
@@ -181,9 +188,9 @@ public class PropertyValues {
     @Override
     public String toString() {
         return "props: {"
-                + "\n\theight: " + height
-                + "\n\twidth: " + width
-                + "\n\tdpi: " + dpi
+                + "\n\theight: " + display_height
+                + "\n\twidth: " + display_width
+                + "\n\tdpi: " + display_dpi
                 + "\n\timgPath: " + imgPath
                 + "\n\thistoryCSV: " + historyCSV
                 + "\n\tnext_rawCode: " + next_command
