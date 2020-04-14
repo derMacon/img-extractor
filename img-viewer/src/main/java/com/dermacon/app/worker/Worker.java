@@ -182,7 +182,7 @@ class Worker implements Runnable {
     }
 
     /**
-     * Initializes the output directory if is's not already existent.
+     * Initializes the output directory if it's not already existent.
      * @throws IOException error if the directory cannot be made.
      */
     private void initOutputDir() throws IOException {
