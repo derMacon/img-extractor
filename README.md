@@ -18,3 +18,7 @@ This program will be useful when working with ankidroid so that you don't have t
 * Resize image: https://deano.me/2012/02/java-resize-an-image-keeping-the-proportions-correct/
 * Pdf box Framework - Apache: https://pdfbox.apache.org/
 
+## todo
+* jar can't append new pdf file 
+* worker thread sometimes throws exception when canceling queue
+

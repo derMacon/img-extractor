@@ -118,7 +118,7 @@ public class FileHandler {
         if (history_file == null || !history_file.exists() || history_file.isDirectory()) {
             history_file = new File(HISTORY_DEFAULT_PATH);
         } else {
-            history_content += filterHistoryFile(bm_selectedFile);
+            history_content += "\n" + filterHistoryFile(bm_selectedFile);
         }
 
         FileUtils.writeStringToFile(history_file, history_content);
