@@ -24,3 +24,4 @@ class Controller:
 
     def display_nav_history(self):
         return self.config_manager.nav_hist_stack
+
