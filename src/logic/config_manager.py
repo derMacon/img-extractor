@@ -3,6 +3,7 @@ from logic.navigator import Navigator
 from logic.keylogger import Keylogger
 from logic.settings import *
 from utils.logging_config import log
+from utils.io_utils import *
 
 
 class ConfigManager:
@@ -48,8 +49,9 @@ class ConfigManager:
             log.error("could not load doc %s", doc)
             return None
 
-        csv_header_doc = CsvHeader.DOCUMENT.name.lower()
-        curr_navigator = next((navigator[csv_header_doc] == doc for navigator in self.nav_hist_stack), None)
+        log.debug('load existing nav')
+        log.debug('nav_hist_stack: %s', ', '.join(map(str, self.nav_hist_stack)))
+        curr_navigator = next((navigator.doc == doc for navigator in self.nav_hist_stack), None)
 
         if curr_navigator is None:
             log.error("could not load navigator for doc %s from history csv %s", doc, self.settings.history_csv)
@@ -88,3 +90,9 @@ class ConfigManager:
             parser.set(ini_section, command_name, command_key)
 
         return self.nav_hist_stack[0]
+    
+    def teardown(self):
+        log.info('running teardown routine')
+        remove_file(self.settings.history_csv)
+        remove_file(self.settings.img_dir)
+
