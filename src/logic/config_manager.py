@@ -49,9 +49,9 @@ class ConfigManager:
             log.error("could not load doc %s", doc)
             return None
 
-        log.debug('load existing nav')
-        log.debug('nav_hist_stack: %s', ', '.join(map(str, self.nav_hist_stack)))
-        curr_navigator = next((navigator.doc == doc for navigator in self.nav_hist_stack), None)
+        log.debug('load existing nav_hist_stack: %s', ', '.join(map(str, self.nav_hist_stack)))
+        curr_navigator = next((nav for nav in self.nav_hist_stack if nav.doc == doc), None)
+        log.debug('navigator for doc %s is %s', doc, str(curr_navigator))
 
         if curr_navigator is None:
             log.error("could not load navigator for doc %s from history csv %s", doc, self.settings.history_csv)

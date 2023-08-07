@@ -16,47 +16,47 @@ class TestControllerMethods(unittest.TestCase):
 		if os.path.exists(HIST_CSV_FILE):
 			os.remove(HIST_CSV_FILE)
 
-	# def test_navigator_bounds(self):
-	# 	controller = Controller()
-	# 	controller.create_doc(SAMPLE_DOC_1)
+	def test_navigator_bounds(self):
+		controller = Controller()
+		controller.create_doc(SAMPLE_DOC_1)
 
-	# 	self.assertEqual(controller.navigator.curr_page_idx, 0)
-	# 	self.assertEqual(controller.navigator.doc, SAMPLE_DOC_1)
+		self.assertEqual(controller.navigator.curr_page_idx, 0)
+		self.assertEqual(controller.navigator.doc, SAMPLE_DOC_1)
 
-	# 	controller.next_page()
-	# 	self.assertEqual(controller.navigator.curr_page_idx, 1)
+		controller.next_page()
+		self.assertEqual(controller.navigator.curr_page_idx, 1)
 
-	# 	controller.next_page()
-	# 	self.assertEqual(controller.navigator.curr_page_idx, 2)
+		controller.next_page()
+		self.assertEqual(controller.navigator.curr_page_idx, 2)
 
-	# 	controller.previous_page()
-	# 	self.assertEqual(controller.navigator.curr_page_idx, 1)
+		controller.previous_page()
+		self.assertEqual(controller.navigator.curr_page_idx, 1)
 
-	# 	controller.previous_page()
-	# 	self.assertEqual(controller.navigator.curr_page_idx, 0)
+		controller.previous_page()
+		self.assertEqual(controller.navigator.curr_page_idx, 0)
 
-	# 	controller.previous_page()
-	# 	self.assertEqual(controller.navigator.curr_page_idx, 0)
+		controller.previous_page()
+		self.assertEqual(controller.navigator.curr_page_idx, 0)
 
-	# 	controller.goto_page(-1)
-	# 	self.assertEqual(controller.navigator.curr_page_idx, 0)
+		controller.goto_page(-1)
+		self.assertEqual(controller.navigator.curr_page_idx, 0)
 
-	# 	controller.goto_page(477)
-	# 	self.assertEqual(controller.navigator.curr_page_idx, 0)
+		controller.goto_page(477)
+		self.assertEqual(controller.navigator.curr_page_idx, 0)
 
-	# 	controller.goto_page(476)
-	# 	self.assertEqual(controller.navigator.curr_page_idx, 475)
+		controller.goto_page(476)
+		self.assertEqual(controller.navigator.curr_page_idx, 475)
 
-	# 	controller.previous_page()
-	# 	self.assertEqual(controller.navigator.curr_page_idx, 474)
+		controller.previous_page()
+		self.assertEqual(controller.navigator.curr_page_idx, 474)
 
-	# 	controller.next_page()
-	# 	self.assertEqual(controller.navigator.curr_page_idx, 475)
+		controller.next_page()
+		self.assertEqual(controller.navigator.curr_page_idx, 475)
 
-	# 	controller.next_page()
-	# 	self.assertEqual(controller.navigator.curr_page_idx, 475)
+		controller.next_page()
+		self.assertEqual(controller.navigator.curr_page_idx, 475)
 
-	# 	controller.teardown()
+		controller.teardown()
 
 	
 	def test_history_stack(self):
@@ -86,8 +86,6 @@ class TestControllerMethods(unittest.TestCase):
 
 		controller.teardown()
 		self.assertFalse(os.path.exists(HIST_CSV_FILE))
-
-
 
 
 if __name__ == '__main__':
