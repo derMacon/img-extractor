@@ -43,3 +43,7 @@ img-viewer/config.properties
 **/here/
 **/img/
 
+
+# ------------ own stuff ------------ #
+**/__pycache__/
+**/*.swp
