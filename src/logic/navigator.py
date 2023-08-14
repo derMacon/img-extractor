@@ -1,6 +1,8 @@
 import datetime
-from logic.settings import Settings
+from logic.settings import *
 from utils.logging_config import log
+from typing import Set
+from tkinter import Tk
 
 
 def now_ts():
@@ -17,14 +19,17 @@ class Navigator:
         self.last_access = last_access
         log.debug('created navigator: %s', self.to_csv_entry())
 
-    def filter(self, user_input):
-        match self.settings.hotkey_map.get(user_input):
-            case Settings.Command.NEXT:
+    def filter(self, user_input: Set[str]):
+        match self.settings.translate_command_hotkey(user_input):
+            case Command.NEXT:
                 log.debug('next page')
                 self.next_page()
-            case Settings.Command.PREVIOUS:
+            case Command.PREVIOUS:
                 log.debug('previous page')
-                self.next_page()
+                self.previous_page()
+            case Command.CLEAN_CLIPBOARD:
+                log.debug('cleaning linebreaks from clipboard')
+                self.clean_linebreaks_from_clipboard()
             case _:
                 log.debug('not a command')
 
@@ -46,6 +51,15 @@ class Navigator:
             log.info('user tried to navigate out of bound - goto page %d but doc only contains %d pages', page_idx)
         else:
             self.curr_page_idx = page_idx
+    
+    def clean_linebreaks_from_clipboard(self):
+        a = Tk()
+        clipboard_content = a.clipboard_get()
+        a.destroy()
+
+        log.debug("clipboard content: %s", clipboard_content)
+        return clipboard_content.replace('\n', ' ')
+ 
 
     def to_csv_entry(self):
         self.last_access = now_ts()

@@ -2,9 +2,13 @@ import unittest
 import os
 from logic.controller import Controller
 from logic.navigator import Navigator
+from logic.settings import *
+from test.utils.datastructure_utils import *
 from utils.logging_config import log
 
 HIST_CSV_FILE = './hist.csv'
+SETTINGS_INI_FILE = './test/resources/test-config-input.ini'
+
 SAMPLE_DOC_INVALID = './test/resources/non-existent.pdf'
 SAMPLE_DOC_1 = './test/resources/test-pdf-1.pdf'
 SAMPLE_DOC_2 = './test/resources/test-pdf-2.pdf'
@@ -58,6 +62,48 @@ class TestControllerMethods(unittest.TestCase):
 
 		controller.teardown()
 
+
+	def test_navigator_hotkeys(self):
+		controller = Controller()
+		controller.create_doc(SAMPLE_DOC_1)
+		navigator = controller.navigator
+
+		self.assertEqual(0, navigator.curr_page_idx)
+		self.assertEqual(SAMPLE_DOC_1, navigator.doc)
+
+		exp_hotkey_combinations = {
+			Command.NEXT: {'ctrl', 'a'},
+			Command.PREVIOUS: {'ctrl', 'b'},
+			Command.CLEAN_CLIPBOARD: {'ctrl', 'shift', 'c'},
+		}
+		
+		act_hotkey_combinations = navigator.settings.hotkey_map
+		self.assertDictEqual(exp_hotkey_combinations, act_hotkey_combinations)
+
+		navigator.filter({'a', 'ctrl'})
+		self.assertEqual(navigator.curr_page_idx, 1)
+
+		navigator.filter({'invalid', 'hotkey'})
+		self.assertEqual(navigator.curr_page_idx, 1)
+
+		navigator.filter({'b', 'ctrl'})
+		self.assertEqual(navigator.curr_page_idx, 0)
+
+		navigator.filter({'a', 'ctrl'})
+		navigator.filter({'ctrl', 'a'})
+		self.assertEqual(navigator.curr_page_idx, 2)
+
+		navigator.filter({'b', 'ctrl'})
+		navigator.filter({'ctrl', 'b'})
+		self.assertEqual(navigator.curr_page_idx, 0)
+
+		navigator.filter({'ctrl', 'b'})
+		self.assertEqual(navigator.curr_page_idx, 0)
+
+		controller.teardown()
+		
+		
+
 	
 	def test_history_stack(self):
 		self.assertFalse(os.path.exists(HIST_CSV_FILE))
@@ -86,6 +132,39 @@ class TestControllerMethods(unittest.TestCase):
 
 		controller.teardown()
 		self.assertFalse(os.path.exists(HIST_CSV_FILE))
+
+
+	def test_settings_ini(self):
+		exp_hotkey_combinations = {
+			Command.NEXT: {'ctrl', 'a'},
+			Command.PREVIOUS: {'ctrl', 'b'},
+			Command.CLEAN_CLIPBOARD: {'ctrl', 'shift', 'c'},
+		}
+
+		exp_dim_x = 2000
+		exp_dim_y = 1000
+
+		exp_history_csv = './hist.csv'
+		exp_img_dir = './img/'
+
+		settings = Settings(SETTINGS_INI_FILE)
+
+		self.assertDictEqual(exp_hotkey_combinations, settings.hotkey_map)
+
+		self.assertTrue(os.path.exists(SETTINGS_INI_FILE))
+		self.assertEqual(exp_dim_y, settings.final_resolution[0])
+		self.assertEqual(exp_dim_x, settings.final_resolution[1])
+
+		self.assertEqual(exp_history_csv, settings.history_csv)
+		self.assertEqual(exp_img_dir, settings.img_dir)
+
+		for (command, hotkey) in exp_hotkey_combinations.items():
+			curr_hotkey_input = exp_hotkey_combinations[command]
+			curr_act_translate = settings.translate_command_hotkey(curr_hotkey_input) 
+			self.assertEqual(command, curr_act_translate)
+		
+		self.assertEqual(None, settings.translate_command_hotkey({'invalid', 'hotkey'}))
+
 
 
 if __name__ == '__main__':

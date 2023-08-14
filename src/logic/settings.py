@@ -1,5 +1,7 @@
 from enum import Enum, auto
 from utils.logging_config import log
+from typing import Set
+import json
 import os
 import sys
 import configparser
@@ -8,6 +10,7 @@ import configparser
 class Command(Enum):
     NEXT = auto()
     PREVIOUS = auto()
+    CLEAN_CLIPBOARD = auto()
 
 
 class Storage(Enum):
@@ -45,15 +48,26 @@ class Settings:
         self.config_parser = configparser.ConfigParser()
         self.config_parser.read(ini_path)
 
+        command_ini_section = self.config_parser[Command.__name__.lower()]
+
         self.hotkey_map = {
-            self.config_parser[Command.__name__.lower()][Command.NEXT.name.lower()], Command.NEXT,
-            self.config_parser[Command.__name__.lower()][Command.PREVIOUS.name.lower()], Command.PREVIOUS,
+            Command.NEXT: set(json.loads(command_ini_section[Command.NEXT.name.lower()])),
+            Command.PREVIOUS: set(json.loads(command_ini_section[Command.PREVIOUS.name.lower()])),
+            Command.CLEAN_CLIPBOARD: set(json.loads(command_ini_section[Command.CLEAN_CLIPBOARD.name.lower()])),
         }
 
         self.final_resolution = (
-            self.config_parser[Dimensions.__name__.lower()][Dimensions.HEIGHT.name.lower()], Dimensions.HEIGHT,
-            self.config_parser[Dimensions.__name__.lower()][Dimensions.WIDTH.name.lower()], Dimensions.WIDTH,
+            int(self.config_parser[Dimensions.__name__.lower()][Dimensions.HEIGHT.name.lower()]),
+            int(self.config_parser[Dimensions.__name__.lower()][Dimensions.WIDTH.name.lower()]), 
         )
 
         self.history_csv = self.config_parser[Storage.__name__.lower()][Storage.HISTORY_CSV.name.lower()]
         self.img_dir = self.config_parser[Storage.__name__.lower()][Storage.IMG_DIR.name.lower()]
+    
+
+    def translate_command_hotkey(self, hotkeys: Set[str]):
+        for (key, val) in self.hotkey_map.items():
+            if val == hotkeys:
+                return key
+
+        return None
