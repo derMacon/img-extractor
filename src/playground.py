@@ -1,9 +1,6 @@
 import json
 from test.utils.datastructure_utils import *
-from tkinter import Tk
+from logic.keylogger import Keylogger
 
-test = Tk().clipboard_get()
-print(test)
-
-# test = json.loads("""["ctrl","c"]""")
-# print(test)
+kl = Keylogger()
+kl.start()

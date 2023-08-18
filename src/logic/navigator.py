@@ -2,7 +2,7 @@ import datetime
 from logic.settings import *
 from utils.logging_config import log
 from typing import Set
-from tkinter import Tk
+# from tkinter import Tk
 
 
 def now_ts():
@@ -53,12 +53,13 @@ class Navigator:
             self.curr_page_idx = page_idx
     
     def clean_linebreaks_from_clipboard(self):
-        a = Tk()
-        clipboard_content = a.clipboard_get()
-        a.destroy()
-
-        log.debug("clipboard content: %s", clipboard_content)
-        return clipboard_content.replace('\n', ' ')
+        # a = Tk()
+        # clipboard_content = a.clipboard_get()
+        # a.destroy()
+        #
+        # log.debug("clipboard content: %s", clipboard_content)
+        # return clipboard_content.replace('\n', ' ')
+        pass
  
 
     def to_csv_entry(self):
