@@ -1,11 +1,9 @@
 import datetime
+import clipboard
 from data.settings import *
 from utils.logging_config import log
 from logic.pdf_converter import PdfConverter
 from typing import Set
-
-
-# from tkinter import Tk
 
 
 def now_ts():
@@ -23,32 +21,36 @@ class Navigator:
         log.debug('created navigator: %s', self.to_csv_entry())
 
     def filter(self, user_input: Set[str]):
-        match self.settings.translate_command_hotkey(user_input):
+        user_command = self.settings.translate_command_hotkey(user_input)
+
+        if user_command == Command.CLEAN_CLIPBOARD:
+            log.debug('cleaning linebreaks from clipboard')
+            self.clean_linebreaks_from_clipboard()
+            return
+
+        match user_command:
             case Command.NEXT:
                 log.debug('next page')
                 self.next_page()
             case Command.PREVIOUS:
                 log.debug('previous page')
                 self.previous_page()
-            case Command.CLEAN_CLIPBOARD:
-                log.debug('cleaning linebreaks from clipboard')
-                self.clean_linebreaks_from_clipboard()
             case _:
                 log.debug('not a command')
+
+        self.pdf_converter.render_img(self.curr_page_idx)
 
     def next_page(self):
         if self.curr_page_idx == self.pdf_converter.get_page_count():
             log.info('user tried to navigate out of bound but navigator is already on last page')
         else:
             self.curr_page_idx += 1
-            self.pdf_converter.render_img(self.curr_page_idx)
 
     def previous_page(self):
         if self.curr_page_idx == 0:
             log.info('user tried to navigate out of bound but navigator is already on first page')
         else:
             self.curr_page_idx -= 1
-            self.pdf_converter.render_img(self.curr_page_idx)
 
     def goto_page(self, page_number):
         page_idx = page_number - 1
@@ -56,16 +58,12 @@ class Navigator:
             log.info('user tried to navigate out of bound - goto page %d but doc only contains %d pages', page_idx)
         else:
             self.curr_page_idx = page_idx
-            self.pdf_converter.render_img(self.curr_page_idx)
 
     def clean_linebreaks_from_clipboard(self):
-        # a = Tk()
-        # clipboard_content = a.clipboard_get()
-        # a.destroy()
-        #
-        # log.debug("clipboard content: %s", clipboard_content)
-        # return clipboard_content.replace('\n', ' ')
-        pass
+        clipboard_text = clipboard.paste()
+        cleaned_text = clipboard_text.replace('\n', ' ').replace('\r', '')  # Replace line breaks with spaces
+        clipboard.copy(cleaned_text)
+        log.debug("cleaned clipboard content: %s", cleaned_text)
 
     def to_csv_entry(self):
         self.last_access = now_ts()

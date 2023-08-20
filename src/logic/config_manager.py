@@ -53,30 +53,27 @@ class ConfigManager:
         log.debug('navigator for doc %s is %s', doc, str(curr_navigator))
 
         if curr_navigator is None:
-            log.error("could not load navigator for doc %s from history csv %s", doc, self.settings.history_csv)
-            return None
+            log.error("create new navigator - could not load navigator for doc %s from history csv %s", doc,
+                      self.settings.history_csv)
+            curr_navigator = Navigator(doc, self.settings)
+            self.keylogger.observer = curr_navigator
+            self.nav_hist_stack.insert(0, curr_navigator)
+            self.overwrite_csv()
 
         self.keylogger.observer = curr_navigator
         return curr_navigator
 
-    def create_nav(self, doc):
-        log.debug('create navigator for doc: %s', doc)
-        curr_navigator = Navigator(doc, self.settings)
-        self.keylogger.observer = curr_navigator
-        self.nav_hist_stack.insert(0, curr_navigator)
-
+    def overwrite_csv(self):
         csv_data = CsvHeader.create_header()
         for navigator in self.nav_hist_stack:
             csv_data.append(navigator.to_csv_entry())
 
-        log.debug('history csv file: %s', self.settings.history_csv)
+        log.debug('overwriting history csv file: %s', self.settings.history_csv)
 
         with open(self.settings.history_csv, "w") as f:
             writer = csv.writer(f)
             for row in csv_data:
                 writer.writerow(row)
-
-        return curr_navigator
 
     def update_hotkeys(self, hotkey_map):
         self.settings.hotkey_map = hotkey_map
@@ -88,9 +85,8 @@ class ConfigManager:
             parser.set(ini_section, command_name, command_key)
 
         return self.nav_hist_stack[0]
-    
+
     def teardown(self):
         log.info('running teardown routine, deleting history csv and image tmp dir')
         remove_file(self.settings.history_csv)
         remove_file(self.settings.img_dir)
-

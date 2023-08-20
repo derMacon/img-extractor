@@ -47,3 +47,4 @@ img-viewer/config.properties
 # ------------ own stuff ------------ #
 **/__pycache__/
 **/*.swp
+**/hist.csv

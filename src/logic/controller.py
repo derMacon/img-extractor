@@ -13,18 +13,21 @@ class Controller:
             log.debug('no active page navigator available')
         else:
             self.navigator.next_page()
+            self.config_manager.overwrite_csv()
 
     def previous_page(self):
         if self.navigator is None:
             log.debug('no active page navigator available')
         else:
             self.navigator.previous_page()
+            self.config_manager.overwrite_csv()
 
     def goto_page(self, page_idx):
         if self.navigator is None:
             log.debug('no active page navigator available')
         else:
             self.navigator.goto_page(page_idx)
+            self.config_manager.overwrite_csv()
 
     def update_hotkey_map(self, hotkey_map):
         self.config_manager.update_hotkeys(hotkey_map)
