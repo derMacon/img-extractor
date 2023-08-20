@@ -1,7 +1,10 @@
 import datetime
-from logic.settings import *
+from data.settings import *
 from utils.logging_config import log
+from logic.pdf_converter import PdfConverter
 from typing import Set
+
+
 # from tkinter import Tk
 
 
@@ -11,9 +14,9 @@ def now_ts():
 
 class Navigator:
 
-    def __init__(self, doc, settings: Settings = None, last_access=now_ts(), curr_page:int = 0):
+    def __init__(self, doc: str, settings: Settings = None, last_access=now_ts(), curr_page: int = 0):
         self.doc = doc
-        self.max_page_idx = 475  # TODO
+        self.pdf_converter = PdfConverter(doc, settings)
         self.curr_page_idx = int(curr_page)
         self.settings = settings
         self.last_access = last_access
@@ -34,24 +37,27 @@ class Navigator:
                 log.debug('not a command')
 
     def next_page(self):
-        if self.curr_page_idx == self.max_page_idx:
+        if self.curr_page_idx == self.pdf_converter.get_page_count():
             log.info('user tried to navigate out of bound but navigator is already on last page')
         else:
             self.curr_page_idx += 1
+            self.pdf_converter.render_img(self.curr_page_idx)
 
     def previous_page(self):
         if self.curr_page_idx == 0:
             log.info('user tried to navigate out of bound but navigator is already on first page')
         else:
             self.curr_page_idx -= 1
+            self.pdf_converter.render_img(self.curr_page_idx)
 
     def goto_page(self, page_number):
         page_idx = page_number - 1
-        if page_idx < 0 or page_idx > self.max_page_idx:
+        if page_idx < 0 or page_idx > self.pdf_converter.get_page_count():
             log.info('user tried to navigate out of bound - goto page %d but doc only contains %d pages', page_idx)
         else:
             self.curr_page_idx = page_idx
-    
+            self.pdf_converter.render_img(self.curr_page_idx)
+
     def clean_linebreaks_from_clipboard(self):
         # a = Tk()
         # clipboard_content = a.clipboard_get()
@@ -60,7 +66,6 @@ class Navigator:
         # log.debug("clipboard content: %s", clipboard_content)
         # return clipboard_content.replace('\n', ' ')
         pass
- 
 
     def to_csv_entry(self):
         self.last_access = now_ts()
@@ -69,11 +74,11 @@ class Navigator:
             self.curr_page_idx,
             self.last_access,
         ]
-    
+
     def __eq__(self, other):
         return other is not None \
             and self.doc == other.doc \
             and self.curr_page_idx == other.curr_page_idx
-    
+
     def __str__(self):
         return f"nav(doc={self.doc}, page_idx={self.curr_page_idx})"

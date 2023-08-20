@@ -1,8 +1,7 @@
 import csv
 from logic.navigator import Navigator
 from logic.keylogger import Keylogger
-from logic.settings import *
-from utils.logging_config import log
+from data.settings import *
 from utils.io_utils import *
 
 
@@ -70,7 +69,6 @@ class ConfigManager:
         for navigator in self.nav_hist_stack:
             csv_data.append(navigator.to_csv_entry())
 
-        log.debug('history csv data: %s', csv_data)
         log.debug('history csv file: %s', self.settings.history_csv)
 
         with open(self.settings.history_csv, "w") as f:
@@ -92,7 +90,7 @@ class ConfigManager:
         return self.nav_hist_stack[0]
     
     def teardown(self):
-        log.info('running teardown routine')
+        log.info('running teardown routine, deleting history csv and image tmp dir')
         remove_file(self.settings.history_csv)
         remove_file(self.settings.img_dir)
 

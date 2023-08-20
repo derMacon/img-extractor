@@ -29,10 +29,10 @@ class Controller:
     def update_hotkey_map(self, hotkey_map):
         self.config_manager.update_hotkeys(hotkey_map)
 
-    def create_doc(self, doc):
+    def create_nav(self, doc):
         self.navigator = self.config_manager.create_nav(doc)
 
-    def load_doc(self, doc):
+    def load_nav(self, doc):
         self.navigator = self.config_manager.load_existing_nav(doc)
 
     def display_nav_history(self):

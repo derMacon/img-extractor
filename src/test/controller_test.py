@@ -1,9 +1,7 @@
 import unittest
-import os
 from logic.controller import Controller
 from logic.navigator import Navigator
-from logic.settings import *
-from test.utils.datastructure_utils import *
+from data.settings import *
 from utils.logging_config import log
 
 HIST_CSV_FILE = './hist.csv'
@@ -23,7 +21,7 @@ class TestControllerMethods(unittest.TestCase):
 
     def test_navigator_bounds(self):
         controller = Controller()
-        controller.create_doc(SAMPLE_DOC_1)
+        controller.create_nav(SAMPLE_DOC_1)
 
         self.assertEqual(controller.navigator.curr_page_idx, 0)
         self.assertEqual(controller.navigator.doc, SAMPLE_DOC_1)
@@ -65,7 +63,7 @@ class TestControllerMethods(unittest.TestCase):
 
     def test_navigator_hotkeys(self):
         controller = Controller()
-        controller.create_doc(SAMPLE_DOC_1)
+        controller.create_nav(SAMPLE_DOC_1)
         navigator = controller.navigator
 
         self.assertEqual(0, navigator.curr_page_idx)
@@ -77,7 +75,7 @@ class TestControllerMethods(unittest.TestCase):
             Command.CLEAN_CLIPBOARD: {'ctrl', 'shift', 'c'},
         }
 
-        act_hotkey_combinations = navigator.settings.hotkey_map
+        act_hotkey_combinations = navigator._settings.hotkey_map
         self.assertDictEqual(exp_hotkey_combinations, act_hotkey_combinations)
 
         navigator.filter({'a', 'ctrl'})
@@ -106,7 +104,7 @@ class TestControllerMethods(unittest.TestCase):
         self.assertFalse(os.path.exists(HIST_CSV_FILE))
 
         controller = Controller()
-        controller.create_doc(SAMPLE_DOC_1)
+        controller.create_nav(SAMPLE_DOC_1)
 
         self.assertTrue(os.path.exists(HIST_CSV_FILE))
 
@@ -115,12 +113,12 @@ class TestControllerMethods(unittest.TestCase):
         exp_out = Navigator(SAMPLE_DOC_1, curr_page=1)
         self.assertEqual(act_out, exp_out)
 
-        controller.create_doc(SAMPLE_DOC_2)
+        controller.create_nav(SAMPLE_DOC_2)
         act_out = controller.navigator
         exp_out = Navigator(SAMPLE_DOC_2)
         self.assertEqual(act_out, exp_out)
 
-        controller.load_doc(SAMPLE_DOC_1)
+        controller.load_nav(SAMPLE_DOC_1)
         act_out = controller.navigator
         exp_out = Navigator(SAMPLE_DOC_1, curr_page=1)
         log.info('act out: %s', act_out)
