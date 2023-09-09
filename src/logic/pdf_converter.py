@@ -66,3 +66,5 @@ class PdfConverter:
         name = self._settings.img_dir + self._name + '_' + str(self.get_page_count()) + '.jpg'
         log.debug("saving img at: %s", name)
         resized_image.save(name, "JPEG")
+
+        return name

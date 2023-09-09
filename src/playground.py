@@ -1,14 +1,12 @@
-from flask import Flask
-from flask_restful import Resource, Api
+from flask import Flask, render_template
+from .business_logic import BusinessLogic  # Import your business logic class
 
 app = Flask(__name__)
-api = Api(app)
 
-class HelloWorld(Resource):
-    def get(self):
-        return {'hello': 'world'}
-
-api.add_resource(HelloWorld, '/')
-
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route('/')
+def index():
+    # Create an instance of the BusinessLogic class
+    logic = BusinessLogic()
+    result = logic.do_something()  # Use the business logic method
+    # return render_template('index.html', result=result)
+    return "works"

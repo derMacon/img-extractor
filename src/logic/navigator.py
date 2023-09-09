@@ -16,6 +16,7 @@ class Navigator:
         self.doc = doc
         self.pdf_converter = PdfConverter(doc, settings)
         self.curr_page_idx = int(curr_page)
+        self.curr_page_img = ''
         self.settings = settings
         self.last_access = last_access
         log.debug('created navigator: %s', self.to_csv_entry())
@@ -38,19 +39,19 @@ class Navigator:
             case _:
                 log.debug('not a command')
 
-        self.pdf_converter.render_img(self.curr_page_idx)
-
     def next_page(self):
         if self.curr_page_idx == self.pdf_converter.get_page_count():
             log.info('user tried to navigate out of bound but navigator is already on last page')
         else:
             self.curr_page_idx += 1
+            self.curr_page_img = self.pdf_converter.render_img(self.curr_page_idx)
 
     def previous_page(self):
         if self.curr_page_idx == 0:
             log.info('user tried to navigate out of bound but navigator is already on first page')
         else:
             self.curr_page_idx -= 1
+            self.curr_page_img = self.pdf_converter.render_img(self.curr_page_idx)
 
     def goto_page(self, page_number):
         page_idx = page_number - 1
@@ -58,20 +59,13 @@ class Navigator:
             log.info('user tried to navigate out of bound - goto page %d but doc only contains %d pages', page_idx)
         else:
             self.curr_page_idx = page_idx
+            self.curr_page_img = self.pdf_converter.render_img(self.curr_page_idx)
 
     def clean_linebreaks_from_clipboard(self):
         clipboard_text = clipboard.paste()
         cleaned_text = clipboard_text.replace('\n', ' ').replace('\r', '')  # Replace line breaks with spaces
         clipboard.copy(cleaned_text)
         log.debug("cleaned clipboard content: %s", cleaned_text)
-
-    def to_csv_entry(self):
-        self.last_access = now_ts()
-        return [
-            self.doc,
-            self.curr_page_idx,
-            self.last_access,
-        ]
 
     def __eq__(self, other):
         return other is not None \
@@ -80,3 +74,18 @@ class Navigator:
 
     def __str__(self):
         return f"nav(doc={self.doc}, page_idx={self.curr_page_idx})"
+
+    def to_dict(self):
+        return {
+            'doc': self.doc,
+            'curr_page_idx': self.curr_page_idx,
+            'curr_page_img': self.curr_page_img
+        }
+
+    def to_csv_entry(self):
+        self.last_access = now_ts()
+        return [
+            self.doc,
+            self.curr_page_idx,
+            self.last_access,
+        ]
