@@ -16,7 +16,7 @@ class Navigator:
         self.doc = doc
         self.pdf_converter = PdfConverter(doc, settings)
         self.curr_page_idx = int(curr_page)
-        self.curr_page_img = ''
+        self.curr_page_img = self.pdf_converter.render_img(self.curr_page_idx)
         self._settings = settings
         self.last_access = last_access
         log.debug('created navigator: %s', self.to_csv_entry())

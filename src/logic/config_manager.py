@@ -54,7 +54,7 @@ class ConfigManager:
         # TODO - improve error handling (don't just return None)
 
         if not os.path.exists(doc):
-            log.error("could not load doc %s", doc)
+            log.error("doc does not exist %s", doc)
             return None
 
         log.debug('load existing nav_hist_stack: %s', ', '.join(map(str, self.nav_hist_stack)))
@@ -62,9 +62,10 @@ class ConfigManager:
         log.debug('navigator for doc %s is %s', doc, str(curr_navigator))
 
         if curr_navigator is None:
-            log.error("create new navigator - could not load navigator for doc %s from history csv %s", doc,
+            log.info("create new navigator - could not load navigator for doc %s from history csv %s", doc,
                       self.settings.history_csv)
             curr_navigator = Navigator(doc, self.settings)
+            log.debug("created nav: %s", str(curr_navigator.to_dict()))
             self.keylogger.observer = curr_navigator
             self.nav_hist_stack.insert(0, curr_navigator)
             self.overwrite_csv()

@@ -48,6 +48,9 @@ class Controller:
             return {}
         return self._navigator.to_dict()
 
+    def get_settings(self):
+        return self._config_manager.settings
+
     def update_hotkey_map(self, hotkey_map):
         self._config_manager.update_hotkeys(hotkey_map)
 

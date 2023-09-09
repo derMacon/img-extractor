@@ -59,13 +59,12 @@ class Settings:
 
         self.final_resolution = (
             int(self.config_parser[Dimensions.__name__.lower()][Dimensions.HEIGHT.name.lower()]),
-            int(self.config_parser[Dimensions.__name__.lower()][Dimensions.WIDTH.name.lower()]), 
+            int(self.config_parser[Dimensions.__name__.lower()][Dimensions.WIDTH.name.lower()]),
         )
 
         self.history_csv = self.config_parser[Storage.__name__.lower()][Storage.HISTORY_CSV.name.lower()]
         self.img_dir = self.config_parser[Storage.__name__.lower()][Storage.IMG_DIR.name.lower()]
         self.docs_dir = self.config_parser[Storage.__name__.lower()][Storage.DOC_DIR.name.lower()]
-
 
     def translate_command_hotkey(self, hotkeys: Set[str]):
         for (key, val) in self.hotkey_map.items():
@@ -73,3 +72,17 @@ class Settings:
                 return key
 
         return None
+
+    def to_dict(self):
+        cleaned_hotkeys = {}
+
+        for (key, val) in self.hotkey_map.items():
+            cleaned_hotkeys[key.name] = list(val)
+
+        return {
+            'hotkey_map': cleaned_hotkeys,
+            'final_resolution': self.final_resolution,
+            'history_csv': self.history_csv,
+            'img_dir': self.img_dir,
+            'docs_dir': self.docs_dir,
+        }

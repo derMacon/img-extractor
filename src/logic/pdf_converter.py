@@ -13,6 +13,9 @@ class PdfConverter:
             log.error('no setting provided for pdf converter - stopping application')
             sys.exit(1)
 
+        # TODO throw exception if input file is not .pdf
+        log.debug("pdf converter for path.: %s", pdf_path)
+
         self._doc = fitz.open(pdf_path)
         self._name = os.path.basename(pdf_path)
         self._settings = settings
