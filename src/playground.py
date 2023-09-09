@@ -1,21 +1,14 @@
-# import json
-# from test.utils.datastructure_utils import *
-# from logic.keylogger import Keylogger
-#
-# kl = Keylogger()
-# kl.start()
+from flask import Flask
+from flask_restful import Resource, Api
 
-import fitz
-from logic.pdf_converter import PdfConverter
+app = Flask(__name__)
+api = Api(app)
 
-pdf_path = "./test/resources/test-pdf-1.pdf"
-output_image_path = "output.jpg"
-page_number = 0
-target_width = 800
-target_height = 600
+class HelloWorld(Resource):
+    def get(self):
+        return {'hello': 'world'}
 
-doc = fitz.open(pdf_path)
-print(str(doc))
+api.add_resource(HelloWorld, '/')
 
-# pdf_page_to_image(pdf_path, page_number, output_image_path, target_width, target_height)
-
+if __name__ == '__main__':
+    app.run(debug=True)
