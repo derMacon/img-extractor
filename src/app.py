@@ -1,13 +1,12 @@
 from flask import Flask, jsonify, send_file, Blueprint, request, abort
+
+from logic.controller import Controller
 from utils.logging_config import log
-from logic.config_manager import ConfigManager
 
 app = Flask(__name__)
 common_prefix = Blueprint('common_prefix', __name__, url_prefix='/api/v1')
 
-config_manager = ConfigManager()
-navigator = config_manager.load_latest_nav()
-
+controller = Controller()
 
 @common_prefix.route("/")
 def hello_world():
@@ -17,27 +16,19 @@ def hello_world():
 
 @common_prefix.route("/nav-stats")
 def nav_stats():
-    return navigator.to_dict()
+    return controller.get_nav_stats()
 
 
 @common_prefix.route("/next-page")
 def next_page():
-    if navigator is None:
-        log.debug('no active page navigator available')
-    else:
-        navigator.next_page()
-        config_manager.overwrite_csv()
-    return send_file(navigator.curr_page_img, mimetype='image/jpg')
+    controller.next_page()
+    return send_file(controller.get_curr_img(), mimetype='image/jpg')
 
 
 @common_prefix.route("/previous-page")
 def previous_page():
-    if navigator is None:
-        log.debug('no active page navigator available')
-    else:
-        navigator.previous_page()
-        config_manager.overwrite_csv()
-    return send_file(navigator.curr_page_img, mimetype='image/jpg')
+    controller.previous_page()
+    return send_file(controller.get_curr_img(), mimetype='image/jpg')
 
 
 @common_prefix.route("/go-to-page")
@@ -55,32 +46,36 @@ def goto_page():
         log.debug(msg)
         abort(400, description=msg)
 
-    if navigator is None:
-        log.debug('no active page navigator available')
-        abort(500, description='no active page navigator available')
-    else:
-        log.debug('page_idx: %s', page_idx)
-        navigator.goto_page(page_idx)
-        config_manager.overwrite_csv()
+    controller.goto_page(page_idx)
 
-    return send_file(navigator.curr_page_img, mimetype='image/jpg')
+    return send_file(controller.get_curr_img(), mimetype='image/jpg')
 
 
 # def update_hotkey_map(self, hotkey_map):
 #     self.config_manager.update_hotkeys(hotkey_map)
 #
 #
-# def create_nav(self, doc):
-#     self.navigator = self.config_manager.create_nav(doc)
+
+@common_prefix.route("/load-nav", methods=['POST'])
+def load_nav():
+    input_file = request.files['doc']
+    doc = f"{controller._config_manager.settings.docs_dir}{input_file.filename}"
+    input_file.save(doc)
+    controller.load_nav(doc)
+    # TODO throw errors and implement error handling
+    log.debug("saving input doc to %s", doc)
+    return 'works'
+
+
 #
 #
 # def load_nav(self, doc):
 #     self.navigator = self.config_manager.load_existing_nav(doc)
 #
 
-@common_prefix.route("/display-nav-history")
-def display_nav_history():
-    return [nav.to_dict() for nav in config_manager.nav_hist_stack]
+# @common_prefix.route("/display-nav-history")
+# def display_nav_history():
+#     return [nav.to_dict() for nav in config_manager.nav_hist_stack]
 
 
 #

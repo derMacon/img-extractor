@@ -1,45 +1,61 @@
-from utils.logging_config import log
 from logic.config_manager import ConfigManager
+from utils.logging_config import log
 
 
 class Controller:
+    """Encapsulates the whole logic
+    - can be plugged into the api controller
+    - can be tested without interfering with the http message passing
+    """
 
     def __init__(self):
-        self.config_manager = ConfigManager()
-        self.navigator = self.config_manager.load_latest_nav()
+        self._config_manager = ConfigManager()
+        self._navigator = self._config_manager.load_latest_nav()
 
     def next_page(self):
-        if self.navigator is None:
+        if self._navigator is None:
             log.debug('no active page navigator available')
+            raise Exception(f"no active page navigator available - cannot turn to next page")
+            # TODO test / handle exception
         else:
-            self.navigator.next_page()
-            self.config_manager.overwrite_csv()
+            self._navigator.next_page()
+            self._config_manager.overwrite_csv()
 
     def previous_page(self):
-        if self.navigator is None:
+        if self._navigator is None:
             log.debug('no active page navigator available')
+            raise Exception(f"no active page navigator available - cannot turn to previous page")
+            # TODO test / handle exception
         else:
-            self.navigator.previous_page()
-            self.config_manager.overwrite_csv()
+            self._navigator.previous_page()
+            self._config_manager.overwrite_csv()
 
     def goto_page(self, page_idx):
-        if self.navigator is None:
+        if self._navigator is None:
             log.debug('no active page navigator available')
+            raise Exception(f"no active page navigator available - cannot goto page {page_idx}")
+            # TODO test / handle exception
         else:
-            self.navigator.goto_page(page_idx)
-            self.config_manager.overwrite_csv()
+            log.debug("page_idx: %s", page_idx)
+            self._navigator.goto_page(page_idx)
+            self._config_manager.overwrite_csv()
+
+    def get_curr_img(self):
+        return self._navigator.curr_page_img
+
+    def get_nav_stats(self):
+        if self._navigator is None:
+            return {}
+        return self._navigator.to_dict()
 
     def update_hotkey_map(self, hotkey_map):
-        self.config_manager.update_hotkeys(hotkey_map)
-
-    def create_nav(self, doc):
-        self.navigator = self.config_manager.create_nav(doc)
+        self._config_manager.update_hotkeys(hotkey_map)
 
     def load_nav(self, doc):
-        self.navigator = self.config_manager.load_existing_nav(doc)
+        self._navigator = self._config_manager.load_nav(doc)
 
     def display_nav_history(self):
-        return self.config_manager.nav_hist_stack
+        return self._config_manager.nav_hist_stack
 
     def teardown(self):
-        self.config_manager.teardown()
+        self._config_manager.teardown()

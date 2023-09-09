@@ -17,12 +17,12 @@ class Navigator:
         self.pdf_converter = PdfConverter(doc, settings)
         self.curr_page_idx = int(curr_page)
         self.curr_page_img = ''
-        self.settings = settings
+        self._settings = settings
         self.last_access = last_access
         log.debug('created navigator: %s', self.to_csv_entry())
 
     def filter(self, user_input: Set[str]):
-        user_command = self.settings.translate_command_hotkey(user_input)
+        user_command = self._settings.translate_command_hotkey(user_input)
 
         if user_command == Command.CLEAN_CLIPBOARD:
             log.debug('cleaning linebreaks from clipboard')

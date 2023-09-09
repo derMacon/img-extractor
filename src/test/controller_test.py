@@ -1,11 +1,11 @@
 import unittest
+# import logging
 from logic.controller import Controller
 from logic.navigator import Navigator
 from data.settings import *
-from utils.logging_config import log
 
 HIST_CSV_FILE = './hist.csv'
-SETTINGS_INI_FILE = './test/resources/test-config-input.ini'
+SETTINGS_INI_FILE = 'resources/test-config-input.ini'
 
 SAMPLE_DOC_INVALID = './test/resources/non-existent.pdf'
 SAMPLE_DOC_1 = './test/resources/test-pdf-1.pdf'
@@ -19,52 +19,55 @@ class TestControllerMethods(unittest.TestCase):
         if os.path.exists(HIST_CSV_FILE):
             os.remove(HIST_CSV_FILE)
 
+    def test_test(self):
+        self.assertTrue(True)
+
     def test_navigator_bounds(self):
         controller = Controller()
         controller.create_nav(SAMPLE_DOC_1)
 
-        self.assertEqual(controller.navigator.curr_page_idx, 0)
-        self.assertEqual(controller.navigator.doc, SAMPLE_DOC_1)
+        self.assertEqual(controller._navigator.curr_page_idx, 0)
+        self.assertEqual(controller._navigator.doc, SAMPLE_DOC_1)
 
         controller.next_page()
-        self.assertEqual(controller.navigator.curr_page_idx, 1)
+        self.assertEqual(controller._navigator.curr_page_idx, 1)
 
         controller.next_page()
-        self.assertEqual(controller.navigator.curr_page_idx, 2)
+        self.assertEqual(controller._navigator.curr_page_idx, 2)
 
         controller.previous_page()
-        self.assertEqual(controller.navigator.curr_page_idx, 1)
+        self.assertEqual(controller._navigator.curr_page_idx, 1)
 
         controller.previous_page()
-        self.assertEqual(controller.navigator.curr_page_idx, 0)
+        self.assertEqual(controller._navigator.curr_page_idx, 0)
 
         controller.previous_page()
-        self.assertEqual(controller.navigator.curr_page_idx, 0)
+        self.assertEqual(controller._navigator.curr_page_idx, 0)
 
         controller.goto_page(-1)
-        self.assertEqual(controller.navigator.curr_page_idx, 0)
+        self.assertEqual(controller._navigator.curr_page_idx, 0)
 
         controller.goto_page(477)
-        self.assertEqual(controller.navigator.curr_page_idx, 0)
+        self.assertEqual(controller._navigator.curr_page_idx, 0)
 
         controller.goto_page(476)
-        self.assertEqual(controller.navigator.curr_page_idx, 475)
+        self.assertEqual(controller._navigator.curr_page_idx, 475)
 
         controller.previous_page()
-        self.assertEqual(controller.navigator.curr_page_idx, 474)
+        self.assertEqual(controller._navigator.curr_page_idx, 474)
 
         controller.next_page()
-        self.assertEqual(controller.navigator.curr_page_idx, 475)
+        self.assertEqual(controller._navigator.curr_page_idx, 475)
 
         controller.next_page()
-        self.assertEqual(controller.navigator.curr_page_idx, 475)
+        self.assertEqual(controller._navigator.curr_page_idx, 475)
 
         controller.teardown()
 
     def test_navigator_hotkeys(self):
         controller = Controller()
         controller.create_nav(SAMPLE_DOC_1)
-        navigator = controller.navigator
+        navigator = controller._navigator
 
         self.assertEqual(0, navigator.curr_page_idx)
         self.assertEqual(SAMPLE_DOC_1, navigator.doc)
@@ -104,23 +107,24 @@ class TestControllerMethods(unittest.TestCase):
         self.assertFalse(os.path.exists(HIST_CSV_FILE))
 
         controller = Controller()
+        settings = controller._config_manager.settings
         controller.create_nav(SAMPLE_DOC_1)
 
         self.assertTrue(os.path.exists(HIST_CSV_FILE))
 
         controller.next_page()
-        act_out = controller.navigator
-        exp_out = Navigator(SAMPLE_DOC_1, curr_page=1)
+        act_out = controller._navigator
+        exp_out = Navigator(SAMPLE_DOC_1, settings, curr_page=1)
         self.assertEqual(act_out, exp_out)
 
         controller.create_nav(SAMPLE_DOC_2)
-        act_out = controller.navigator
-        exp_out = Navigator(SAMPLE_DOC_2)
+        act_out = controller._navigator
+        exp_out = Navigator(SAMPLE_DOC_2, settings)
         self.assertEqual(act_out, exp_out)
 
         controller.load_nav(SAMPLE_DOC_1)
-        act_out = controller.navigator
-        exp_out = Navigator(SAMPLE_DOC_1, curr_page=1)
+        act_out = controller._navigator
+        exp_out = Navigator(SAMPLE_DOC_1, settings, curr_page=1)
         log.info('act out: %s', act_out)
         log.info('exp out: %s', exp_out)
         self.assertEqual(act_out, exp_out)
@@ -139,7 +143,7 @@ class TestControllerMethods(unittest.TestCase):
         exp_dim_y = 1000
 
         exp_history_csv = './hist.csv'
-        exp_img_dir = './img/'
+        exp_img_dir = '../img/'
 
         settings = Settings(SETTINGS_INI_FILE)
 

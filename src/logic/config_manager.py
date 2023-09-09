@@ -12,6 +12,15 @@ class ConfigManager:
         self.keylogger = Keylogger()
         self.settings = Settings(self.CONFIG_INI_PATH)
         self.nav_hist_stack = self.parse_history_stack()
+        self._create_tmp_dirs()
+
+    def _create_tmp_dirs(self):
+        if not os.path.exists(self.settings.img_dir):
+            log.debug("creating img tmp dir: %s", self.settings.img_dir)
+            os.makedirs(self.settings.img_dir)
+        if not os.path.exists(self.settings.docs_dir):
+            log.debug("creating img tmp dir: %s", self.settings.docs_dir)
+            os.makedirs(self.settings.docs_dir)
 
     def parse_history_stack(self):
         csv_file = self.settings.history_csv
@@ -41,7 +50,7 @@ class ConfigManager:
             return None  # empty list
         return self.nav_hist_stack[0]
 
-    def load_existing_nav(self, doc):
+    def load_nav(self, doc):
         # TODO - improve error handling (don't just return None)
 
         if not os.path.exists(doc):
@@ -90,3 +99,4 @@ class ConfigManager:
         log.info('running teardown routine, deleting history csv and image tmp dir')
         remove_file(self.settings.history_csv)
         remove_file(self.settings.img_dir)
+        remove_file(self.settings.docs_dir)

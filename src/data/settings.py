@@ -15,6 +15,7 @@ class Command(Enum):
 
 class Storage(Enum):
     IMG_DIR = auto()
+    DOC_DIR = auto()
     HISTORY_CSV = auto()
 
 
@@ -63,7 +64,8 @@ class Settings:
 
         self.history_csv = self.config_parser[Storage.__name__.lower()][Storage.HISTORY_CSV.name.lower()]
         self.img_dir = self.config_parser[Storage.__name__.lower()][Storage.IMG_DIR.name.lower()]
-    
+        self.docs_dir = self.config_parser[Storage.__name__.lower()][Storage.DOC_DIR.name.lower()]
+
 
     def translate_command_hotkey(self, hotkeys: Set[str]):
         for (key, val) in self.hotkey_map.items():
