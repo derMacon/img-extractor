@@ -1,23 +1,25 @@
-from flask import Flask, jsonify, send_file
-from logic.mock_service import MockService
+from flask import Flask, jsonify, send_file, Blueprint
 from utils.logging_config import log
 from logic.config_manager import ConfigManager
 
 app = Flask(__name__)
+common_prefix = Blueprint('common_prefix', __name__, url_prefix='/api/v1')
+
 config_manager = ConfigManager()
 navigator = config_manager.load_latest_nav()
-# mock = MockService()
 
 
-@app.route("/")
+@common_prefix.route("/")
 def hello_world():
     return "<p>Hello, World!y....</p>"
 
-@app.route("/nav-stats")
+
+@common_prefix.route("/nav-stats")
 def nav_stats():
     return navigator.to_dict()
 
-@app.route("/next-page")
+
+@common_prefix.route("/next-page")
 def next_page():
     if navigator is None:
         log.debug('no active page navigator available')
@@ -27,7 +29,7 @@ def next_page():
     return send_file(navigator.curr_page_img, mimetype='image/jpg')
 
 
-@app.route("/previous-page")
+@common_prefix.route("/previous-page")
 def previous_page():
     if navigator is None:
         log.debug('no active page navigator available')
@@ -65,3 +67,5 @@ def previous_page():
 #
 # def teardown(self):
 #     self.config_manager.teardown()
+
+app.register_blueprint(common_prefix)
