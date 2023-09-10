@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { socket } from './socket';
 import { ConnectionState } from './components/ConnectionState';
 import { ImageViewer } from './components/ImageViewer';
-import DocNavigation from './components/DocNavigation';
+import MainNavbar from './components/MainNavbar';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 export default function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
@@ -35,9 +36,9 @@ export default function App() {
 
   return (
     <div className="App">
+      <MainNavbar />
       <ConnectionState isConnected={ isConnected } />
       <ImageViewer imageData={ imageData } />
-      <DocNavigation />
     </div>
   );
 }

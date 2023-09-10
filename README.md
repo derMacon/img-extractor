@@ -22,3 +22,16 @@ This program will be useful when working with ankidroid so that you don't have t
 * jar can't append new pdf file 
 * worker thread sometimes throws exception when canceling queue
 
+
+## Run New Version
+```
+cd src/
+flask --app main.py run --reload --debug
+```
+
+in another terminal
+```
+cd frontend/
+npm start
+```
+

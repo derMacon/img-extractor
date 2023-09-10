@@ -1,4 +1,6 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 class DocNavigation extends React.Component {
 
@@ -16,10 +18,10 @@ class DocNavigation extends React.Component {
 
   render() {
     return (
-      <div>
-        <button onClick={() => this.turnNextPage(DocNavigation.ENDPOINT_PREV_PAGE)}>prev</button>
-        <button onClick={() => this.turnNextPage(DocNavigation.ENDPOINT_NEXT_PAGE)}>next</button>
-      </div>
+      <ButtonGroup aria-label="doc-nav">
+        <Button variant="secondary" onClick={() => this.turnNextPage(DocNavigation.ENDPOINT_PREV_PAGE)}>prev</Button>
+        <Button variant="secondary" onClick={() => this.turnNextPage(DocNavigation.ENDPOINT_NEXT_PAGE)}>next</Button>
+      </ButtonGroup>
     )
   }
 }
