@@ -72,7 +72,7 @@ class ConfigManager:
             self.nav_hist_stack.insert(0, curr_navigator)
             self.overwrite_csv()
 
-        self.keylogger.set_nav(curr_navigator)
+        self.keylogger.update_settings(self.settings)
         return curr_navigator
 
     def overwrite_csv(self):

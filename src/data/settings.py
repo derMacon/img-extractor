@@ -67,6 +67,9 @@ class Settings:
         self.docs_dir = self.config_parser[Storage.__name__.lower()][Storage.DOC_DIR.name.lower()]
 
     def translate_command_hotkey(self, hotkeys: Set[str]):
+        if hotkeys is None:
+            return None
+
         for (key, val) in self.hotkey_map.items():
             if val == hotkeys:
                 return key

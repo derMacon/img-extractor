@@ -29,15 +29,6 @@ class Navigator:
             self.clean_linebreaks_from_clipboard()
             return
 
-        match user_command:
-            case Command.NEXT:
-                log.debug('next page')
-                self.next_page()
-            case Command.PREVIOUS:
-                log.debug('previous page')
-                self.previous_page()
-            case _:
-                log.debug('not a command')
 
     def next_page(self):
         if self.curr_page_idx == self.pdf_converter.get_page_count():
