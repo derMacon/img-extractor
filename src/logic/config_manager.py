@@ -1,6 +1,6 @@
 import csv
 from logic.navigator import Navigator
-from logic.keylogger import Keylogger
+from logic.keylogger import keylogger_manager
 from data.settings import *
 from utils.io_utils import *
 
@@ -9,7 +9,7 @@ class ConfigManager:
     CONFIG_INI_PATH = './todo.ini'
 
     def __init__(self, ini_path=CONFIG_INI_PATH):
-        self.keylogger = Keylogger()
+        self.keylogger = keylogger_manager
         self.settings = Settings(self.CONFIG_INI_PATH)
         self.nav_hist_stack = self.parse_history_stack()
         self._create_tmp_dirs()
@@ -44,33 +44,35 @@ class ConfigManager:
         log.debug('sorted navigation history stack: %s', out)
         return out
 
-    def load_latest_nav(self):
-        if not self.nav_hist_stack:
-            log.debug('navigation history stack is empty, not able to load latest navigator')
-            return None  # empty list
-        return self.nav_hist_stack[0]
+    def load_nav(self, doc=None):
+        curr_navigator = None
 
-    def load_nav(self, doc):
+        if doc is None: # load latest navigator
+            if self.nav_hist_stack is None or not self.nav_hist_stack:
+                log.debug('navigation history stack is empty, not able to load latest navigator')
+            else:
+                curr_navigator = self.nav_hist_stack[0]
+
         # TODO - improve error handling (don't just return None)
 
-        if not os.path.exists(doc):
+        if doc is None or not os.path.exists(doc):
             log.error("doc does not exist %s", doc)
-            return None
+            # TODO exception
 
-        log.debug('load existing nav_hist_stack: %s', ', '.join(map(str, self.nav_hist_stack)))
-        curr_navigator = next((nav for nav in self.nav_hist_stack if nav.doc == doc), None)
-        log.debug('navigator for doc %s is %s', doc, str(curr_navigator))
+        if curr_navigator is None: # existing doc was specified - create nav for it
+            log.debug('load existing nav_hist_stack: %s', ', '.join(map(str, self.nav_hist_stack)))
+            curr_navigator = next((nav for nav in self.nav_hist_stack if nav.doc == doc), None)
+            log.debug('navigator for doc %s is %s', doc, str(curr_navigator))
 
-        if curr_navigator is None:
+        if curr_navigator is None and doc is not None:
             log.info("create new navigator - could not load navigator for doc %s from history csv %s", doc,
                       self.settings.history_csv)
             curr_navigator = Navigator(doc, self.settings)
             log.debug("created nav: %s", str(curr_navigator.to_dict()))
-            self.keylogger.observer = curr_navigator
             self.nav_hist_stack.insert(0, curr_navigator)
             self.overwrite_csv()
 
-        self.keylogger.observer = curr_navigator
+        self.keylogger.set_nav(curr_navigator)
         return curr_navigator
 
     def overwrite_csv(self):

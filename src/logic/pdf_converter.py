@@ -9,6 +9,10 @@ import sys
 class PdfConverter:
 
     def __init__(self, pdf_path: str, settings: Settings):
+        if pdf_path is None:
+            log.error('no pdf path provided for pdf converter - stopping application')
+            sys.exit(1)
+
         if settings is None:
             log.error('no setting provided for pdf converter - stopping application')
             sys.exit(1)
@@ -31,7 +35,7 @@ class PdfConverter:
         return self._doc.page_count
 
     def render_img(self, page_number):
-        log.info('rendering page %s from %s', self._doc, page_number)
+        log.info('rendering page %s at idx %s', self._doc, page_number)
 
         if page_number < 0 or page_number >= self._doc.page_count:
             log.error("Invalid page number: %s", page_number)
@@ -66,7 +70,7 @@ class PdfConverter:
             os.makedirs(self._settings.img_dir)
 
         # Save the resized image to the specified output path
-        name = self._settings.img_dir + self._name + '_' + str(self.get_page_count()) + '.jpg'
+        name = self._settings.img_dir + self._name + '_' + str(page_number) + '.jpg'
         log.debug("saving img at: %s", name)
         resized_image.save(name, "JPEG")
 

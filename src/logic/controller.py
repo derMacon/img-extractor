@@ -12,7 +12,7 @@ class Controller:
 
     def __init__(self):
         self._config_manager = ConfigManager()
-        self._navigator = self._config_manager.load_latest_nav()
+        self._navigator = self._config_manager.load_nav()
 
     def next_page(self):
         if self._navigator is None:
@@ -45,7 +45,6 @@ class Controller:
     def get_curr_img(self):
         path = os.path.abspath(self._navigator.curr_page_img)
         log.debug('get_curr_img: %s', path)
-        # send_image(path)
         socketio.start_background_task(send_image, path)
         return path
 

@@ -4,7 +4,7 @@ from data.settings import *
 from utils.logging_config import log
 from logic.pdf_converter import PdfConverter
 from typing import Set
-
+from app.events import socketio, send_image
 
 def now_ts():
     return datetime.datetime.now().timestamp()
