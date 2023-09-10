@@ -50,3 +50,4 @@ img-viewer/config.properties
 **/hist.csv
 **/docs/
 **/docs/*
+**/node_modules/
