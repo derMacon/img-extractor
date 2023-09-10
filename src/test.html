@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Streaming</title>
+</head>
+<body>
+    <img id="image" src="" alt="Image">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script type="text/javascript">
+        var socket = io.connect('http://127.0.0.1:5000');
+        console.log('start2')
+
+        socket.on('update_image', function(imageData) {
+            console.log('inside')
+            document.getElementById('image').src = "data:image/jpeg;base64," + imageData;
+        });
+        console.log('start3')
+    </script>
+</body>
+</html>

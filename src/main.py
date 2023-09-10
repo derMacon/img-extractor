@@ -1,20 +1,6 @@
-from logic.controller import Controller
-from utils.logging_config import log
+from app import create_app, socketio
 
-from logic.keylogger import Keylogger
+app = create_app(debug=True)
 
-# controller = Controller()
-# controller.load_nav('./test/resources/test-pdf-1.pdf')
-#
-# log.debug("nav: %s", controller.next_page())
-# log.debug("nav: %s", controller._navigator)
-
-# controller.navigator.clean_linebreaks_from_clipboard()
-
-
-# TODO threading
-logger = Keylogger()
-logger.start()
-
-log.debug('afterererer')
-
+if __name__ == '__main__':
+    socketio.run(app)
