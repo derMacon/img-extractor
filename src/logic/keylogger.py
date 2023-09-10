@@ -7,7 +7,7 @@ from data.settings import Command, Settings
 
 
 class Keylogger:
-    SERVER_BASE = 'http://localhost:5000/api/v1/'
+    SERVER_BASE = 'http://localhost:5000/api/v1'
     ENDPOINT_NEXT_PAGE = SERVER_BASE + '/next-page'
     ENDPOINT_PREV_PAGE = SERVER_BASE + '/previous-page'
 

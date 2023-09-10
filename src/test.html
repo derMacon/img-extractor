@@ -11,7 +11,7 @@
         console.log('start2')
 
         socket.on('update_image', function(imageData) {
-            console.log('inside')
+            console.log('imageData type: ' + (typeof imageData))
             document.getElementById('image').src = "data:image/jpeg;base64," + imageData;
         });
         console.log('start3')
