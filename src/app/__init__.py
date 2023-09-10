@@ -1,7 +1,6 @@
 from flask import Flask
-from flask_socketio import SocketIO
-
-socketio = SocketIO(cors_allowed_origins="*")
+from .routes import main
+from .events import socketio
 
 
 def create_app(debug=False):
@@ -10,8 +9,7 @@ def create_app(debug=False):
     app.debug = debug
     app.config['SECRET_KEY'] = 'gjr39dkjn344_!67#'
 
-    from .main import main as main_blueprint
-    app.register_blueprint(main_blueprint)
+    app.register_blueprint(main)
 
     socketio.init_app(app)
     return app

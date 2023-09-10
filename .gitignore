@@ -48,3 +48,5 @@ img-viewer/config.properties
 **/__pycache__/
 **/*.swp
 **/hist.csv
+**/docs/
+**/docs/*

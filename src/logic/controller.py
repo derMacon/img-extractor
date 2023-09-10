@@ -1,5 +1,7 @@
+import os
 from logic.config_manager import ConfigManager
 from utils.logging_config import log
+from app.events import *
 
 
 class Controller:
@@ -41,7 +43,11 @@ class Controller:
             self._config_manager.overwrite_csv()
 
     def get_curr_img(self):
-        return self._navigator.curr_page_img
+        path = os.path.abspath(self._navigator.curr_page_img)
+        log.debug('get_curr_img: %s', path)
+        # send_image(path)
+        socketio.start_background_task(send_image, path)
+        return path
 
     def get_nav_stats(self):
         if self._navigator is None:
@@ -62,3 +68,6 @@ class Controller:
 
     def teardown(self):
         self._config_manager.teardown()
+
+
+controller = Controller()
