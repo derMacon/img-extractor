@@ -66,11 +66,11 @@ class KeyloggerManager:
 
     def update_settings(self, settings: Settings):
         log.debug("set up new observer for keylogger: %s", str(settings))
-        if self._proc is not None:
-            self._proc.terminate()
-        keylogger = Keylogger(settings)
-        self._proc = multiprocessing.Process(target=keylogger.start, args=())
-        self._proc.start()
+        # if self._proc is not None:
+        #     self._proc.terminate()
+        # keylogger = Keylogger(settings)
+        # self._proc = multiprocessing.Process(target=keylogger.start, args=())
+        # self._proc.start()
 
 
 keylogger_manager = KeyloggerManager()

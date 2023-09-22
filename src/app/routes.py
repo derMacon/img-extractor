@@ -5,8 +5,10 @@ from utils.logging_config import log
 
 main = Blueprint('main', __name__, url_prefix='/api/v1')
 
+
 @main.route("/nav-history")
 def show_nav_history():
+    log.debug('')
     return [nav.to_dict() for nav in controller.get_nav_stats()]
 
 
@@ -27,8 +29,8 @@ def update_hotkey_map():
     controller.update_hotkey_map(hotkey_map)
 
 
-@main.route("/load-nav", methods=['POST'])
-def load_nav():
+@main.route("/load-new", methods=['POST'])
+def load_new():
     input_file = request.files['doc']
     doc = f"{controller.get_settings().docs_dir}{input_file.filename}"
     log.debug("saving input doc to %s", doc)
@@ -36,6 +38,21 @@ def load_nav():
     controller.load_nav(doc)
     # TODO throw errors and implement error handling
     return '', 204  # 204 No Content
+
+
+@main.route("/load-existing")
+def load_existing():
+    filename = request.args.get('filename')
+    # TODO check if arg present & if doc exists- error if not
+    log.debug("load existing by filename %s", filename)
+    doc = f"{controller.get_settings().docs_dir}{filename}"
+    controller.load_nav(doc)
+    return send_file(controller.get_curr_img(), mimetype='image/jpg')
+
+@main.route("/test-log")
+def test_log():
+    log.debug("test log incommmmmiiiiiinnnnnggg")
+    return '', 204
 
 
 @main.route("/current-page")
