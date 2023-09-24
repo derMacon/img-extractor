@@ -1,6 +1,9 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Pagination from 'react-bootstrap/Pagination';
 
 class DocNavigation extends React.Component {
 
@@ -18,10 +21,19 @@ class DocNavigation extends React.Component {
 
   render() {
     return (
-      <ButtonGroup aria-label="doc-nav">
-        <Button variant="secondary" onClick={() => this.turnNextPage(DocNavigation.ENDPOINT_PREV_PAGE)}>prev</Button>
-        <Button variant="secondary" onClick={() => this.turnNextPage(DocNavigation.ENDPOINT_NEXT_PAGE)}>next</Button>
-      </ButtonGroup>
+        <Pagination>
+        <Pagination.Prev onClick={() => this.turnNextPage(DocNavigation.ENDPOINT_PREV_PAGE)} />
+        <InputGroup>
+          <Form.Control
+            type="text"
+            placeholder="1"
+            aria-label="Input group example"
+            aria-describedby="btnGroupAddon"
+          />
+          <InputGroup.Text id="btnGroupAddon"> / 42</InputGroup.Text>
+        </InputGroup>
+        <Pagination.Next onClick={() => this.turnNextPage(DocNavigation.ENDPOINT_NEXT_PAGE)} />
+        </Pagination>
     )
   }
 }

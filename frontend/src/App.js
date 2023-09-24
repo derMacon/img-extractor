@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { socket } from './socket';
-import { ConnectionState } from './components/ConnectionState';
 import { ImageViewer } from './components/ImageViewer';
-import MainNavbar from './components/MainNavbar';
+import { MainNavbar } from './components/MainNavbar';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import './App.css' 
 
 export default function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
@@ -36,9 +39,14 @@ export default function App() {
 
   return (
     <div className="App">
-      <MainNavbar />
-      <ConnectionState isConnected={ isConnected } />
-      <ImageViewer imageData={ imageData } />
+      <MainNavbar isConnected={ isConnected }/>
+      <Container fluid="md">
+        <Row>
+          <Col>
+            <ImageViewer imageData={ imageData } />
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }

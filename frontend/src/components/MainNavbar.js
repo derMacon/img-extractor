@@ -2,8 +2,9 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import FileMenu from './FileMenu';
+import { ConnectionState } from './ConnectionState';
 
-function MainNavbar() {
+export function MainNavbar({ isConnected }) {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -11,14 +12,16 @@ function MainNavbar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
+            <Navbar.Text>
+              Home
+            </Navbar.Text>
             <FileMenu />
+            <Nav.Link href="#link">
+              <ConnectionState isConnected={ isConnected } />
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
 }
-
-export default MainNavbar;
