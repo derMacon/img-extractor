@@ -16,6 +16,7 @@ export function MainNavbar({ isConnected, title }) {
               Home
             </Navbar.Text>
             <FileMenu />
+            <Nav.Link href='' onClick={() => console.log('link on click')}>Features</Nav.Link>
             <Nav.Link href="#link">
               <ConnectionState isConnected={ isConnected } />
             </Nav.Link>

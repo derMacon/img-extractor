@@ -43,3 +43,11 @@
   border-color: red; */
   padding: 15px;
 }
+
+
+.custom-file-label::after,
+.custom-file-label::before,
+.custom-file-input::after,
+.custom-file-input::before {
+  display: none;
+}
