@@ -45,7 +45,7 @@ class Controller:
     def get_curr_img(self):
         path = os.path.abspath(self._navigator.curr_page_img)
         log.debug('get_curr_img: %s', path)
-        socketio.start_background_task(send_image, path)
+        socketio.start_background_task(send_image, self._navigator.to_dict())
         return path
 
     def get_nav_stats(self):

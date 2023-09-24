@@ -1,21 +1,21 @@
 import cv2
 import base64
 from flask_socketio import SocketIO
+from utils.logging_config import log
 
 socketio = SocketIO(cors_allowed_origins="*")
+
 
 @socketio.on('connect')
 def handle_connect():
     print('Client connected')
 
-def send_image(image_path):
+
+def send_image(navigator_dict):
     while True:
         try:
-            frame = cv2.imread(image_path)
-            if frame is not None:
-                _, img_encoded = cv2.imencode('.jpg', frame)
-                image_data = base64.b64encode(img_encoded).decode('utf-8')
-                socketio.emit('update_image', image_data)
+            if navigator_dict is not None:
+                socketio.emit('update_image', navigator_dict)
                 socketio.stop()
         except Exception as e:
             print(f"Error sending image: {e}")

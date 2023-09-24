@@ -1,4 +1,6 @@
 import datetime
+import cv2
+import base64
 import clipboard
 from data.settings import *
 from utils.logging_config import log
@@ -67,10 +69,17 @@ class Navigator:
         return f"nav(doc={self.doc}, page_idx={self.curr_page_idx})"
 
     def to_dict(self):
+        frame = cv2.imread(self.curr_page_img)
+        image_data = None
+        if frame is not None:
+            _, img_encoded = cv2.imencode('.jpg', frame)
+            image_data = base64.b64encode(img_encoded).decode('utf-8')
+
         return {
             'doc': self.doc,
+            'page_cnt': self.pdf_converter.get_page_count(),
             'curr_page_idx': self.curr_page_idx,
-            'curr_page_img': self.curr_page_img
+            'curr_page_img': image_data,
         }
 
     def to_csv_entry(self):

@@ -16,3 +16,14 @@ export function loadExistingNav(fileName) {
         .then(data => console.log(data))
         .catch(error => console.error(error));
 }
+
+
+export function turnToSpecificPage(pageIdx) {
+    fetch(SERVER_BASE + '/go-to-page?' + new URLSearchParams({
+        page_idx: pageIdx,
+    }))
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
+
+}

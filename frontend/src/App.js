@@ -10,7 +10,12 @@ import './App.css'
 
 export default function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
-  const [imageData, setImageData] = useState('no-data');
+  const [imageData, setImageData] = useState({
+    doc: 'no-data',
+    page_cnt: 0,
+    curr_page_idx: 0,
+    curr_page_img: 'no-data',
+  });
 
   useEffect(() => {
     function onConnect() {
@@ -39,7 +44,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <MainNavbar isConnected={ isConnected }/>
+      <MainNavbar isConnected={ isConnected } title={ imageData.doc }/>
       <Container fluid="md">
         <Row>
           <Col>
