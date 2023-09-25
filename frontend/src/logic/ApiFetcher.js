@@ -28,19 +28,31 @@ export function turnToSpecificPage(pageIdx) {
         .catch(error => console.error(error));
 }
 
-export function fetchFileHistory() {
-    console.log('fetchFileHistory called')
-    const fileHistory = [];
+export async function fetchFileHistory() {
 
-    // TODO await this
-    fetch(SERVER_BASE + '/file-history')
-        .then(response => response.json())
-        .then(response => fileHistory.push(response))
-        .then(data => console.log('out: ', data))
-        .catch(error => console.error(error));
+    console.log('======> before')
+    // fetch(SERVER_BASE + '/test-log')
+    //     .then(response => response)
+    //     .then(data => console.log('---- inner: ', data))
+    //     .catch(error => console.error(error));
 
+    try {
+      const tmp = await fetch(SERVER_BASE + '/file-history');
+      const text = await tmp.text()
+      console.log(text)
+    //   const response = await fetch(SERVER_BASE + '/file-history');
+    //   console.log('response: ', response);
+  
+    //   if (!response.ok) {
+    //     throw new Error('Network response was not ok');
+    //   }
+  
+    //   const data = await response.json();
+    //   return data;
+    } catch (error) {
+      console.error('Error fetching file history:', error);
+      throw error;
+    }
+    return ['test-1.pdf']
 
-    return fileHistory
-
-    // return ['test-pdf-1.pdf', 'test-pdf-2.pdf']
-}
+  }

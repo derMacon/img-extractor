@@ -12,11 +12,7 @@ export function MainNavbar({ isConnected, title }) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Navbar.Text>
-              Home
-            </Navbar.Text>
             <FileMenu />
-            <Nav.Link href='' onClick={() => console.log('link on click')}>Features</Nav.Link>
             <Nav.Link href="#link">
               <ConnectionState isConnected={ isConnected } />
             </Nav.Link>

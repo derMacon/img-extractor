@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, send_file, Blueprint, request, abort
+from flask_cors import cross_origin
 from logic.controller import controller
 from test.utils.message_parsing_utils import parse_map_input
 from utils.logging_config import log
@@ -7,6 +8,7 @@ main = Blueprint('main', __name__, url_prefix='/api/v1')
 
 
 @main.route("/file-history")
+@cross_origin()
 def show_file_history():
     log.debug('show_file_history')
     tmp = [nav.doc for nav in controller.display_nav_history()]
@@ -52,9 +54,10 @@ def load_existing():
     return send_file(controller.get_curr_img(), mimetype='image/jpg')
 
 @main.route("/test-log")
+@cross_origin()
 def test_log():
     log.debug("test log incommmmmiiiiiinnnnnggg")
-    return '', 204
+    return 'test-log called', 200
 
 
 @main.route("/current-page")

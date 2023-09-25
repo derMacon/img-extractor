@@ -1,99 +1,34 @@
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import Card from 'react-bootstrap/Card';
 import { loadExistingNav } from '../logic/ApiFetcher';
 import Form from 'react-bootstrap/Form';
-import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 
 import { fetchFileHistory } from '../logic/ApiFetcher';
 
 
-// class FileMenu extends React.Component {
-
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             fileHistory: this.fetchFileHistory()
-//         };
-//     }
-
-//     fetchFileHistory() {
-//         return ['test-pdf-1.pdf', 'test-pdf-2.pdf']
-//     }
-
-//     appendHistory(newFileName) {
-//         // todo
-//         console.log("appending file history with: " + newFileName)
-//         // this.setState({
-//         //     fileHistory: fileHistory.concat([
-//         //         {
-
-//         //         }
-//         //     ])
-//         // })
-//     }
-
-//     openNewFile() {
-//         console.log("open new file")
-//     }
-
-//     handleFileChange(e) {
-//         // setSelectedFile(e.target.files[0]);
-//         console.log('handleFileChange: ' + e)
-//     };
-
-//     handleUpload() {
-//         // if (selectedFile) {
-//         // You can perform file upload logic here, such as sending the file to a server.
-//         // console.log('Uploading file:', selectedFile);
-//         // }
-//         console.log('handle upload')
-//     };
-
-
-//     render() {
-//         // const files = this.state['fileHistory'].map((fileName) =>
-//         //     <NavDropdown.Item onClick={() => loadExistingNav(fileName)}>
-//         //         {fileName}
-//         //     </NavDropdown.Item>
-//         // )
-
-//         // console.log('files: ' + files)
-
-//         // return (
-//         //     <NavDropdown title="File" id="basic-nav-dropdown">
-//         //         {files}
-//         //       <NavDropdown.Divider />
-//         //       <NavDropdown.Item onClick={this.openNewFile}>
-//         //         <Form.Group controlId="formFile">
-//         //             <Form.Control type="file" />
-//         //         </Form.Group>
-//         //       </NavDropdown.Item>
-//         //     </NavDropdown>
-//         // )
-
-
-//         return (
-//             <Form.Group controlId="formFile" className="mb-3">
-//                 <Form.Control type="file" onChange={() => console.log('on change')}/>
-//             </Form.Group>
-//         )
-
-//     }
-
-// }
-
 function FileMenu() {
   const [show, setShow] = useState(false);
-  const [fileHistory, setFileHistory] = useState(fetchFileHistory());
+  const [fileHistory, setFileHistory] = useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await fetchFileHistory();
+        console.log('Response from fetchFileHistory:', data);
+        setFileHistory(data);
+      } catch (error) {
+        console.error('Error fetching file history:', error);
+      }
+    }
+    fetchData();
+  }, []);
 
 
   const handleFileChange = (e) => {
