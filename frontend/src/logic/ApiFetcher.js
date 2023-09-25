@@ -29,15 +29,18 @@ export function turnToSpecificPage(pageIdx) {
 }
 
 export function fetchFileHistory() {
-    // const fileHistory = [];
+    console.log('fetchFileHistory called')
+    const fileHistory = [];
 
-    // fetch(SERVER_BASE + '/nav-history')
-    //     .then(response => response.json())
-    //     .then(response => fileHistory.push(response))
-    //     .then(data => console.log(data))
-    //     .catch(error => console.error(error));
+    // TODO await this
+    fetch(SERVER_BASE + '/file-history')
+        .then(response => response.json())
+        .then(response => fileHistory.push(response))
+        .then(data => console.log('out: ', data))
+        .catch(error => console.error(error));
 
-    // return fileHistory
-    
-    return ['test-pdf-1.pdf', 'test-pdf-2.pdf']
+
+    return fileHistory
+
+    // return ['test-pdf-1.pdf', 'test-pdf-2.pdf']
 }

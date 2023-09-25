@@ -9,7 +9,9 @@ main = Blueprint('main', __name__, url_prefix='/api/v1')
 @main.route("/file-history")
 def show_file_history():
     log.debug('show_file_history')
-    return [nav.doc for nav in controller.display_nav_history()]
+    tmp = [nav.doc for nav in controller.display_nav_history()]
+    log.debug('hist out: %s', tmp)
+    return tmp
 
 
 @main.route("/curr-nav")
