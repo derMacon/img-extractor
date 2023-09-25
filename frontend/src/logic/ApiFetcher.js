@@ -1,5 +1,6 @@
 const SERVER_BASE = 'http://localhost:5000/api/v1'
 
+// TODO check if response is ok in all calls
 
 export function turnNextPage() {
     fetch(SERVER_BASE + '/next-page')
@@ -25,5 +26,18 @@ export function turnToSpecificPage(pageIdx) {
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(error => console.error(error));
+}
 
+export function fetchFileHistory() {
+    // const fileHistory = [];
+
+    // fetch(SERVER_BASE + '/nav-history')
+    //     .then(response => response.json())
+    //     .then(response => fileHistory.push(response))
+    //     .then(data => console.log(data))
+    //     .catch(error => console.error(error));
+
+    // return fileHistory
+    
+    return ['test-pdf-1.pdf', 'test-pdf-2.pdf']
 }

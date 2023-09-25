@@ -9,6 +9,8 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
+import { fetchFileHistory } from '../logic/ApiFetcher';
+
 
 // class FileMenu extends React.Component {
 
@@ -87,23 +89,37 @@ import Modal from 'react-bootstrap/Modal';
 
 function FileMenu() {
   const [show, setShow] = useState(false);
+  const [fileHistory, setFileHistory] = useState(fetchFileHistory());
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     console.log('handleFileChange')
     if (file) {
-      console.log(file);
       handleClose()
     }
   }
 
+  const files = fileHistory.map((fileName) =>
+      <NavDropdown.Item onClick={() => loadExistingNav(fileName)}>
+          {fileName}
+      </NavDropdown.Item>
+  )
+
   return (
     <>
 
-      <Nav.Link href='' onClick={handleShow}>New File</Nav.Link>
+        <NavDropdown title="File" id="basic-nav-dropdown">
+          {files}
+          <NavDropdown.Divider />
+          <Nav.Link href='' onClick={handleShow}>New File</Nav.Link>
+        </NavDropdown>
+
+
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
