@@ -1,4 +1,6 @@
 import React from 'react';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Card from 'react-bootstrap/Card';
 import { loadExistingNav } from '../logic/ApiFetcher';
@@ -100,9 +102,8 @@ function FileMenu() {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
+
+      <Nav.Link href='' onClick={handleShow}>New File</Nav.Link>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
