@@ -6,10 +6,10 @@ from utils.logging_config import log
 main = Blueprint('main', __name__, url_prefix='/api/v1')
 
 
-@main.route("/nav-history")
-def show_nav_history():
-    log.debug('')
-    return [nav.to_dict() for nav in controller.get_nav_stats()]
+@main.route("/file-history")
+def show_file_history():
+    log.debug('show_file_history')
+    return [nav.doc for nav in controller.display_nav_history()]
 
 
 @main.route("/curr-nav")
