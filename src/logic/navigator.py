@@ -9,13 +9,14 @@ from typing import Set
 from app.events import socketio, send_image
 import os
 
+
 def now_ts():
     return datetime.datetime.now().timestamp()
 
 
 class Navigator:
 
-    def __init__(self, doc: str, settings: Settings = None, last_access=now_ts(), curr_page: int = 0):
+    def __init__(self, doc: str, settings: Settings = None, last_access: float = now_ts(), curr_page: int = 0):
         self.doc = doc
         self.pdf_converter = PdfConverter(doc, settings)
         self.curr_page_idx = int(curr_page)
@@ -31,7 +32,6 @@ class Navigator:
             log.debug('cleaning linebreaks from clipboard')
             self.clean_linebreaks_from_clipboard()
             return
-
 
     def next_page(self):
         if self.curr_page_idx == self.pdf_converter.get_page_count():
@@ -92,7 +92,6 @@ class Navigator:
         }
 
     def to_csv_entry(self):
-        self.last_access = now_ts()
         return [
             self.doc,
             self.curr_page_idx,

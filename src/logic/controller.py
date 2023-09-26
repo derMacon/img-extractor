@@ -69,7 +69,12 @@ class Controller:
         self._navigator = self._config_manager.load_nav(doc)
 
     def display_nav_history(self):
-        return self._config_manager.nav_hist_stack
+        out = self._config_manager.nav_hist_stack
+        # TODO delete logs
+        for n in out:
+            log.debug('out sorted: %s - %s', n.doc, type(n.last_access))
+        out = sorted(out, key=lambda x: x.last_access, reverse=True)
+        return out
 
     def teardown(self):
         self._config_manager.teardown()

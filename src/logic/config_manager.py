@@ -1,5 +1,5 @@
 import csv
-from logic.navigator import Navigator
+from logic.navigator import *
 from logic.keylogger import keylogger_manager
 from data.settings import *
 from utils.io_utils import *
@@ -34,10 +34,10 @@ class ConfigManager:
         with open(csv_file, 'r') as file:
             for entry in csv.DictReader(file):
                 curr_nav = Navigator(
-                    entry[CsvHeader.DOCUMENT.name.lower()],
-                    self.settings,
-                    entry[CsvHeader.LAST_ACCESSED.name.lower()],
-                    entry[CsvHeader.PAGE_IDX.name.lower()],
+                    doc=entry[CsvHeader.DOCUMENT.name.lower()],
+                    settings=self.settings,
+                    last_access=float(entry[CsvHeader.LAST_ACCESSED.name.lower()]),
+                    curr_page=entry[CsvHeader.PAGE_IDX.name.lower()],
                 )
                 out.insert(0, curr_nav)
         out = sorted(out, key=lambda x: x.last_access, reverse=True)
@@ -59,7 +59,7 @@ class ConfigManager:
             log.error("doc does not exist %s", doc)
             # TODO exception
 
-        if curr_navigator is None: # existing doc was specified - create nav for it
+        if curr_navigator is None and doc is not None: # existing doc was specified - create nav for it
             log.debug('load existing nav_hist_stack: %s', ', '.join(map(str, self.nav_hist_stack)))
             curr_navigator = next((nav for nav in self.nav_hist_stack if nav.doc == doc), None)
             log.debug('navigator for doc %s is %s', doc, str(curr_navigator))
@@ -70,6 +70,10 @@ class ConfigManager:
             curr_navigator = Navigator(doc, self.settings)
             log.debug("created nav: %s", str(curr_navigator.to_logable()))
             self.nav_hist_stack.insert(0, curr_navigator)
+
+        if curr_navigator:
+            log.debug('updating hist.csv with new ts')
+            curr_navigator.last_access = now_ts()
             self.overwrite_csv()
 
         self.keylogger.update_settings(self.settings)

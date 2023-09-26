@@ -17,18 +17,20 @@ function FileMenu() {
   const handleShow = () => setShow(true);
 
 
-  useEffect(() => {
+  const loadHistFiles = () => {
     async function fetchData() {
       try {
         const data = await fetchFileHistory();
-        console.log('Response from fetchFileHistory:', data);
+        console.log('........Response from fetchFileHistory:', data);
         setFileHistory(data);
       } catch (error) {
         console.error('Error fetching file history:', error);
       }
     }
     fetchData();
-  }, []);
+  }
+
+  useEffect(loadHistFiles, []);
 
 
   const handleFileChange = (e) => {
@@ -41,7 +43,12 @@ function FileMenu() {
   }
 
   const files = fileHistory.map((fileName) =>
-      <NavDropdown.Item onClick={() => loadExistingNav(fileName)}>
+      <NavDropdown.Item onClick={() => {
+        loadExistingNav(fileName)
+        console.log("---------after wait")
+
+        setTimeout(loadHistFiles, 2000)
+      }}>
           {fileName}
       </NavDropdown.Item>
   )
