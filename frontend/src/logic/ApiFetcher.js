@@ -50,7 +50,6 @@ export async function fetchFileHistory() {
 export function uploadFile(file) {
     console.log('upload file: ', file)
 
-
     const formData = new FormData();
     formData.append('doc', file);
 

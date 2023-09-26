@@ -7,8 +7,10 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './App.css' 
+import {  } from './logic/ApiFetcher'
 
 export default function App() {
+  
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [imageData, setImageData] = useState({
     doc: 'no-data',

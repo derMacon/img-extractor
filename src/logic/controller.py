@@ -3,6 +3,11 @@ from logic.config_manager import ConfigManager
 from utils.logging_config import log
 from app.events import *
 
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
+    controller.get_curr_img()
+
 
 class Controller:
     """Encapsulates the whole logic
@@ -13,6 +18,7 @@ class Controller:
     def __init__(self):
         self._config_manager = ConfigManager()
         self._navigator = self._config_manager.load_nav()
+
 
     def next_page(self):
         if self._navigator is None:

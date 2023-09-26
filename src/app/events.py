@@ -5,14 +5,8 @@ from utils.logging_config import log
 
 socketio = SocketIO(cors_allowed_origins="*")
 
-
-@socketio.on('connect')
-def handle_connect():
-    print('Client connected')
-
-
 def send_image(navigator_dict):
-    while True:
+    while True: # TODO do we need this loop?
         try:
             if navigator_dict is not None:
                 socketio.emit('update_image', navigator_dict)
