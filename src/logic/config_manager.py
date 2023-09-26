@@ -68,7 +68,7 @@ class ConfigManager:
             log.info("create new navigator - could not load navigator for doc %s from history csv %s", doc,
                       self.settings.history_csv)
             curr_navigator = Navigator(doc, self.settings)
-            log.debug("created nav: %s", str(curr_navigator.to_dict()))
+            log.debug("created nav: %s", str(curr_navigator.to_logable()))
             self.nav_hist_stack.insert(0, curr_navigator)
             self.overwrite_csv()
 

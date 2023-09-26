@@ -7,6 +7,7 @@ from utils.logging_config import log
 from logic.pdf_converter import PdfConverter
 from typing import Set
 from app.events import socketio, send_image
+import os
 
 def now_ts():
     return datetime.datetime.now().timestamp()
@@ -70,16 +71,24 @@ class Navigator:
 
     def to_dict(self):
         frame = cv2.imread(self.curr_page_img)
+        filename = os.path.basename(self.doc)
         image_data = None
         if frame is not None:
             _, img_encoded = cv2.imencode('.jpg', frame)
             image_data = base64.b64encode(img_encoded).decode('utf-8')
 
         return {
-            'doc': self.doc,
+            'doc': filename,
             'page_cnt': self.pdf_converter.get_page_count(),
             'curr_page_idx': self.curr_page_idx,
             'curr_page_img': image_data,
+        }
+
+    def to_logable(self):
+        return {
+            'doc': self.doc,
+            'page_cnt': self.pdf_converter.get_page_count(),
+            'curr_page_idx': self.curr_page_idx,
         }
 
     def to_csv_entry(self):

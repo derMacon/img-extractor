@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 
-import { fetchFileHistory } from '../logic/ApiFetcher';
+import { fetchFileHistory, uploadFile } from '../logic/ApiFetcher';
 
 
 function FileMenu() {
@@ -35,6 +35,7 @@ function FileMenu() {
     const file = e.target.files[0];
     console.log('handleFileChange')
     if (file) {
+      uploadFile(file)
       handleClose()
     }
   }

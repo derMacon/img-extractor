@@ -26,7 +26,6 @@ export function loadExistingNav(fileName) {
         .catch(error => console.error(error));
 }
 
-
 export function turnToSpecificPage(pageIdx) {
     console.log('turn to specific page')
     fetch(SERVER_BASE + '/go-to-page?' + new URLSearchParams({
@@ -46,4 +45,32 @@ export async function fetchFileHistory() {
       console.error('Error fetching file history:', error);
       throw error;
     }
+}
+
+export function uploadFile(file) {
+    console.log('upload file: ', file)
+
+
+    const formData = new FormData();
+    formData.append('doc', file);
+
+    fetch(SERVER_BASE + '/load-new', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+      })
+      .then((data) => {
+        // Handle the response from the server here
+        console.log('File uploaded successfully:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert('Please select a file to upload.');
+      });
+
+    console.log('after upload')
 }

@@ -62,6 +62,7 @@ def load_existing():
     controller.load_nav(doc)
     return send_file(controller.get_curr_img(), mimetype='image/jpg')
 
+# TODO delete this
 @main.route("/test-log")
 @cross_origin()
 def test_log():
