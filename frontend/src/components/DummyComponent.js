@@ -37,31 +37,20 @@ class DummyComponent extends Component {
         return blob;
     }
 
+    setSystemClipboard(image) {
+        navigator.clipboard.write([
+                new ClipboardItem({
+                    'image/png': this.b64toBlob(image),
+                })
+        ])
+    }
+
 
     render() {
         return (<button onClick={() => {
-                try {
-                    const binaryData = this.props.imageData.curr_page_img
-                    const byteArray = new Uint8Array(binaryData.length);
-
-                    for (let i = 0; i < binaryData.length; i++) {
-                        byteArray[i] = binaryData.charCodeAt(i);
-                    }
-
-                    // Create a Blob from the binary data with 'image/png' MIME type
-                    const blob = new Blob([byteArray], { type: 'image/png' });
-
-                    navigator.clipboard.write([
-                            new ClipboardItem({
-                                'image/png': this.b64toBlob(this.props.imageData.curr_page_img),
-                            })
-                    ])
-                } catch(error) {
-                    console.error(error)
-                }
-        }
-        }>dummy test</button>)
-        // return (<button onClick={() => {navigator.clipboard.writeText('thisasdfadf')}}>dummy test</button>)
+                this.setSystemClipboard(this.props.imageData.curr_page_img)
+            }
+            }>dummy test</button>)
     }
 }
 

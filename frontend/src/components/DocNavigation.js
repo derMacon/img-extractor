@@ -20,7 +20,8 @@ class DocNavigation extends React.Component {
       if (!isNaN(currPage)) {
         console.log('go to page: ' + currPage);
         turnToSpecificPage(currPage)
-        event.target.value = currPage
+        event.target.placeholder = currPage 
+        event.target.value = ''
       }
 
     }

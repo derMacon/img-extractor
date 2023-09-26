@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './App.css' 
 import DummyComponent from './components/DummyComponent';
+import { setSystemClipboard } from './logic/ClipboardUtils';
 
 export default function App() {
   
@@ -16,7 +17,7 @@ export default function App() {
     doc: 'no-data',
     page_cnt: 0,
     curr_page_idx: 0,
-    curr_page_img: 'no-data',
+    curr_page_img: '',
   });
 
   useEffect(() => {
@@ -29,6 +30,7 @@ export default function App() {
     }
 
     function onImageData(value) {
+      setSystemClipboard(value.curr_page_img)
       setImageData(value)
     }
 
@@ -43,9 +45,9 @@ export default function App() {
     };
   }, []);
 
+
   return (
     <div className="App">
-      <DummyComponent imageData={imageData} />
       <MainNavbar isConnected={ isConnected } title={ imageData.doc }/>
       <Container fluid="md">
         <Row>
