@@ -70,8 +70,8 @@ class PdfConverter:
             os.makedirs(self._settings.img_dir)
 
         # Save the resized image to the specified output path
-        name = self._settings.img_dir + self._name + '_' + str(page_number) + '.jpg'
+        name = self._settings.img_dir + self._name + '_' + str(page_number) + '.png'
         log.debug("saving img at: %s", name)
-        resized_image.save(name, "JPEG")
+        resized_image.save(name, "PNG")
 
         return name

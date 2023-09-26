@@ -7,7 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './App.css' 
-import {  } from './logic/ApiFetcher'
+import DummyComponent from './components/DummyComponent';
 
 export default function App() {
   
@@ -45,6 +45,7 @@ export default function App() {
 
   return (
     <div className="App">
+      <DummyComponent imageData={imageData} />
       <MainNavbar isConnected={ isConnected } title={ imageData.doc }/>
       <Container fluid="md">
         <Row>

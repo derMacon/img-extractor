@@ -61,7 +61,7 @@ def load_existing():
     log.debug("load existing by filename %s", filename)
     doc = f"{controller.get_settings().docs_dir}{filename}"
     controller.load_nav(doc)
-    return send_file(controller.get_curr_img(), mimetype='image/jpg')
+    return send_file(controller.get_curr_img(), mimetype='image/png')
 
 # TODO delete this
 @main.route("/test-log")
@@ -74,21 +74,21 @@ def test_log():
 @main.route("/current-page")
 @cross_origin()
 def current_page():
-    return send_file(controller.get_curr_img(), mimetype='image/jpg')
+    return send_file(controller.get_curr_img(), mimetype='image/png')
 
 
 @main.route("/next-page")
 @cross_origin()
 def next_page():
     controller.next_page()
-    return send_file(controller.get_curr_img(), mimetype='image/jpg')
+    return send_file(controller.get_curr_img(), mimetype='image/png')
 
 
 @main.route("/previous-page")
 @cross_origin()
 def previous_page():
     controller.previous_page()
-    return send_file(controller.get_curr_img(), mimetype='image/jpg')
+    return send_file(controller.get_curr_img(), mimetype='image/png')
 
 
 @main.route("/go-to-page")
@@ -109,7 +109,7 @@ def goto_page():
 
     controller.goto_page(page_idx)
 
-    return send_file(controller.get_curr_img(), mimetype='image/jpg')
+    return send_file(controller.get_curr_img(), mimetype='image/png')
 
 
 @main.route("/teardown")
