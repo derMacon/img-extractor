@@ -38,6 +38,8 @@ function FileMenu() {
     console.log('handleFileChange')
     if (file) {
       uploadFile(file)
+      loadHistFiles()
+      console.log('...... after hist load')
       handleClose()
     }
   }
@@ -45,9 +47,7 @@ function FileMenu() {
   const files = fileHistory.map((fileName) =>
       <NavDropdown.Item onClick={() => {
         loadExistingNav(fileName)
-        console.log("---------after wait")
-
-        setTimeout(loadHistFiles, 2000)
+        loadHistFiles()
       }}>
           {fileName}
       </NavDropdown.Item>
@@ -61,8 +61,6 @@ function FileMenu() {
           <NavDropdown.Divider />
           <Nav.Link href='' onClick={handleShow}>New File</Nav.Link>
         </NavDropdown>
-
-
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

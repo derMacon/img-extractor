@@ -16,14 +16,19 @@ export function turnPrevPage() {
         .catch(error => console.error(error));
 }
 
-export function loadExistingNav(fileName) {
+export async function loadExistingNav(fileName) {
     console.log('load existing nav')
-    fetch(SERVER_BASE + '/load-existing?' + new URLSearchParams({
+    try {
+    await fetch(SERVER_BASE + '/load-existing?' + new URLSearchParams({
         filename: fileName,
     }))
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(error => console.error(error));
+    } catch (error) {
+        console.error('somethings wrong')
+        // alert('somethings wrong')
+    }
 }
 
 export function turnToSpecificPage(pageIdx) {
