@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify, send_file, Blueprint, request, abort
 from flask_cors import cross_origin
 from logic.controller import controller
@@ -11,22 +12,28 @@ main = Blueprint('main', __name__, url_prefix='/api/v1')
 @cross_origin()
 def show_file_history():
     log.debug('show_file_history')
-    tmp = [nav.doc for nav in controller.display_nav_history()]
-    log.debug('hist out: %s', tmp)
-    return tmp
+    out = []
+    for nav in controller.display_nav_history():
+        filename = os.path.basename(nav.doc)
+        out.append(filename)
+    log.debug('hist out: %s', out)
+    return jsonify(out)
 
 
 @main.route("/curr-nav")
+@cross_origin()
 def show_curr_nav():
-    return controller.get_nav_stats()
+    return jsonify(controller.get_nav_stats())
 
 
 @main.route("/settings")
+@cross_origin()
 def show_settings():
-    return controller.get_settings().to_dict()
+    return jsonify(controller.get_settings().to_dict())
 
 
 @main.route("/set-hotkey-map")
+@cross_origin()
 def update_hotkey_map():
     # TODO test this
     hotkey_map = parse_map_input(request)
@@ -34,6 +41,7 @@ def update_hotkey_map():
 
 
 @main.route("/load-new", methods=['POST'])
+@cross_origin()
 def load_new():
     input_file = request.files['doc']
     doc = f"{controller.get_settings().docs_dir}{input_file.filename}"
@@ -45,6 +53,7 @@ def load_new():
 
 
 @main.route("/load-existing")
+@cross_origin()
 def load_existing():
     filename = request.args.get('filename')
     # TODO check if arg present & if doc exists- error if not
@@ -57,27 +66,31 @@ def load_existing():
 @cross_origin()
 def test_log():
     log.debug("test log incommmmmiiiiiinnnnnggg")
-    return 'test-log called', 200
+    return jsonify('test-log called'), 200
 
 
 @main.route("/current-page")
+@cross_origin()
 def current_page():
     return send_file(controller.get_curr_img(), mimetype='image/jpg')
 
 
 @main.route("/next-page")
+@cross_origin()
 def next_page():
     controller.next_page()
     return send_file(controller.get_curr_img(), mimetype='image/jpg')
 
 
 @main.route("/previous-page")
+@cross_origin()
 def previous_page():
     controller.previous_page()
     return send_file(controller.get_curr_img(), mimetype='image/jpg')
 
 
 @main.route("/go-to-page")
+@cross_origin()
 def goto_page():
     key = 'page_idx'
     page_idx = request.args.get(key)
@@ -98,5 +111,6 @@ def goto_page():
 
 
 @main.route("/teardown")
+@cross_origin()
 def teardown():
     controller.teardown()

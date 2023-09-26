@@ -28,7 +28,6 @@ export default function App() {
 
     function onImageData(value) {
       setImageData(value)
-      setImageData(value)
     }
 
     socket.on('connect', onConnect);

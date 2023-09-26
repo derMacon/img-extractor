@@ -4,26 +4,12 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Pagination from 'react-bootstrap/Pagination';
-
-import { turnToSpecificPage } from '../logic/ApiFetcher';
+import { turnToSpecificPage, turnNextPage, turnPrevPage } from '../logic/ApiFetcher';
 
 class DocNavigation extends React.Component {
 
   constructor(props) {
     super(props);
-  }
-
-  // TODO use APIFetcher class
-  static SERVER_BASE = 'http://localhost:5000/api/v1'
-  static ENDPOINT_NEXT_PAGE = DocNavigation.SERVER_BASE + '/next-page'
-  static ENDPOINT_PREV_PAGE = DocNavigation.SERVER_BASE + '/previous-page'
-
-
-  turnNextPage(endpoint) {
-    fetch(endpoint)
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error(error));
   }
 
   handleKeyPress(event) {
@@ -47,7 +33,7 @@ class DocNavigation extends React.Component {
 
     return (
         <Pagination>
-        <Pagination.Prev onClick={() => this.turnNextPage(DocNavigation.ENDPOINT_PREV_PAGE)} />
+        <Pagination.Prev onClick={turnPrevPage} />
         <InputGroup>
           <Form.Control
             type="text"
@@ -58,7 +44,7 @@ class DocNavigation extends React.Component {
           />
           <InputGroup.Text id="btnGroupAddon"> / {pageCnt}</InputGroup.Text>
         </InputGroup>
-        <Pagination.Next onClick={() => this.turnNextPage(DocNavigation.ENDPOINT_NEXT_PAGE)} />
+        <Pagination.Next onClick={turnNextPage} />
         </Pagination>
     )
   }
