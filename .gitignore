@@ -52,3 +52,5 @@ img-viewer/config.properties
 **/docs/*
 **/node_modules/
 frontend/node_modules/
+**/env/
+**/env/*
