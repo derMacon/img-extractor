@@ -38,9 +38,9 @@ function FileMenu() {
     console.log('handleFileChange')
     if (file) {
       uploadFile(file)
-      loadHistFiles()
       console.log('...... after hist load')
       handleClose()
+      setTimeout(loadHistFiles, 2000)
     }
   }
 

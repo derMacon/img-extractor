@@ -48,6 +48,7 @@ def load_new():
     log.debug("saving input doc to %s", doc)
     input_file.save(doc)
     controller.load_nav(doc)
+    controller.get_curr_img()
     # TODO throw errors and implement error handling
     return '', 204  # 204 No Content
 

@@ -52,29 +52,21 @@ export async function fetchFileHistory() {
     }
 }
 
-export function uploadFile(file) {
+export async function uploadFile(file) {
     console.log('upload file: ', file)
 
     const formData = new FormData();
     formData.append('doc', file);
 
-    fetch(SERVER_BASE + '/load-new', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-      })
-      .then((data) => {
-        // Handle the response from the server here
-        console.log('File uploaded successfully:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        alert('Please select a file to upload.');
-      });
+    try {
+        const tmp = await fetch(SERVER_BASE + '/load-new', {
+            method: 'POST',
+            body: formData,
+        })
+        await tmp.text()
+    } catch (error) {
+        console.log(error)
+    }
 
     console.log('after upload')
 }
