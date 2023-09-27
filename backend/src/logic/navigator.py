@@ -2,11 +2,11 @@ import datetime
 import cv2
 import base64
 import clipboard
-from data.settings import *
-from utils.logging_config import log
-from logic.pdf_converter import PdfConverter
 from typing import Set
-from app.events import socketio, send_image
+from src.data.settings import *
+from src.utils.logging_config import log
+from src.logic.pdf_converter import PdfConverter
+from src.app.events import socketio, send_image
 import os
 
 

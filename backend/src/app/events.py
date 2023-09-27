@@ -1,7 +1,7 @@
 import cv2
 import base64
 from flask_socketio import SocketIO
-from utils.logging_config import log
+from src.utils.logging_config import log
 
 socketio = SocketIO(cors_allowed_origins="*")
 

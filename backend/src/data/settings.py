@@ -1,5 +1,5 @@
 from enum import Enum, auto
-from utils.logging_config import log
+from src.utils.logging_config import log
 from typing import Set
 import json
 import os

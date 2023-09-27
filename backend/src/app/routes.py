@@ -1,9 +1,9 @@
 import os
 from flask import Flask, jsonify, send_file, Blueprint, request, abort
 from flask_cors import cross_origin
-from logic.controller import controller
-from test.utils.message_parsing_utils import parse_map_input
-from utils.logging_config import log
+from src.logic.controller import controller
+from src.test.utils.message_parsing_utils import parse_map_input
+from src.utils.logging_config import log
 
 main = Blueprint('main', __name__, url_prefix='/api/v1')
 

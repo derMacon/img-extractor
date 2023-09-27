@@ -1,7 +1,7 @@
 import os
-from logic.config_manager import ConfigManager
-from utils.logging_config import log
-from app.events import *
+from src.logic.config_manager import ConfigManager
+from src.utils.logging_config import log
+from src.app.events import *
 
 @socketio.on('connect')
 def handle_connect():
@@ -14,6 +14,7 @@ class Controller:
     - can be plugged into the api controller
     - can be tested without interfering with the http message passing
     """
+
 
     def __init__(self):
         self._config_manager = ConfigManager()
@@ -50,8 +51,8 @@ class Controller:
 
     def get_curr_img(self):
         if not self._navigator:
-            log.debug('no navigator / doc specified atm - returning empty path')
-            return ''
+            log.debug('no navigator / doc specified atm - setting placeholder')
+            self._navigator = self._config_manager.setup_placeholder()
 
         path = os.path.abspath(self._navigator.curr_page_img)
         log.debug('get_curr_img: %s', path)

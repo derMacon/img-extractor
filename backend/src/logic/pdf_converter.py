@@ -1,5 +1,5 @@
-from utils.logging_config import log
-from data.settings import Settings
+from src.utils.logging_config import log
+from src.data.settings import Settings
 import fitz
 import os
 from PIL import Image

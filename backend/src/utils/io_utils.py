@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from utils.logging_config import log
+from src.utils.logging_config import log
 
 
 def remove_file(path):

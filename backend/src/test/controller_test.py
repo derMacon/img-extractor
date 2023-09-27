@@ -7,10 +7,10 @@ from data.settings import *
 HIST_CSV_FILE = './hist.csv'
 SETTINGS_INI_FILE = 'resources/test-config-input.ini'
 
-SAMPLE_DOC_INVALID = './test/resources/non-existent.pdf'
-SAMPLE_DOC_1 = './test/resources/test-pdf-1.pdf'
-SAMPLE_DOC_2 = './test/resources/test-pdf-2.pdf'
-SAMPLE_DOC_3 = './test/resources/test-pdf-3.pdf'
+SAMPLE_DOC_INVALID = './test/res/non-existent.pdf'
+SAMPLE_DOC_1 = './test/res/test-pdf-1.pdf'
+SAMPLE_DOC_2 = './test/res/test-pdf-2.pdf'
+SAMPLE_DOC_3 = './test/res/test-pdf-3.pdf'
 
 
 class TestControllerMethods(unittest.TestCase):

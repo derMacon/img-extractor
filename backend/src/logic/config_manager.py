@@ -1,16 +1,19 @@
 import csv
-from logic.navigator import *
-from logic.keylogger import keylogger_manager
-from data.settings import *
-from utils.io_utils import *
+from src.logic.navigator import *
+from src.logic.keylogger import keylogger_manager
+from src.data.settings import *
+from src.utils.io_utils import *
+import shutil
 
 
 class ConfigManager:
-    CONFIG_INI_PATH = './todo.ini'
+
+    CONFIG_INI_PATH = './res/runtime/config.ini'
+    PLACEHOLDER_PATH = './res/runtime/placeholder.pdf'
 
     def __init__(self, ini_path=CONFIG_INI_PATH):
         self.keylogger = keylogger_manager
-        self.settings = Settings(self.CONFIG_INI_PATH)
+        self.settings = Settings(ini_path)
         self.nav_hist_stack = self.parse_history_stack()
         self._create_tmp_dirs()
 
@@ -50,6 +53,7 @@ class ConfigManager:
         if doc is None: # load latest navigator
             if self.nav_hist_stack is None or not self.nav_hist_stack:
                 log.debug('navigation history stack is empty, not able to load latest navigator')
+                # TODO throw error
             else:
                 curr_navigator = self.nav_hist_stack[0]
 
@@ -78,6 +82,7 @@ class ConfigManager:
 
         self.keylogger.update_settings(self.settings)
         return curr_navigator
+
 
     def overwrite_csv(self):
         csv_data = CsvHeader.create_header()
@@ -112,3 +117,27 @@ class ConfigManager:
         remove_file(history_csv)
         remove_file(img_dir)
         remove_file(docs_dir)
+
+        self.nav_hist_stack.clear()
+        self.setup_placeholder()
+
+    def setup_placeholder(self):
+        log.debug('setup placeholder')
+        self._create_tmp_dirs()
+
+        source_file = self.PLACEHOLDER_PATH
+        destination_directory = self.settings.docs_dir
+        file_name = os.path.basename(source_file)
+        destination_path = os.path.join(destination_directory, file_name)
+
+        try:
+            log.debug(f"copying File '{source_file}' to '{destination_path}'.")
+            shutil.copy(source_file, destination_path)
+        except FileNotFoundError:
+            log.erro(f"Source file '{source_file}' not found.")
+        except PermissionError:
+            log.erro(f"Permission denied. You may not have the necessary permissions to copy the file.")
+        except Exception as e:
+            log.error(f"An error occurred: {e}")
+
+        return self.load_nav(destination_path)

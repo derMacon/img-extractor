@@ -1,8 +1,8 @@
 import requests
 import multiprocessing
 from pynput import keyboard
-from utils.logging_config import log
-from data.settings import Command, Settings
+from src.utils.logging_config import log
+from src.data.settings import Command, Settings
 
 
 
