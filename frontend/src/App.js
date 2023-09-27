@@ -21,6 +21,7 @@ export default function App() {
   });
 
   useEffect(() => {
+    document.title = "img-viewer"
     function onConnect() {
       setIsConnected(true);
     }

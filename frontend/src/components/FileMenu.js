@@ -21,8 +21,8 @@ function FileMenu() {
     async function fetchData() {
       try {
         const data = await fetchFileHistory();
-        console.log('........Response from fetchFileHistory:', data);
-        setFileHistory(data);
+        const latestElements = [...data.slice(0, 7)];
+        setFileHistory(latestElements);
       } catch (error) {
         console.error('Error fetching file history:', error);
       }
@@ -38,7 +38,6 @@ function FileMenu() {
     console.log('handleFileChange')
     if (file) {
       uploadFile(file)
-      console.log('...... after hist load')
       handleClose()
       setTimeout(loadHistFiles, 2000)
     }
