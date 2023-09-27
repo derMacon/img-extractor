@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import FileMenu from './FileMenu';
 import { ConnectionState } from './ConnectionState';
-import { SERVER_BASE } from '../logic/ApiFetcher';
+import { SERVER_BASE, teardown } from '../logic/ApiFetcher';
 
 export function MainNavbar({ isConnected, title }) {
 
@@ -26,6 +26,9 @@ export function MainNavbar({ isConnected, title }) {
               <Nav.Link href={settingsUrl} onClick={displayEditingInstructions}>Settings</Nav.Link>
               <Nav.Link href='https://github.com/derMacon/img-extractor'>Github</Nav.Link>
             </NavDropdown>
+            <Nav.Link href='' onClick={teardown}>
+              clear-data
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

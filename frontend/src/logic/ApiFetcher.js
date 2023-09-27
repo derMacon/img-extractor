@@ -70,3 +70,10 @@ export async function uploadFile(file) {
 
     console.log('after upload')
 }
+
+export function teardown() {
+    console.log('teardown')
+    fetch(SERVER_BASE + '/teardown')
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
+}

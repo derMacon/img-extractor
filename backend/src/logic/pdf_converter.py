@@ -21,7 +21,7 @@ class PdfConverter:
         log.debug("pdf converter for path.: %s", pdf_path)
 
         self._doc = fitz.open(pdf_path)
-        self._name = os.path.basename(pdf_path)
+        self._name = os.path.splitext(os.path.basename(pdf_path))[0]
         self._settings = settings
 
         log.info('opening pdf with path: %s', pdf_path)

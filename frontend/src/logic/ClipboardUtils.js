@@ -26,9 +26,16 @@ function b64toBlob (b64Data, contentType='image/png', sliceSize=512) {
 }
 
 export function setSystemClipboard (image) {
+    if (!image) {
+        return;
+    }
+    try {
     navigator.clipboard.write([
             new ClipboardItem({
                 'image/png': b64toBlob(image),
             })
     ])
+    } catch(error) {
+        console.log(error)
+    }
 }

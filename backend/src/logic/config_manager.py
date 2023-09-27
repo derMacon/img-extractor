@@ -119,7 +119,7 @@ class ConfigManager:
         remove_file(docs_dir)
 
         self.nav_hist_stack.clear()
-        self.setup_placeholder()
+        return self.setup_placeholder()
 
     def setup_placeholder(self):
         log.debug('setup placeholder')

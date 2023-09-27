@@ -83,7 +83,7 @@ class Controller:
         return out
 
     def teardown(self):
-        self._config_manager.teardown()
+        self._navigator = self._config_manager.teardown()
 
 
 controller = Controller()
