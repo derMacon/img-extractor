@@ -1,4 +1,4 @@
-const SERVER_BASE = 'http://localhost:5000/api/v1'
+export const SERVER_BASE = 'http://localhost:5000/api/v1'
 
 // TODO check if response is ok in all calls
 
