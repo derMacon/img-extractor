@@ -116,3 +116,5 @@ def goto_page():
 @cross_origin()
 def teardown():
     controller.teardown()
+    controller.get_curr_img()
+    return '', 204  # 204 No Content

@@ -49,9 +49,14 @@ class Controller:
             self._config_manager.overwrite_csv()
 
     def get_curr_img(self):
+        if not self._navigator:
+            log.debug('no navigator / doc specified atm - returning empty path')
+            return ''
+
         path = os.path.abspath(self._navigator.curr_page_img)
         log.debug('get_curr_img: %s', path)
         socketio.start_background_task(send_image, self._navigator.to_dict())
+
         return path
 
     def get_nav_stats(self):

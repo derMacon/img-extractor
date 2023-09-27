@@ -104,6 +104,11 @@ class ConfigManager:
 
     def teardown(self):
         log.info('running teardown routine, deleting history csv and image tmp dir')
-        remove_file(self.settings.history_csv)
-        remove_file(self.settings.img_dir)
-        remove_file(self.settings.docs_dir)
+
+        history_csv = os.path.abspath(self.settings.history_csv)
+        img_dir = os.path.abspath(self.settings.img_dir)
+        docs_dir = os.path.abspath(self.settings.docs_dir)
+
+        remove_file(history_csv)
+        remove_file(img_dir)
+        remove_file(docs_dir)
