@@ -8,5 +8,6 @@ docker build -t $IMG_NAME:$TAG .
 docker stop $IMG_NAME
 docker rm $IMG_NAME
 
-docker run --privileged --rm -t -d -u root --name $IMG_NAME $IMG_NAME:$TAG
+docker run --rm -t -d -u root --name $IMG_NAME $IMG_NAME:$TAG
+# docker run --privileged --rm -t -d -u root --name $IMG_NAME $IMG_NAME:$TAG
 docker logs -f $IMG_NAME
