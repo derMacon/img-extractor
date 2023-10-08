@@ -7,6 +7,9 @@ RUN apt-get update && apt-get install -y python3=3.10.6-1~22.04 python3.10-venv 
 
 ENV PATH="/opt/venv/bin:$PATH"
 
+# HINT: for some reason an error gets thrown when I install multiple packages with one pip install call
+#       I know that a new layer gets created, each time a new RUN command gets executed, but there is
+#       nothing I can do...
 RUN pip install Flask==2.3.2
 RUN pip install Flask_Cors==4.0.0
 RUN pip install Flask_SocketIO==5.3.6
