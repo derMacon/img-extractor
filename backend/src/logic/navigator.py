@@ -1,7 +1,7 @@
 import datetime
 import cv2
 import base64
-import clipboard
+# import clipboard
 from typing import Set
 from src.data.settings import *
 from src.utils.logging_config import log
@@ -28,10 +28,10 @@ class Navigator:
     def filter(self, user_input: Set[str]):
         user_command = self._settings.translate_command_hotkey(user_input)
 
-        if user_command == Command.CLEAN_CLIPBOARD:
-            log.debug('cleaning linebreaks from clipboard')
-            self.clean_linebreaks_from_clipboard()
-            return
+        # if user_command == Command.CLEAN_CLIPBOARD:
+        #     log.debug('cleaning linebreaks from clipboard')
+        #     self.clean_linebreaks_from_clipboard()
+        #     return
 
     def next_page(self):
         if self.curr_page_idx == self.pdf_converter.get_page_count():
@@ -54,12 +54,6 @@ class Navigator:
         else:
             self.curr_page_idx = page_idx
             self.curr_page_img = self.pdf_converter.render_img(self.curr_page_idx)
-
-    def clean_linebreaks_from_clipboard(self):
-        clipboard_text = clipboard.paste()
-        cleaned_text = clipboard_text.replace('\n', ' ').replace('\r', '')  # Replace line breaks with spaces
-        clipboard.copy(cleaned_text)
-        log.debug("cleaned clipboard content: %s", cleaned_text)
 
     def __eq__(self, other):
         return other is not None \

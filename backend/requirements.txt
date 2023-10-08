@@ -1,9 +1,8 @@
-clipboard==0.0.4
 Flask==2.3.2
 Flask_Cors==4.0.0
 Flask_SocketIO==5.3.6
 opencv_python==4.8.0.76
 Pillow==9.0.1
 PyMuPDF==1.22.5
-pynput==1.7.6
 Requests==2.31.0
+opencv-python-headless==4.8.1.78

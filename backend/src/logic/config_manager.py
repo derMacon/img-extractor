@@ -1,6 +1,6 @@
 import csv
 from src.logic.navigator import *
-from src.logic.keylogger import keylogger_manager
+# from src.logic.keylogger import keylogger_manager
 from src.data.settings import *
 from src.utils.io_utils import *
 import shutil
@@ -12,7 +12,7 @@ class ConfigManager:
     PLACEHOLDER_PATH = './res/runtime/placeholder.pdf'
 
     def __init__(self, ini_path=CONFIG_INI_PATH):
-        self.keylogger = keylogger_manager
+        # self.keylogger = keylogger_manager
         self.settings = Settings(ini_path)
         self.nav_hist_stack = self.parse_history_stack()
         self._create_tmp_dirs()
@@ -80,7 +80,7 @@ class ConfigManager:
             curr_navigator.last_access = now_ts()
             self.overwrite_csv()
 
-        self.keylogger.update_settings(self.settings)
+        # self.keylogger.update_settings(self.settings)
         return curr_navigator
 
 
