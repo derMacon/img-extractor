@@ -1,11 +1,7 @@
 FROM ubuntu:22.04 as builder
-#FROM python:3.11.6-alpine3.18
-#FROM python:3.9-slim-bullseye
-#FROM python:3.12.0-bookworm
 
 WORKDIR /app
 
-#COPY ./requirements.txt .
 RUN apt-get update && apt-get install -y python3=3.10.6-1~22.04 python3.10-venv \
     && python3 -m venv /opt/venv && . /opt/venv/bin/activate
 
@@ -20,33 +16,26 @@ RUN pip install PyMuPDF==1.22.5
 RUN pip install Requests==2.31.0
 RUN pip install opencv-python-headless==4.8.1.78
 
+# HINT: for some reason an error gets thrown when I try to install it via the requirements.txt
+#       no idea why, when using the direct pip install it seems to work
+#COPY ./requirements.txt .
+#RUN pip install -r requirements.txt
 
-# RUN apt-get install -y \
-#    libgl1-mesa-glx=23.0.4-0ubuntu1~22.04.1 \
-#    xauth=1:1.1-1build2 \
-#    libglib2.0-0=2.72.4-0ubuntu2.2 \
-#    && pip install -r requirements.txt
-
-
-#ENTRYPOINT ["flask", "--app", "main.py", "run", "--debug"]
-
-
-#FROM ubuntu:22.04
+# HINT: I tried to create a multi stage build because some dependencies cannot be installed
+#       when using the python base image (e.g. the PyMuPDF). The idea was to build an virtual
+#       env in the first builder step using ubuntu and then copy the whole venv directory to the
+#       final build stage. But this won't work because the second stage cannot activate a venv
+#       which it didn't create itself.
 #FROM python:3.10.13-bookworm
-#
-#WORKDIR /app
-#
 #COPY --from=builder /opt/venv /opt/venv
 ##COPY --from=builder /usr/bin/python3 /usr/bin/python3
 #ENV PATH="/opt/venv/bin:$PATH"
-#
+
 COPY ./main.py .
 COPY ./src/ ./src/
 COPY ./res/ ./res/
+
+EXPOSE 5000
 CMD python3 main.py
 
-#EXPOSE 5000
-##CMD apt-get update
-##CMD flask --app main.py run --debug
-#
 #CMD tail -f /dev/null
