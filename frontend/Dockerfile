@@ -1,17 +1,15 @@
-# src: https://mherman.org/blog/dockerizing-a-react-app/
-# build environment
-FROM node:13.12.0-alpine as build
+# src: https://dev.to/luizcalaca/dockerize-a-react-app-with-node-and-nginx-and-how-to-push-an-image-to-docker-hub-l9g
+FROM node:20 as build-stage
 WORKDIR /app
-ENV PATH /app/node_modules/.bin:$PATH
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm ci --only=prod
-RUN npm install react-scripts@3.4.1 -g --silent
-COPY . ./
+COPY package*.json /app/
+RUN npm install
+COPY ./ /app/
 RUN npm run build
 
-# production environment
-FROM nginx:stable-alpine
-COPY --from=build /app/build /usr/share/nginx/html
+FROM nginx:alpine
+WORKDIR /usr/share/nginx/html
+COPY --from=build-stage /app/build .
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# run nginx with global directives and daemon off
+# in order to keep container running
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
