@@ -19,15 +19,15 @@ export function MainNavbar({ isConnected, title }) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <FileMenu />
-            <Nav.Link href="#link">
-              <ConnectionState isConnected={ isConnected } />
-            </Nav.Link>
             <NavDropdown title="Help" id="basic-nav-dropdown">
               <Nav.Link href={settingsUrl} onClick={displayEditingInstructions}>Settings</Nav.Link>
-              <Nav.Link href='https://github.com/derMacon/img-extractor'>Github</Nav.Link>
+              <Nav.Link href='https://gitlab.com/s.hoffmann/projects/programming/msc/img-extractor.git'>Gitlab</Nav.Link>
             </NavDropdown>
             <Nav.Link href='' onClick={teardown}>
               clear-data
+            </Nav.Link>
+            <Nav.Link href="">
+              <ConnectionState isConnected={ isConnected } />
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

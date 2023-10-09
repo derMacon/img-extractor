@@ -28,6 +28,7 @@ export default function App() {
 
     function onDisconnect() {
       setIsConnected(false);
+      alert('backend offline - check the docker compose setup on the host')
     }
 
     function onImageData(value) {
