@@ -33,20 +33,22 @@ class DocNavigation extends React.Component {
     const pageCnt = String(this.props.imageData.page_cnt)
 
     return (
+      <div id='custom-center'>
         <Pagination>
-        <Pagination.Prev onClick={turnPrevPage} />
-        <InputGroup>
-          <Form.Control
-            type="text"
-            placeholder={currPage}
-            aria-label="Input group example"
-            aria-describedby="btnGroupAddon"
-            onKeyPress={this.handleKeyPress}
-          />
-          <InputGroup.Text id="btnGroupAddon"> / {pageCnt}</InputGroup.Text>
-        </InputGroup>
-        <Pagination.Next onClick={turnNextPage} />
+          <Pagination.Prev onClick={turnPrevPage} />
+          <InputGroup id='page_selector'>
+            <Form.Control
+              type="text"
+              placeholder={currPage}
+              aria-label="Input group example"
+              aria-describedby="btnGroupAddon"
+              onKeyPress={this.handleKeyPress}
+            />
+            <InputGroup.Text id="btnGroupAddon"> / {pageCnt}</InputGroup.Text>
+          </InputGroup>
+          <Pagination.Next onClick={turnNextPage} />
         </Pagination>
+      </div>
     )
   }
 }
