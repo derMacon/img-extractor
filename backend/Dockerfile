@@ -41,4 +41,4 @@ COPY ./res/ ./res/
 EXPOSE 5000
 CMD python3 main.py
 
-#CMD tail -f /dev/null
+# CMD tail -f /dev/null

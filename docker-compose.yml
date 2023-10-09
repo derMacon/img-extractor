@@ -1,0 +1,16 @@
+services:
+  backend:
+    image: "img-viewer_backend:v1.0"
+    build: ./backend/
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/res/:/app/res/
+      - ./logs/backend/:/app/logs/
+  frontend:
+    depends_on:
+        - backend
+    image: "img-viewer_frontend:v1.0"
+    build: ./frontend/
+    ports:
+      - "80:80"

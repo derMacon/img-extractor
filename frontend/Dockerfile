@@ -6,7 +6,7 @@ RUN npm install
 COPY ./ /app/
 RUN npm run build
 
-FROM nginx:alpine
+FROM nginx:alpine as prod
 WORKDIR /usr/share/nginx/html
 COPY --from=build-stage /app/build .
 EXPOSE 80
