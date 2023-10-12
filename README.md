@@ -1,9 +1,9 @@
 # Image Extractor
 
 ## UI
-![screenshot_1.png](./_miscellaneous/demos/img/screenshot_1.png)
-![screenshot_2.png](./_miscellaneous/demos/img/screenshot_2.png)
-![screenshot_3.png](./_miscellaneous/demos/img/screenshot_3.png)
+![screenshot1.png](./_miscellaneous/demos/img/screenshot_1.png)
+![screenshot2.png](./_miscellaneous/demos/img/screenshot_2.png)
+![screenshot3.png](./_miscellaneous/demos/img/screenshot_3.png)
 
 
 The program copies a previewed page of a given pdf document to the systems clipboard. Since it runs in the background the pages can be turned using hotkeys or by clicking in the preview window. 
