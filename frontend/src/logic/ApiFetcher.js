@@ -1,4 +1,8 @@
-export const SERVER_BASE = 'http://localhost:5000/api/v1'
+import { io } from 'socket.io-client';
+
+const SERVER_ADDRESS = 'http://localhost:5000'
+export const SERVER_BASE = SERVER_ADDRESS + '/api/v1'
+export const socket = io(SERVER_ADDRESS)
 
 // TODO check if response is ok in all calls
 

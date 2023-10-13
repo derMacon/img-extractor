@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { socket } from './socket';
-import { ImageViewer } from './components/ImageViewer';
-import { MainNavbar } from './components/MainNavbar';
-import 'bootstrap/dist/css/bootstrap.min.css'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css' 
-import DummyComponent from './components/DummyComponent';
+import { socket } from './logic/ApiFetcher';
+import { ImageViewer } from './components/ImageViewer';
+import { MainNavbar } from './components/MainNavbar';
 import { setSystemClipboard } from './logic/ClipboardUtils';
 
 export default function App() {
