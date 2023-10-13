@@ -54,12 +54,11 @@ function FileMenu() {
 
   return (
     <>
-
-        <NavDropdown title="File" id="basic-nav-dropdown">
-          {files}
-          <NavDropdown.Divider />
-          <Nav.Link href='' onClick={handleShow}>New File</Nav.Link>
-        </NavDropdown>
+      <NavDropdown title="File" id="basic-nav-dropdown">
+        {files}
+        <NavDropdown.Divider />
+        <Nav.Link href='' onClick={handleShow}>New File</Nav.Link>
+      </NavDropdown>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

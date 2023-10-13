@@ -3,8 +3,6 @@ import Card from 'react-bootstrap/Card';
 import DocNavigation from './DocNavigation';
 
 export function ImageViewer({ imageData }) {
-  console.log("in viewer")
-  console.log(imageData)
   console.log(imageData.curr_page_idx)
   return (
     <Card>
