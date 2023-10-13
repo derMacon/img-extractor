@@ -1,8 +1,5 @@
 import csv
-import shutil
 
-# from src.logic.keylogger import keylogger_manager
-from src.data.settings import *
 from src.logic.navigator import *
 from src.utils.io_utils import *
 
@@ -80,7 +77,6 @@ class ConfigManager:
             curr_navigator.last_access = now_ts()
             self.overwrite_csv()
 
-        # self.keylogger.update_settings(self.settings)
         return curr_navigator
 
     def overwrite_csv(self):

@@ -41,3 +41,10 @@ docker-compose build
 docker-compose up -d
 ```
 
+python venv commands
+```
+pipreqs .
+python3 -m venv env
+source env/bin/activate
+pip3 install -r requirements.txt
+```
