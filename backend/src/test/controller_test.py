@@ -1,8 +1,9 @@
 import unittest
+
+from data.settings import *
 # import logging
 from logic.controller import Controller
 from logic.navigator import Navigator
-from data.settings import *
 
 HIST_CSV_FILE = './hist.csv'
 SETTINGS_INI_FILE = 'resources/test-config-input.ini'

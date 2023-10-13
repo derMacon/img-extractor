@@ -1,9 +1,11 @@
-from src.utils.logging_config import log
-from src.data.settings import Settings
-import fitz
 import os
-from PIL import Image
 import sys
+
+import fitz
+from PIL import Image
+
+from src.data.settings import Settings
+from src.utils.logging_config import log
 
 
 class PdfConverter:
@@ -17,7 +19,6 @@ class PdfConverter:
             log.error('no setting provided for pdf converter - stopping application')
             sys.exit(1)
 
-        # TODO throw exception if input file is not .pdf
         log.debug("pdf converter for path.: %s", pdf_path)
 
         self._doc = fitz.open(pdf_path)

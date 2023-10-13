@@ -1,13 +1,13 @@
 import csv
-from src.logic.navigator import *
+import shutil
+
 # from src.logic.keylogger import keylogger_manager
 from src.data.settings import *
+from src.logic.navigator import *
 from src.utils.io_utils import *
-import shutil
 
 
 class ConfigManager:
-
     CONFIG_INI_PATH = './res/runtime/config.ini'
     PLACEHOLDER_PATH = './res/runtime/placeholder.pdf'
 
@@ -50,7 +50,7 @@ class ConfigManager:
     def load_nav(self, doc=None):
         curr_navigator = None
 
-        if doc is None: # load latest navigator
+        if doc is None:  # load latest navigator
             if self.nav_hist_stack is None or not self.nav_hist_stack:
                 log.debug('navigation history stack is empty, not able to load latest navigator')
                 # TODO throw error
@@ -63,14 +63,14 @@ class ConfigManager:
             log.error("doc does not exist %s", doc)
             # TODO exception
 
-        if curr_navigator is None and doc is not None: # existing doc was specified - create nav for it
+        if curr_navigator is None and doc is not None:  # existing doc was specified - create nav for it
             log.debug('load existing nav_hist_stack: %s', ', '.join(map(str, self.nav_hist_stack)))
             curr_navigator = next((nav for nav in self.nav_hist_stack if nav.doc == doc), None)
             log.debug('navigator for doc %s is %s', doc, str(curr_navigator))
 
         if curr_navigator is None and doc is not None:
             log.info("create new navigator - could not load navigator for doc %s from history csv %s", doc,
-                      self.settings.history_csv)
+                     self.settings.history_csv)
             curr_navigator = Navigator(doc, self.settings)
             log.debug("created nav: %s", str(curr_navigator.to_logable()))
             self.nav_hist_stack.insert(0, curr_navigator)
@@ -82,7 +82,6 @@ class ConfigManager:
 
         # self.keylogger.update_settings(self.settings)
         return curr_navigator
-
 
     def overwrite_csv(self):
         csv_data = CsvHeader.create_header()

@@ -1,6 +1,8 @@
 import os
-from flask import Flask, jsonify, send_file, Blueprint, request, abort
+
+from flask import jsonify, send_file, Blueprint, request, abort
 from flask_cors import cross_origin
+
 from src.logic.controller import controller
 from src.test.utils.message_parsing_utils import parse_map_input
 from src.utils.logging_config import log
@@ -35,7 +37,6 @@ def show_settings():
 @main.route("/set-hotkey-map")
 @cross_origin()
 def update_hotkey_map():
-    # TODO test this
     hotkey_map = parse_map_input(request)
     controller.update_hotkey_map(hotkey_map)
 
@@ -49,7 +50,6 @@ def load_new():
     input_file.save(doc)
     controller.load_nav(doc)
     controller.get_curr_img()
-    # TODO throw errors and implement error handling
     return '', 204  # 204 No Content
 
 
@@ -57,17 +57,16 @@ def load_new():
 @cross_origin()
 def load_existing():
     filename = request.args.get('filename')
-    # TODO check if arg present & if doc exists- error if not
     log.debug("load existing by filename %s", filename)
     doc = f"{controller.get_settings().docs_dir}{filename}"
     controller.load_nav(doc)
     return send_file(controller.get_curr_img(), mimetype='image/png')
 
-# TODO delete this
+
 @main.route("/test-log")
 @cross_origin()
 def test_log():
-    log.debug("test log incommmmmiiiiiinnnnnggg")
+    log.debug("user called test log function")
     return jsonify('test-log called'), 200
 
 

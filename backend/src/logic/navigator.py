@@ -1,13 +1,13 @@
-import datetime
-import cv2
 import base64
-# import clipboard
-from typing import Set
-from src.data.settings import *
-from src.utils.logging_config import log
-from src.logic.pdf_converter import PdfConverter
-from src.app.events import socketio, send_image
+import datetime
 import os
+
+import cv2
+
+# import clipboard
+from src.data.settings import *
+from src.logic.pdf_converter import PdfConverter
+from src.utils.logging_config import log
 
 
 def now_ts():

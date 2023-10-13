@@ -1,7 +1,9 @@
 import os
+
+from src.app.events import *
 from src.logic.config_manager import ConfigManager
 from src.utils.logging_config import log
-from src.app.events import *
+
 
 @socketio.on('connect')
 def handle_connect():
@@ -15,11 +17,9 @@ class Controller:
     - can be tested without interfering with the http message passing
     """
 
-
     def __init__(self):
         self._config_manager = ConfigManager()
         self._navigator = self._config_manager.load_nav()
-
 
     def next_page(self):
         if self._navigator is None:

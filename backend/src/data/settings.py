@@ -1,10 +1,11 @@
-from enum import Enum, auto
-from src.utils.logging_config import log
-from typing import Set
+import configparser
 import json
 import os
 import sys
-import configparser
+from enum import Enum, auto
+from typing import Set
+
+from src.utils.logging_config import log
 
 
 class Command(Enum):
