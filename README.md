@@ -1,9 +1,9 @@
 # Image Extractor
 
 ## UI
-![screenshot1a.png](./_miscellaneous/demos/images/screenshot_1.png)
-![screenshot2.png](./miscellaneous/demos/img/screenshot_2.png)
-![screenshot3.png](./miscellaneous/demos/img/screenshot_3.png)
+![screenshot1.png](./_miscellaneous/demos/images/screenshot_1.png)
+![screenshot2.png](./_miscellaneous/demos/images/screenshot_2.png)
+![screenshot3.png](./_miscellaneous/demos/images/screenshot_3.png)
 
 ![test](./_miscellaneous/demos/img/images.jpeg)
 
