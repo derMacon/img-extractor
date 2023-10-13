@@ -1,7 +1,8 @@
 # Image Extractor
 
 ## UI
-![screenshot1a.png](./screenshot1.PNG)
+![screenshot1a.png](./screenshot1.png)
+![screenshot1a.png](./screenshot1.gif)
 
 ![screenshot2.png](./_miscellaneous/demos/img/screenshot_2.png)
 
