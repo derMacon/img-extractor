@@ -16,7 +16,7 @@ This program will be useful when working with ankidroid so that you don't have t
 * `f11` + number + `Enter`: go to specified page number
 
 ## Example:
-![Example workflow](./otherDocs/gif/pdf2img_example.gif)
+![Example workflow](./_miscellaneous/demos/gif/pdf2img_example.gif)
 
 ## Credits
 * Image to clipboard: http://omtlab.com/java-store-image-in-clipboard/
