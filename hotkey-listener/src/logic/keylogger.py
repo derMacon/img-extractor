@@ -14,11 +14,13 @@ class Keylogger:
     @staticmethod
     def _translate_keys(key):
         try:
-            key = key.char
+            key = key.char.lower()
         except AttributeError:
             match str(key):
                 case 'Key.ctrl':
                     key = 'ctrl'
+                case 'Key.shift':
+                    key = 'shift'
         return key
 
     def _press_callback(self, key):
@@ -29,7 +31,6 @@ class Keylogger:
     def _release_callback(self, key):
         key = self._translate_keys(key)
         self.currently_pressed_keys.remove(key)
-        log.debug("Release event - Current keys: %s", self.currently_pressed_keys)
 
     def start(self):
         with keyboard.Listener(on_press=self._press_callback,

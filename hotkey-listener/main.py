@@ -10,4 +10,4 @@ log.info("configured endpoints: %s", settings.endpoint_map)
 log.info("configured shortcuts: %s", settings.hotkey_map)
 
 translator = Translator(settings)
-Keylogger(translator.tranlate_command).start()
+Keylogger(translator.translate_command).start()
