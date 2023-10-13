@@ -9,7 +9,6 @@ class ConfigManager:
     PLACEHOLDER_PATH = './res/runtime/placeholder.pdf'
 
     def __init__(self, ini_path=CONFIG_INI_PATH):
-        # self.keylogger = keylogger_manager
         self.settings = Settings(ini_path)
         self.nav_hist_stack = self.parse_history_stack()
         self._create_tmp_dirs()
@@ -19,7 +18,7 @@ class ConfigManager:
             log.debug("creating img tmp dir: %s", self.settings.img_dir)
             os.makedirs(self.settings.img_dir)
         if not os.path.exists(self.settings.docs_dir):
-            log.debug("creating img tmp dir: %s", self.settings.docs_dir)
+            log.debug("creating doc tmp dir: %s", self.settings.docs_dir)
             os.makedirs(self.settings.docs_dir)
 
     def parse_history_stack(self):
