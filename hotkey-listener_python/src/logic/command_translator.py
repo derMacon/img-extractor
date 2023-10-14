@@ -1,5 +1,5 @@
 # import keyboard
-import pyperclip
+# import pyperclip
 import requests
 
 from src.logic.settings import Settings, Hotkey, Endpoint
@@ -37,15 +37,17 @@ class Translator:
                 log.error(f"error calling rest endpoint: {rest_endpoint}")
 
     def _clean_clipboard(self):
-        clipboard_text = pyperclip.paste()
-        if isinstance(clipboard_text, str):
-            text_without_linebreaks = clipboard_text.replace('\n', '').replace('\r', ' ')
-            pyperclip.copy(text_without_linebreaks)
-            log.debug("Line breaks removed and copied to clipboard.")
-        else:
-            log.debug("Clipboard content is not in text form.")
+        pass
+        # clipboard_text = pyperclip.paste()
+        # if isinstance(clipboard_text, str):
+        #     text_without_linebreaks = clipboard_text.replace('\n', '').replace('\r', ' ')
+        #     pyperclip.copy(text_without_linebreaks)
+        #     log.debug("Line breaks removed and copied to clipboard.")
+        # else:
+        #     log.debug("Clipboard content is not in text form.")
 
-        # clipboard_text = keyboard.read_clipboard()
+        # clipboard_text = keyboard.read_event().name
+        #
         # if isinstance(clipboard_text, str):
         #     text_without_linebreaks = clipboard_text.replace('\n', '').replace('\r', '')
         #     keyboard.write(text_without_linebreaks)

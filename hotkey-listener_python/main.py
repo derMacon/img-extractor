@@ -11,3 +11,5 @@ log.info("configured shortcuts: %s", settings.hotkey_map)
 
 translator = Translator(settings)
 Keylogger(translator.translate_command).start()
+
+# translator._clean_clipboard()
