@@ -29,9 +29,8 @@ To configure the shortcuts use [this](./hotkey-listener_bash/hotkey-listener.sh)
 
 
 ## UI
-![screenshot1.png](./_miscellaneous/demos/images/screenshot_1.png)
-![screenshot2.png](./_miscellaneous/demos/images/screenshot_2.png)
-![screenshot3.png](./_miscellaneous/demos/images/screenshot_3.png)
+![collage1.png](./_miscellaneous/demos/images/collage_1.png)
+
 
 ## Example:
 ![Example workflow](./_miscellaneous/demos/gif/pdf2img_example.gif)
