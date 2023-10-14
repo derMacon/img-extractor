@@ -5,9 +5,28 @@ The program copies a previewed page of a given pdf document to the systems clipb
 This program will be useful when working with ankidroid so that you don't have to screenshot each page you want to make a flashcard for. Just move to the page in the preview window and the page can be pasted directly.
 
 ## Usage: 
-* `f9`: go to previous page
-* `f10`: go to previous page
-* `f11` + number + `Enter`: go to specified page number
+
+### Main Application
+The application is packaged into a front- and a backend docker image. To startup both, use the attributed [docker-compose](./docker-compose.yml) file.
+
+```bash
+# startup containers
+docker-compose up -d
+
+# shutdown containers
+docker-compose down -v
+
+# rebuild images
+docker-compose build
+```
+
+Docker images available on dockerhub ([frontend](https://hub.docker.com/repository/docker/dermacon/img-viewer_frontend/general), [backend](https://hub.docker.com/repository/docker/dermacon/img-viewer_backend/general))
+
+### Hotkeys
+To configure the shortcuts use [this](./hotkey-listener_bash/hotkey-listener.sh) script. In Ubuntu a configuration might look like this:
+
+![config1.png](_miscellaneous/demos/images/config_1.png)
+
 
 ## UI
 ![screenshot1.png](./_miscellaneous/demos/images/screenshot_1.png)
@@ -17,11 +36,9 @@ This program will be useful when working with ankidroid so that you don't have t
 ## Example:
 ![Example workflow](./_miscellaneous/demos/gif/pdf2img_example.gif)
 
-## Credits
-* Image to clipboard: http://omtlab.com/java-store-image-in-clipboard/
-* JNativeHook Framework - system wide shortcut hook: https://github.com/kwhat/jnativehook/releases
-* Resize image: https://deano.me/2012/02/java-resize-an-image-keeping-the-proportions-correct/
-* Pdf box Framework - Apache: https://pdfbox.apache.org/
+## Technology Stack
+- Python3, Flask
+- React.js, socket.IO
 
 ## Dev Commands
 ```
