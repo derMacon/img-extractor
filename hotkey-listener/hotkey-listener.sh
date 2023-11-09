@@ -2,6 +2,7 @@
 
 readonly SERVER_BASE='localhost:5000/api/v1'
 readonly COMMAND_NEXT_PAGE="$SERVER_BASE/next-page"
+readonly COMMAND_CURRENT_PAGE="$SERVER_BASE/current-page"
 readonly COMMAND_PREV_PAGE="$SERVER_BASE/previous-page"
 
 func_usage() {
@@ -19,6 +20,8 @@ hotkey-listener.sh COMMAND
   -n, --next          calls endpoint for next page command
 
   -p, --previous      calls endpoint for previous page command
+
+  -c, --current       calls endpoint for current page command
   ")
 }
 
@@ -45,6 +48,10 @@ then
     then
         echo "- turning to next page - calling $COMMAND_NEXT_PAGE"
         calling_endpoint $COMMAND_NEXT_PAGE
+    elif [ "$1" = "-c" ] || [ "$1" = "--current" ]
+    then
+        echo "- getting current page - calling $COMMAND_CURRENT_PAGE"
+        calling_endpoint $COMMAND_CURRENT_PAGE
     elif [ "$1" = "-p" ] || [ "$1" = "--previous" ]
     then
         echo "- turning to previous page - calling $COMMAND_PREV_PAGE"
@@ -66,3 +73,4 @@ then
     func_usage >&2
 fi
 exit $ERROR
+
