@@ -26,7 +26,7 @@ ERROR=0
 
 calling_endpoint() {
     url=$1
-    response=$(curl -s -o /dev/null -w "%{http_code}" "$url")
+    response=$(curl -w "%{http_code}" "$url" | xclip -selection clipboard -target image/png -i)
 
     if [ "$response" -ge 200 ] && [ "$response" -lt 300 ]; then
         echo "- HTTP status code is OK (2xx): $response"
